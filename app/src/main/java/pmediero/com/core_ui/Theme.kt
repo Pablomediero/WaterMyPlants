@@ -1,4 +1,4 @@
-package pmediero.com.ui.theme
+package pmediero.com.core_ui
 
 import android.app.Activity
 import android.os.Build
