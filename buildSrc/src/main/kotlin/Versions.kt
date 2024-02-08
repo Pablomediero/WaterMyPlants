@@ -3,6 +3,11 @@ object Versions {
     const val lifecycle = "2.7.0"
     const val activity_compose = "1.8.2"
     const val compose_boom = "2023.08.00"
+
+    /*const val coroutines = "1.6.0"
+    const val retrofit = "2.9.0"
+    const val okHttp = "5.0.0-alpha.2"*/
+
     const val junit = "4.13.2"
     const val test_junit = "1.1.5"
     const val test_expresso = "3.5.1"
