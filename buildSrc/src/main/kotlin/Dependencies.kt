@@ -20,4 +20,8 @@ object Dependencies {
     const val test_ui_junit = "androidx.compose.ui:ui-test-junit4"
     const val test_ui_tooling = "androidx.compose.ui:ui-tooling"
     const val test_ui_manifest = "androidx.compose.ui:ui-test-manifest"
+
+    const val lottie =  "com.airbnb.android:lottie-compose:${Versions.lottie}"
+    const val splash = "androidx.core:core-splashscreen:${Versions.splash}"
+    const val navigation = "androidx.navigation:navigation-compose:${Versions.navigation}"
 }

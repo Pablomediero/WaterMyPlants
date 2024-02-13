@@ -92,7 +92,8 @@ fun WelcomeScreen() {
                     .height(56.dp),
                 shape = MaterialTheme.shapes.large,
                 colors = ButtonDefaults.buttonColors(
-                    contentColor = Color.White
+                    contentColor = Color.White,
+                    containerColor = Color.Blue
                 )
             ) {
                 Row(
