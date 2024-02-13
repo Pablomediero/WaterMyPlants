@@ -12,4 +12,8 @@ object Versions {
     const val test_junit = "1.1.5"
     const val test_expresso = "3.5.1"
     const val test_compose_boom = "2023.08.00"
+
+    const val lottie = "6.3.0"
+    const val splash = "1.0.0"
+    const val navigation = "2.5.3"
 }

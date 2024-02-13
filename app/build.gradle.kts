@@ -59,6 +59,10 @@ dependencies {
     implementation(Dependencies.ui_tooling)
     implementation(Dependencies.material)
 
+    implementation(Dependencies.lottie)
+    implementation(Dependencies.splash)
+    implementation(Dependencies.navigation)
+
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.test_junit)
     androidTestImplementation(Dependencies.test_expresso)
@@ -66,4 +70,6 @@ dependencies {
     androidTestImplementation(Dependencies.test_ui_junit)
     debugImplementation(Dependencies.test_ui_tooling)
     debugImplementation(Dependencies.test_ui_manifest)
+
+
 }
