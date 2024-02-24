@@ -1,0 +1,1 @@
+C:\Users\pmediero\Documents\Proyectos\Personal\Android\WatermyPlants\Pablo\WaterMyPlants\buildSrc\build\classes\kotlin\main\Dependencies.class;C:\Users\pmediero\Documents\Proyectos\Personal\Android\WatermyPlants\Pablo\WaterMyPlants\buildSrc\build\classes\kotlin\main\Versions.class

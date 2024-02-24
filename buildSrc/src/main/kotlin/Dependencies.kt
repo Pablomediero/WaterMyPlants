@@ -24,4 +24,5 @@ object Dependencies {
     const val lottie =  "com.airbnb.android:lottie-compose:${Versions.lottie}"
     const val splash = "androidx.core:core-splashscreen:${Versions.splash}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.navigation}"
+    const val fonts = "androidx.compose.ui:ui-text-google-fonts:${Versions.font}"
 }

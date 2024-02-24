@@ -62,6 +62,7 @@ dependencies {
     implementation(Dependencies.lottie)
     implementation(Dependencies.splash)
     implementation(Dependencies.navigation)
+    implementation(Dependencies.fonts)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.test_junit)

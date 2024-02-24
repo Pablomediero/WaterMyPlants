@@ -16,4 +16,5 @@ object Versions {
     const val lottie = "6.3.0"
     const val splash = "1.0.0"
     const val navigation = "2.5.3"
+    const val font = "1.6.1"
 }
