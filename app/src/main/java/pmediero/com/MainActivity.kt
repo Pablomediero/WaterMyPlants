@@ -13,7 +13,7 @@ import pmediero.com.core.navigation.AppRoutes
 import pmediero.com.features.addplant.presentation.AddPlantScreenFigma
 import pmediero.com.features.splash.presentation.SplashScreen
 import pmediero.com.features.welcome.presentation.WelcomeScreen
-import pmediero.com.core.navigation.Navigation
+import pmediero.com.core.navigation.WaterMyPlantsNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             WaterMyPlantsTheme {
-                Navigation()
+                WaterMyPlantsNavHost()
             }
         }
     }

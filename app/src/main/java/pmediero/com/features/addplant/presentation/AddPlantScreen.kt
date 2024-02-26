@@ -49,13 +49,13 @@ import androidx.compose.ui.unit.dp
 import pmediero.com.R
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.addplant.components.CustomTextField
-import pmediero.com.features.addplant.components.CustomFloatingActionButton
-import pmediero.com.features.addplant.components.CustomFloatingActionButtonWithText
-import pmediero.com.features.addplant.components.DialogWateringDays
-import pmediero.com.features.addplant.components.PlantSize
-import pmediero.com.features.addplant.components.DialogPlantSize
-import pmediero.com.features.addplant.components.DialogWateringTime
+import pmediero.com.features.addplant.presentation.components.CustomTextField
+import pmediero.com.features.addplant.presentation.components.CustomFloatingActionButton
+import pmediero.com.features.addplant.presentation.components.CustomFloatingActionButtonWithText
+import pmediero.com.features.addplant.presentation.components.DialogWateringDays
+import pmediero.com.features.addplant.presentation.components.PlantSize
+import pmediero.com.features.addplant.presentation.components.DialogPlantSize
+import pmediero.com.features.addplant.presentation.components.DialogWateringTime
 
 @Composable
 fun AddPlantScreenFigma() {

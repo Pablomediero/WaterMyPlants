@@ -10,7 +10,7 @@ import pmediero.com.features.splash.presentation.SplashScreen
 import pmediero.com.features.welcome.presentation.WelcomeScreen
 
 @Composable
-fun Navigation(){
+fun WaterMyPlantsNavHost(){
     val navController = rememberNavController()
     NavHost(
         navController = navController,

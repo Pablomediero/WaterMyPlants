@@ -1,4 +1,4 @@
-package pmediero.com.features.addplant.components
+package pmediero.com.features.addplant.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
