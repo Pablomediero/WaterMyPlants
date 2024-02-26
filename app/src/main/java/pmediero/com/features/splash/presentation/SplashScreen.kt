@@ -1,4 +1,4 @@
-package pmediero.com.features.screens.splash
+package pmediero.com.features.splash.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -18,7 +18,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.coroutines.delay
 import pmediero.com.R
-import pmediero.com.features.routes.AppRoutes
+import pmediero.com.core.navigation.AppRoutes
 
 @Composable
 fun SplashScreen(navController: NavController){

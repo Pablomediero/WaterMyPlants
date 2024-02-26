@@ -1,4 +1,4 @@
-package pmediero.com.features.routes
+package pmediero.com.core.navigation
 
 sealed class AppRoutes(val route: String){
     object SplashScreen: AppRoutes("splash_screen")

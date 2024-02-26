@@ -1,4 +1,4 @@
-package pmediero.com.features.components
+package pmediero.com.features.addplant.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,6 +43,7 @@ fun CustomTextField(
         focusedIndicatorColor = Color.Transparent,
         disabledIndicatorColor = Color.Transparent,
         disabledTextColor = Color.DarkGray,
+        disabledLabelColor = Color.DarkGray,
         disabledPlaceholderColor = Color.DarkGray
     )
 
@@ -53,11 +54,8 @@ fun CustomTextField(
         onValueChange = onValueChange,
         readOnly = isModal,
         enabled = !isModal,
-        placeholder = {
-            Column (modifier = modifier, verticalArrangement = if (isDescription) Arrangement.Center else Arrangement.Top){
-
-                Text(placeholder, fontSize = 14.sp)
-            }
+        label = {
+            Text(placeholder, style = MaterialTheme.typography.bodyLarge)
         },
         trailingIcon = if (isModal) {
             {
@@ -76,7 +74,7 @@ fun CustomTextField(
         maxLines = if (isDescription) Int.MAX_VALUE else 1,
 
 
-    )
+        )
 }
 
 @Preview

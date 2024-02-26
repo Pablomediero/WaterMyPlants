@@ -1,4 +1,4 @@
-package pmediero.com.features.components
+package pmediero.com.features.addplant.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -62,7 +62,7 @@ fun CustomFloatingActionButtonWithText(
         ) {
             Icon(icon = icon)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = text)
+            Text(text = text,  style = MaterialTheme.typography.bodyLarge)
         }
     }
 }

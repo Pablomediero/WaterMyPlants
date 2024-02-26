@@ -1,4 +1,4 @@
-package pmediero.com.features.screens.addplant
+package pmediero.com.features.addplant.presentation
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -48,13 +49,13 @@ import androidx.compose.ui.unit.dp
 import pmediero.com.R
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.components.CustomTextField
-import pmediero.com.features.components.CustomFloatingActionButton
-import pmediero.com.features.components.CustomFloatingActionButtonWithText
-import pmediero.com.features.components.DialogWateringDays
-import pmediero.com.features.components.PlantSize
-import pmediero.com.features.components.DialogPlantSize
-import pmediero.com.features.components.DialogWateringTime
+import pmediero.com.features.addplant.components.CustomTextField
+import pmediero.com.features.addplant.components.CustomFloatingActionButton
+import pmediero.com.features.addplant.components.CustomFloatingActionButtonWithText
+import pmediero.com.features.addplant.components.DialogWateringDays
+import pmediero.com.features.addplant.components.PlantSize
+import pmediero.com.features.addplant.components.DialogPlantSize
+import pmediero.com.features.addplant.components.DialogWateringTime
 
 @Composable
 fun AddPlantScreenFigma() {
@@ -342,20 +343,19 @@ fun FormAddPlantFigma(modifier: Modifier) {
         }
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Blue),
+                .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            CustomTextField(
-                modifier = Modifier.fillMaxSize(),
-                value = description,
-                onValueChange = { description = it },
-                placeholder = "Description",
-                isModal = false,
-                isDescription = true,
-                onClick = {}
-            )
+                CustomTextField(
+                    modifier = Modifier.fillMaxSize(),
+                    value = description,
+                    onValueChange = { description = it },
+                    placeholder = "Description",
+                    isModal = false,
+                    isDescription = true,
+                    onClick = {}
+                )
         }
     }
     DialogWateringDays(
