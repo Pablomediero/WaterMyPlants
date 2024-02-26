@@ -1,4 +1,4 @@
-package pmediero.com.features.screens.welcome
+package pmediero.com.features.welcome
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import pmediero.com.R
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.routes.AppRoutes
+import pmediero.com.core.navigation.Routes
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
@@ -134,7 +134,7 @@ fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
                 Button(
                     onClick = {
                         navController.popBackStack()
-                        navController.navigate(AppRoutes.AddPlantScreen.route)
+                        navController.navigate(Routes.AddPlantScreen.route)
                     },
                     modifier = Modifier
                         .padding(all = LocalSpacing.current.default)

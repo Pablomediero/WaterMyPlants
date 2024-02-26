@@ -1,4 +1,4 @@
-package pmediero.com.features.components
+package pmediero.com.features.addplant.components
 
 
 import androidx.compose.foundation.clickable
