@@ -14,7 +14,6 @@ object Versions {
     const val test_compose_boom = "2023.08.00"
 
     const val lottie = "6.3.0"
-    const val splash = "1.0.0"
     const val navigation = "2.5.3"
     const val font = "1.6.1"
 }

@@ -43,6 +43,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
@@ -68,7 +69,7 @@ fun AddPlantScreenFigma() {
     ) {
         HeaderAddPlantFigma(
             modifier = Modifier
-                .weight(5f)
+                .weight(4f)
                 .fillMaxWidth()
                 .padding(all = LocalSpacing.current.default)
         )
@@ -202,12 +203,10 @@ fun HeaderAddPlantFigma(modifier: Modifier) {
                     }
                 }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        LocalSpacing.current.medium,
-                        Alignment.Start
-                    ),
+                    horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.small, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically,
-                ) {
+
+                    ) {
                     CustomFloatingActionButtonWithText(
                         onClick = {},
                         modifier = Modifier
@@ -342,9 +341,7 @@ fun FormAddPlantFigma(modifier: Modifier) {
         }
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Blue),
-            verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
+                .fillMaxSize().padding(top = LocalSpacing.current.medium),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CustomTextField(
@@ -406,12 +403,12 @@ fun FooterAddPlantFigma(modifier: Modifier) {
         ) {
             Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Create plant", color = MaterialTheme.colorScheme.primary)
+            Text(text = "Create plant", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, device = Devices.PIXEL_7)
 @Composable
 fun PreviewAddPlantScreen() {
     WaterMyPlantsTheme {

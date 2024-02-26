@@ -60,7 +60,6 @@ dependencies {
     implementation(Dependencies.material)
 
     implementation(Dependencies.lottie)
-    implementation(Dependencies.splash)
     implementation(Dependencies.navigation)
     implementation(Dependencies.fonts)
 

@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -17,7 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pmediero.com.R
+import pmediero.com.core_ui.LocalSpacing
 
 @Composable
 fun CustomFloatingActionButton(
@@ -62,7 +67,7 @@ fun CustomFloatingActionButtonWithText(
         ) {
             Icon(icon = icon)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = text)
+            Text(text = text, style = MaterialTheme.typography.labelMedium)
         }
     }
 }
@@ -85,4 +90,21 @@ fun Icon(icon: Any) {
         }
         else -> throw IllegalArgumentException("Unsupported icon type")
     }
+}
+
+@Preview
+@Composable
+fun PreviewCustomActionButton() {
+    CustomFloatingActionButtonWithText(
+        onClick = {},
+        modifier = Modifier
+            .padding(LocalSpacing.current.default)
+            .width(151.dp)
+            .height(48.dp)
+            .padding(all = LocalSpacing.current.default),
+        contentColor = MaterialTheme.colorScheme.onSecondary,
+        containerColor = MaterialTheme.colorScheme.secondary,
+        icon = R.drawable.add_plant_add_images_icon_header,
+        text = "Add Image"
+    )
 }

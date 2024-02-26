@@ -17,12 +17,11 @@ val fontFamily = FontFamily(
         fontProvider = GoogleFont.Provider(
             providerAuthority = "com.google.android.gms.fonts",
             providerPackage = "com.google.android.gms",
-            certificates = R.font.font_certs
+            certificates = R.array.com_google_android_gms_fonts_certs
         )
     )
 )
 
-// Set of Material typography styles to start with
 val Typography = Typography(
     displayLarge = TextStyle(
         fontSize = 57.sp,
