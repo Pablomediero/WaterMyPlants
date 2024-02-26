@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import pmediero.com.R
+import pmediero.com.core.common.CustomFloatingActionButtonWithText
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.core.navigation.AppRoutes
@@ -131,31 +132,18 @@ fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Button(
+
+                CustomFloatingActionButtonWithText(
+                    modifier =   Modifier.padding(all = LocalSpacing.current.default),
                     onClick = {
                         navController.popBackStack()
                         navController.navigate(AppRoutes.AddPlantScreen.route)
                     },
-                    modifier = Modifier
-                        .padding(all = LocalSpacing.current.default)
-                        .width(200.dp)
-                        .height(56.dp),
-                    shape = MaterialTheme.shapes.extraLarge,
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = Color.White,
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = null)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "Add my first plant")
-                    }
-                }
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = Color.White,
+                    icon =  Icons.Default.Add,
+                    text = "Add your first plant"
+                )
             }
         }
     }
@@ -166,7 +154,6 @@ fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
 @Composable
 fun PreviewWelcomeCompose() {
     WaterMyPlantsTheme {
-
         val navController = rememberNavController()
         WelcomeScreen(navController)
     }

@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -50,8 +50,8 @@ import pmediero.com.R
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.features.addplant.presentation.components.CustomTextField
-import pmediero.com.features.addplant.presentation.components.CustomFloatingActionButton
-import pmediero.com.features.addplant.presentation.components.CustomFloatingActionButtonWithText
+import pmediero.com.core.common.CustomFloatingActionButton
+import pmediero.com.core.common.CustomFloatingActionButtonWithText
 import pmediero.com.features.addplant.presentation.components.DialogWateringDays
 import pmediero.com.features.addplant.presentation.components.PlantSize
 import pmediero.com.features.addplant.presentation.components.DialogPlantSize
@@ -75,7 +75,7 @@ fun AddPlantScreenFigma() {
         )
         BodyAddPlantFigma(
             modifier = Modifier
-                .weight(4f)
+                .weight(5f)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .height(IntrinsicSize.Max)
@@ -212,9 +212,7 @@ fun HeaderAddPlantFigma(modifier: Modifier) {
                     CustomFloatingActionButtonWithText(
                         onClick = {},
                         modifier = Modifier
-                            .padding(LocalSpacing.current.default)
-                            .width(151.dp)
-                            .height(48.dp)
+                            .wrapContentWidth()
                             .padding(all = LocalSpacing.current.default),
                         contentColor = MaterialTheme.colorScheme.onSecondary,
                         containerColor = MaterialTheme.colorScheme.secondary,
@@ -390,25 +388,15 @@ fun FormAddPlantFigma(modifier: Modifier) {
 
 @Composable
 fun FooterAddPlantFigma(modifier: Modifier) {
-    Button(
-        onClick = { },
+    CustomFloatingActionButtonWithText(
         modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.extraLarge,
-        colors = ButtonDefaults.buttonColors(
-            contentColor = MaterialTheme.colorScheme.outline,
-            containerColor = Color.White
-        ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Create plant", color = MaterialTheme.colorScheme.primary)
-        }
-    }
+        onClick = { /*TODO*/ },
+        contentColor = MaterialTheme.colorScheme.primary,
+        containerColor = Color.White,
+        icon = Icons.Outlined.Add,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        text = "Create plant"
+    )
 }
 
 @Preview(showBackground = true)
