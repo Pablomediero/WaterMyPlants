@@ -33,14 +33,17 @@ fun CustomFloatingActionButton(
     contentColor: Color,
     modifier: Modifier = Modifier,
     icon: Any,
+    isVisible: Boolean
 ) {
-    FloatingActionButton(
-        onClick = onClick,
-        modifier = modifier,
-        containerColor = containerColor,
-        contentColor = contentColor
-    ) {
-        Icon(icon = icon)
+    if (isVisible) {
+        FloatingActionButton(
+            onClick = onClick,
+            modifier = modifier,
+            containerColor = containerColor,
+            contentColor = contentColor
+        ) {
+            Icon(icon = icon)
+        }
     }
 }
 
@@ -53,7 +56,7 @@ fun CustomFloatingActionButtonWithText(
     border: BorderStroke = BorderStroke(0.dp, Color.Transparent), // Set default to no border
     icon: Any,
     text: String
-){
+) {
     Button(
         onClick = onClick,
         modifier = modifier,
@@ -71,7 +74,7 @@ fun CustomFloatingActionButtonWithText(
         ) {
             Icon(icon = icon)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = text,  style = MaterialTheme.typography.bodyLarge)
+            Text(text = text, style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
@@ -86,12 +89,14 @@ fun Icon(icon: Any) {
                 contentDescription = null
             )
         }
+
         is ImageVector -> {
             Icon(
                 imageVector = icon,
                 contentDescription = null
             )
         }
+
         else -> throw IllegalArgumentException("Unsupported icon type")
     }
 }

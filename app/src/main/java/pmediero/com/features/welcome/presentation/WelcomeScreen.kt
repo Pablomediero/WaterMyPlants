@@ -22,6 +22,7 @@ import pmediero.com.core.common.CustomFloatingActionButtonWithText
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.core.navigation.AppRoutes
+import pmediero.com.core_ui.onBackgroundVariant
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
@@ -123,6 +124,7 @@ fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
                 text = "There are no plants in the list, please add your first plant",
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onBackgroundVariant
             )
             Column(
                 modifier = Modifier.padding(all = LocalSpacing.current.large),
