@@ -72,7 +72,6 @@ fun AddPlantScreenFigma() {
         BodyAddPlantFigma(
             modifier = Modifier
                 .weight(5f)
-                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .height(IntrinsicSize.Max)
                 .shadow(
