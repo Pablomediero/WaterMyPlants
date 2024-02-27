@@ -8,13 +8,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -22,12 +21,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.twotone.Edit
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,15 +42,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
+import pmediero.com.core.common.CustomFloatingActionButton
+import pmediero.com.core.common.CustomFloatingActionButtonWithText
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.features.addplant.presentation.components.CustomTextField
-import pmediero.com.features.addplant.presentation.components.CustomFloatingActionButton
-import pmediero.com.features.addplant.presentation.components.CustomFloatingActionButtonWithText
-import pmediero.com.features.addplant.presentation.components.DialogWateringDays
-import pmediero.com.features.addplant.presentation.components.PlantSize
+import pmediero.com.features.addplant.presentation.components.CustomTextFieldModal
 import pmediero.com.features.addplant.presentation.components.DialogPlantSize
+import pmediero.com.features.addplant.presentation.components.DialogWateringDays
 import pmediero.com.features.addplant.presentation.components.DialogWateringTime
+import pmediero.com.features.addplant.presentation.components.PlantSize
 
 @Composable
 fun AddPlantScreenFigma() {
@@ -75,8 +71,7 @@ fun AddPlantScreenFigma() {
         )
         BodyAddPlantFigma(
             modifier = Modifier
-                .weight(4f)
-                .fillMaxSize()
+                .weight(5f)
                 .verticalScroll(rememberScrollState())
                 .height(IntrinsicSize.Max)
                 .shadow(
@@ -170,7 +165,8 @@ fun HeaderAddPlantFigma(modifier: Modifier) {
                                 .clip(CircleShape),
                             containerColor = MaterialTheme.colorScheme.secondary,
                             contentColor = MaterialTheme.colorScheme.onSecondary,
-                            icon = Icons.Default.ArrowBack
+                            icon = Icons.Default.ArrowBack,
+                            isVisible = true
                         )
                     }
                     Row(
@@ -188,7 +184,8 @@ fun HeaderAddPlantFigma(modifier: Modifier) {
                                 .clip(CircleShape),
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                            icon = Icons.TwoTone.Edit
+                            icon = Icons.TwoTone.Edit,
+                            isVisible = false
                         )
                         CustomFloatingActionButton(
                             onClick = { },
@@ -198,7 +195,8 @@ fun HeaderAddPlantFigma(modifier: Modifier) {
                                 .clip(CircleShape),
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                            icon = R.drawable.add_plant_cancel_icon_header
+                            icon = R.drawable.add_plant_cancel_icon_header,
+                            isVisible = false
                         )
                     }
                 }
@@ -212,9 +210,7 @@ fun HeaderAddPlantFigma(modifier: Modifier) {
                     CustomFloatingActionButtonWithText(
                         onClick = {},
                         modifier = Modifier
-                            .padding(LocalSpacing.current.default)
-                            .width(151.dp)
-                            .height(48.dp)
+                            .wrapContentWidth()
                             .padding(all = LocalSpacing.current.default),
                         contentColor = MaterialTheme.colorScheme.onSecondary,
                         containerColor = MaterialTheme.colorScheme.secondary,
@@ -278,9 +274,7 @@ fun FormAddPlantFigma(modifier: Modifier) {
                 value = plantName,
                 onValueChange = { plantName = it },
                 placeholder = "Plant name*",
-                isModal = false,
                 isDescription = false,
-                onClick = {}
             )
         }
         Row(
@@ -290,24 +284,20 @@ fun FormAddPlantFigma(modifier: Modifier) {
             ),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CustomTextField(
+            CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
                 value = wateringDays,
                 onValueChange = { wateringDays = it },
                 placeholder = "Watering days*",
-                isModal = true,
-                isDescription = false,
                 onClick = {
                     showDialogCheckBox.value = true
-                }
+                },
             )
-            CustomTextField(
+            CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
                 value = wateringTime,
                 onValueChange = { wateringTime = it },
                 placeholder = "Watering time",
-                isModal = true,
-                isDescription = false,
                 onClick = {
                     showDialogTimePicker.value = true
                 }
@@ -325,17 +315,13 @@ fun FormAddPlantFigma(modifier: Modifier) {
                 value = waterAmount,
                 onValueChange = { waterAmount = it },
                 placeholder = "Water amount",
-                isModal = false,
                 isDescription = false,
-                onClick = {}
             )
-            CustomTextField(
+            CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
                 value = plantSize,
                 onValueChange = { plantSize = it },
                 placeholder = "Plant size",
-                isModal = true,
-                isDescription = false,
                 onClick = {
                     showDialogPlantSize.value = true
                 }
@@ -347,15 +333,13 @@ fun FormAddPlantFigma(modifier: Modifier) {
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.small),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-                CustomTextField(
-                    modifier = Modifier.fillMaxSize(),
-                    value = description,
-                    onValueChange = { description = it },
-                    placeholder = "Description",
-                    isModal = false,
-                    isDescription = true,
-                    onClick = {}
-                )
+            CustomTextField(
+                modifier = Modifier.fillMaxSize(),
+                value = description,
+                onValueChange = { description = it },
+                placeholder = "Description",
+                isDescription = true,
+            )
         }
     }
     DialogWateringDays(
@@ -371,16 +355,16 @@ fun FormAddPlantFigma(modifier: Modifier) {
         showDialog = showDialogTimePicker,
         timePickerStateHorizontal,
         onConfirm = { selectedTime ->
-                    wateringTime = selectedTime
-                    showDialogTimePicker.value = false
+            wateringTime = selectedTime
+            showDialogTimePicker.value = false
         },
         onCancel = { showDialogPlantSize.value = false }
     )
     DialogPlantSize(
         showDialog = showDialogPlantSize,
         selectedSize = selectedSize,
-        onConfirm = {selectedSize ->
-            plantSize = selectedSize.toString()
+        onConfirm = { selectedSizeOption ->
+            plantSize = selectedSizeOption.toString()
             showDialogPlantSize.value = false
         },
         onCancel = { showDialogPlantSize.value = false }
@@ -390,25 +374,15 @@ fun FormAddPlantFigma(modifier: Modifier) {
 
 @Composable
 fun FooterAddPlantFigma(modifier: Modifier) {
-    Button(
-        onClick = { },
+    CustomFloatingActionButtonWithText(
         modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.extraLarge,
-        colors = ButtonDefaults.buttonColors(
-            contentColor = MaterialTheme.colorScheme.outline,
-            containerColor = Color.White
-        ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Create plant", color = MaterialTheme.colorScheme.primary)
-        }
-    }
+        onClick = { /*TODO*/ },
+        contentColor = MaterialTheme.colorScheme.primary,
+        containerColor = Color.White,
+        icon = Icons.Outlined.Add,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        text = "Create plant"
+    )
 }
 
 @Preview(showBackground = true)
