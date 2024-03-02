@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import pmediero.com.core.navigation.AppRoutes
-import pmediero.com.features.addplant.presentation.AddPlantScreenFigma
-import pmediero.com.features.splash.presentation.SplashScreen
-import pmediero.com.features.welcome.presentation.WelcomeScreen
+import pmediero.com.features.addplant.presentation.AddPlantRoot
+import pmediero.com.features.addplant.presentation.AddPlantViewModel
+import pmediero.com.features.splash.presentation.SplashRoot
+import pmediero.com.features.welcome.presentation.WelcomeRoot
 
 @Composable
 fun WaterMyPlantsNavHost(){
@@ -16,13 +16,13 @@ fun WaterMyPlantsNavHost(){
         navController = navController,
         startDestination = AppRoutes.SplashScreen.route) {
         composable( AppRoutes.SplashScreen.route){
-            SplashScreen(navController = navController)
+            SplashRoot(navController = navController)
         }
         composable( AppRoutes.WelcomeScreen.route){
-            WelcomeScreen(navController = navController)
+            WelcomeRoot(navController = navController)
         }
         composable( AppRoutes.AddPlantScreen.route){
-            AddPlantScreenFigma()
+            AddPlantRoot(navController = navController,  AddPlantViewModel())
         }
     }
 }

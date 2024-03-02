@@ -25,12 +25,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -52,9 +49,20 @@ import pmediero.com.features.addplant.presentation.components.DialogPlantSize
 import pmediero.com.features.addplant.presentation.components.DialogWateringDays
 import pmediero.com.features.addplant.presentation.components.DialogWateringTime
 import pmediero.com.features.addplant.presentation.components.PlantSize
+import pmediero.com.features.addplant.presentation.event.AddPlantEvent
+import pmediero.com.features.addplant.presentation.event.OnCreatePlant
+import pmediero.com.features.addplant.presentation.event.OnPlantDescriptionChange
+import pmediero.com.features.addplant.presentation.event.OnPlantNameChange
+import pmediero.com.features.addplant.presentation.event.OnPlantSizeChange
+import pmediero.com.features.addplant.presentation.event.OnPlantWaterAmountChange
+import pmediero.com.features.addplant.presentation.event.OnPlantWateringDaysChange
+import pmediero.com.features.addplant.presentation.event.OnPlantWateringTimeChange
 
 @Composable
-fun AddPlantScreenFigma() {
+fun AddPlantScreen(
+    state: AddPlantState,
+    onEvent: (AddPlantEvent) -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(
@@ -89,7 +97,27 @@ fun AddPlantScreenFigma() {
                     start = LocalSpacing.current.medium,
                     end = LocalSpacing.current.medium,
                     bottom = LocalSpacing.current.default
-                )
+                ),
+            state = state,
+            onPlantNameChange = { plantName ->
+                onEvent(OnPlantNameChange(plantName))
+            },
+            onPlantWateringDaysChange = { wateringDays ->
+                onEvent(OnPlantWateringDaysChange(wateringDays))
+            },
+            onPlantWateringTimeChange = { wateringTime ->
+                onEvent(OnPlantWateringTimeChange(wateringTime))
+            },
+            onPlantWaterAmountChange = { waterAmount ->
+                onEvent(OnPlantWaterAmountChange(waterAmount))
+            },
+            onPlantSizeChange = { plantSize ->
+                onEvent(OnPlantSizeChange(plantSize))
+            },
+            onPlantDescriptionChange = { plantDescription ->
+                onEvent(OnPlantDescriptionChange(plantDescription))
+            }
+
         )
         FooterAddPlantFigma(
             modifier = Modifier
@@ -97,7 +125,8 @@ fun AddPlantScreenFigma() {
                 .padding(
                     horizontal = LocalSpacing.current.medium,
                     vertical = LocalSpacing.current.small
-                )
+                ),
+            onEvent = onEvent,
         )
     }
 }
@@ -225,7 +254,17 @@ fun HeaderAddPlantFigma(modifier: Modifier) {
 }
 
 @Composable
-fun BodyAddPlantFigma(modifier: Modifier) {
+fun BodyAddPlantFigma(
+    modifier: Modifier,
+    state: AddPlantState,
+    onPlantNameChange: (String) -> Unit,
+    onPlantWateringDaysChange: (Map<String, Boolean>) -> Unit,
+    onPlantWateringTimeChange: (String) -> Unit,
+    onPlantWaterAmountChange: (String) -> Unit,
+    onPlantSizeChange: (String) -> Unit,
+    onPlantDescriptionChange: (String) -> Unit
+
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.medium, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -234,7 +273,14 @@ fun BodyAddPlantFigma(modifier: Modifier) {
         FormAddPlantFigma(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(all = LocalSpacing.current.default)
+                .padding(all = LocalSpacing.current.default),
+            state = state,
+            onPlantNameChange = onPlantNameChange,
+            onPlantWateringDaysChange = onPlantWateringDaysChange,
+            onPlantWateringTimeChange = onPlantWateringTimeChange,
+            onPlantWaterAmountChange = onPlantWaterAmountChange,
+            onPlantSizeChange = onPlantSizeChange,
+            onPlantDescriptionChange = onPlantDescriptionChange
         )
     }
 }
@@ -242,13 +288,16 @@ fun BodyAddPlantFigma(modifier: Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormAddPlantFigma(modifier: Modifier) {
-    var plantName by rememberSaveable { mutableStateOf("") }
-    var wateringDays by rememberSaveable { mutableStateOf("") }
-    var wateringTime by rememberSaveable { mutableStateOf("") }
-    var waterAmount by rememberSaveable { mutableStateOf("") }
-    var plantSize by rememberSaveable { mutableStateOf("") }
-    var description by rememberSaveable { mutableStateOf("") }
+fun FormAddPlantFigma(
+    modifier: Modifier,
+    state: AddPlantState,
+    onPlantNameChange: (String) -> Unit,
+    onPlantWateringDaysChange: (Map<String, Boolean>) -> Unit,
+    onPlantWateringTimeChange: (String) -> Unit,
+    onPlantWaterAmountChange: (String) -> Unit,
+    onPlantSizeChange: (String) -> Unit,
+    onPlantDescriptionChange: (String) -> Unit
+) {
 
     val showDialogPlantSize = remember { mutableStateOf(false) }
     val selectedSize = remember { mutableStateOf(PlantSize.Default) }
@@ -271,8 +320,8 @@ fun FormAddPlantFigma(modifier: Modifier) {
         ) {
             CustomTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = plantName,
-                onValueChange = { plantName = it },
+                value = state.plantName,
+                onValueChange = { onPlantNameChange(it) },
                 placeholder = "Plant name*",
                 isDescription = false,
             )
@@ -286,8 +335,8 @@ fun FormAddPlantFigma(modifier: Modifier) {
         ) {
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = wateringDays,
-                onValueChange = { wateringDays = it },
+                value = state.wateringDays,
+                //onValueChange = {  },
                 placeholder = "Watering days*",
                 onClick = {
                     showDialogCheckBox.value = true
@@ -295,8 +344,8 @@ fun FormAddPlantFigma(modifier: Modifier) {
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = wateringTime,
-                onValueChange = { wateringTime = it },
+                value = state.wateringTime,
+                //onValueChange = { onPlantWateringTimeChange(it) },
                 placeholder = "Watering time",
                 onClick = {
                     showDialogTimePicker.value = true
@@ -312,15 +361,15 @@ fun FormAddPlantFigma(modifier: Modifier) {
         ) {
             CustomTextField(
                 modifier = Modifier.weight(1f),
-                value = waterAmount,
-                onValueChange = { waterAmount = it },
+                value = state.waterAmount,
+                onValueChange = { onPlantWaterAmountChange(it) },
                 placeholder = "Water amount",
                 isDescription = false,
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = plantSize,
-                onValueChange = { plantSize = it },
+                value = state.plantSize,
+                //onValueChange = { onPlantSizeChange(it) },
                 placeholder = "Plant size",
                 onClick = {
                     showDialogPlantSize.value = true
@@ -335,8 +384,8 @@ fun FormAddPlantFigma(modifier: Modifier) {
         ) {
             CustomTextField(
                 modifier = Modifier.fillMaxSize(),
-                value = description,
-                onValueChange = { description = it },
+                value = state.plantDescription,
+                onValueChange = { onPlantDescriptionChange(it) },
                 placeholder = "Description",
                 isDescription = true,
             )
@@ -346,7 +395,9 @@ fun FormAddPlantFigma(modifier: Modifier) {
         showDialog = showDialogCheckBox,
         checkboxState,
         onConfirm = { selectedDays ->
-            wateringDays = selectedDays.filter { it.value }.keys.joinToString()
+            // wateringDays = selectedDays.filter { it.value }.keys.joinToString()
+
+            onPlantWateringDaysChange(selectedDays)
             showDialogCheckBox.value = false
         },
         onCancel = { showDialogCheckBox.value = false }
@@ -355,7 +406,9 @@ fun FormAddPlantFigma(modifier: Modifier) {
         showDialog = showDialogTimePicker,
         timePickerStateHorizontal,
         onConfirm = { selectedTime ->
-            wateringTime = selectedTime
+            //state.wateringTime = selectedTime
+            onPlantWateringTimeChange(selectedTime)
+
             showDialogTimePicker.value = false
         },
         onCancel = { showDialogPlantSize.value = false }
@@ -364,7 +417,8 @@ fun FormAddPlantFigma(modifier: Modifier) {
         showDialog = showDialogPlantSize,
         selectedSize = selectedSize,
         onConfirm = { selectedSizeOption ->
-            plantSize = selectedSizeOption.toString()
+           // state.plantSize = selectedSizeOption.toString()
+            onPlantSizeChange(selectedSizeOption.toString())
             showDialogPlantSize.value = false
         },
         onCancel = { showDialogPlantSize.value = false }
@@ -372,11 +426,14 @@ fun FormAddPlantFigma(modifier: Modifier) {
 }
 
 
+
 @Composable
-fun FooterAddPlantFigma(modifier: Modifier) {
+fun FooterAddPlantFigma(modifier: Modifier, onEvent: (AddPlantEvent) -> Unit) {
     CustomFloatingActionButtonWithText(
         modifier = modifier.fillMaxWidth(),
-        onClick = { /*TODO*/ },
+        onClick = {
+            onEvent(OnCreatePlant)
+        },
         contentColor = MaterialTheme.colorScheme.primary,
         containerColor = Color.White,
         icon = Icons.Outlined.Add,
@@ -389,6 +446,6 @@ fun FooterAddPlantFigma(modifier: Modifier) {
 @Composable
 fun PreviewAddPlantScreen() {
     WaterMyPlantsTheme {
-        AddPlantScreenFigma()
+        AddPlantScreen(AddPlantState()) {}
     }
 }

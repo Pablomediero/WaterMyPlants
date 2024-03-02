@@ -2,11 +2,17 @@ package pmediero.com.features.welcome.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,17 +21,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import pmediero.com.R
 import pmediero.com.core.common.CustomFloatingActionButtonWithText
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.core.navigation.AppRoutes
 import pmediero.com.core_ui.onBackgroundVariant
+import pmediero.com.features.welcome.event.WelcomeEvent
 
 @Composable
-fun WelcomeScreen(navController: NavController) {
+fun WelcomeScreen(
+    onEvent: (WelcomeEvent) -> Unit,
+    ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,7 +48,7 @@ fun WelcomeScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(2f),
-            navController = navController
+            onEvent = onEvent,
         )
     }
 }
@@ -73,7 +79,7 @@ fun HeaderWelcomeScreen(modifier: Modifier) {
 }
 
 @Composable
-fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
+fun BodyWelcomeScreen(modifier: Modifier, onEvent: (WelcomeEvent) -> Unit) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(
@@ -138,8 +144,7 @@ fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
                 CustomFloatingActionButtonWithText(
                     modifier =   Modifier.padding(all = LocalSpacing.current.default),
                     onClick = {
-                        navController.popBackStack()
-                        navController.navigate(AppRoutes.AddPlantScreen.route)
+                      onEvent(WelcomeEvent.OnAddFirstPlantClick)
                     },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
@@ -156,7 +161,6 @@ fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
 @Composable
 fun PreviewWelcomeCompose() {
     WaterMyPlantsTheme {
-        val navController = rememberNavController()
-        WelcomeScreen(navController)
+        WelcomeScreen(){}
     }
 }

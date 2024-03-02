@@ -11,29 +11,32 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.coroutines.delay
 import pmediero.com.R
-import pmediero.com.core.navigation.AppRoutes
+import pmediero.com.features.splash.event.SplashEvent
 
 @Composable
-fun SplashScreen(navController: NavController){
+fun SplashScreen(
+    onEvent: (SplashEvent) -> Unit,
+) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.plantexampleanimation))
     val progress by animateLottieCompositionAsState(composition)
 
     LaunchedEffect(key1 = true) {
-        delay(4000L)
-       navController.popBackStack()
-       navController.navigate( AppRoutes.WelcomeScreen.route)
+        delay(3000L)
+        onEvent(SplashEvent.OnLoadingApp)
     }
-    Column (
-        modifier = Modifier.fillMaxSize().background(
-            if (isSystemInDarkTheme()) Color.DarkGray
-            else Color.White),
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                if (isSystemInDarkTheme()) Color.DarkGray
+                else Color.White
+            ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

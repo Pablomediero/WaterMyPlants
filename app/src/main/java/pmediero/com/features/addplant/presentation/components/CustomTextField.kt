@@ -4,15 +4,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -65,7 +64,7 @@ fun CustomTextField(
 fun  CustomTextFieldModal(
     modifier: Modifier = Modifier,
     value: String,
-    onValueChange: (String) -> Unit,
+   // onValueChange: (String) -> Unit,
     placeholder: String,
     onClick: () -> Unit
 ) {
@@ -86,7 +85,7 @@ fun  CustomTextFieldModal(
             .clickable { onClick() },
         colors = colors,
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = {},
         readOnly = true,
         enabled = false,
         label = {
