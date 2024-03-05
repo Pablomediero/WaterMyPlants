@@ -64,10 +64,10 @@ fun CustomTextField(
 fun  CustomTextFieldModal(
     modifier: Modifier = Modifier,
     value: String,
-   // onValueChange: (String) -> Unit,
     placeholder: String,
     onClick: () -> Unit
 ) {
+    val spacing = LocalSpacing.current
     val colors = TextFieldDefaults.colors(
         disabledTextColor = Color.DarkGray,
         focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -98,7 +98,7 @@ fun  CustomTextFieldModal(
                 Icon(
                     imageVector = Icons.Outlined.KeyboardArrowDown,
                     contentDescription = null,
-                    modifier = modifier.padding(all = LocalSpacing.current.small)
+                    modifier = modifier.padding(all = spacing.small)
                 )
             },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),

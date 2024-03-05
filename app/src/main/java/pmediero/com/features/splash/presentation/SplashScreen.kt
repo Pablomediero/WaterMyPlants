@@ -17,18 +17,18 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.coroutines.delay
 import pmediero.com.R
-import pmediero.com.features.splash.event.SplashEvent
+import pmediero.com.features.splash.action.SplashAction
 
 @Composable
 fun SplashScreen(
-    onEvent: (SplashEvent) -> Unit,
+    onEvent: (SplashAction) -> Unit,
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.plantexampleanimation))
     val progress by animateLottieCompositionAsState(composition)
 
     LaunchedEffect(key1 = true) {
         delay(3000L)
-        onEvent(SplashEvent.OnLoadingApp)
+        onEvent(SplashAction.OnLoadingApp)
     }
     Column(
         modifier = Modifier

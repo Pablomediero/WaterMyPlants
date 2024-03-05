@@ -18,36 +18,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
 import pmediero.com.core.common.CustomFloatingActionButtonWithText
 import pmediero.com.core_ui.LocalSpacing
+import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.core_ui.onBackgroundVariant
-import pmediero.com.features.welcome.event.WelcomeEvent
+import pmediero.com.features.welcome.action.WelcomeAction
 
 @Composable
 fun WelcomeScreen(
-    onEvent: (WelcomeEvent) -> Unit,
-    ) {
+    onEvent: (WelcomeAction) -> Unit,
+) {
+    val spacing = LocalSpacing.current
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(all = LocalSpacing.current.default)
+            .padding(all = spacing.default)
     ) {
         HeaderWelcomeScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .padding(LocalSpacing.current.default)
+                .padding(spacing.default)
         )
         BodyWelcomeScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(2f),
+            spacing = spacing,
             onEvent = onEvent,
         )
     }
@@ -69,7 +73,7 @@ fun HeaderWelcomeScreen(modifier: Modifier) {
         )
 
         Text(
-            text = "Welcome to Water My Plants!",
+            text = stringResource(R.string.welcome_to_water_my_plants),
             style = MaterialTheme.typography.displaySmall,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onBackground,
@@ -79,11 +83,11 @@ fun HeaderWelcomeScreen(modifier: Modifier) {
 }
 
 @Composable
-fun BodyWelcomeScreen(modifier: Modifier, onEvent: (WelcomeEvent) -> Unit) {
+fun BodyWelcomeScreen(modifier: Modifier, spacing: Spacing, onEvent: (WelcomeAction) -> Unit) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(
-            LocalSpacing.current.default,
+            spacing.default,
             Alignment.CenterVertically
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -93,7 +97,7 @@ fun BodyWelcomeScreen(modifier: Modifier, onEvent: (WelcomeEvent) -> Unit) {
                 .fillMaxWidth()
                 .weight(1f),
             verticalArrangement = Arrangement.spacedBy(
-                LocalSpacing.current.default,
+                spacing.default,
                 Alignment.CenterVertically
             ),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -112,44 +116,44 @@ fun BodyWelcomeScreen(modifier: Modifier, onEvent: (WelcomeEvent) -> Unit) {
                 .fillMaxWidth()
                 .weight(1f)
                 .padding(
-                    horizontal = LocalSpacing.current.large,
-                    vertical = LocalSpacing.current.default
+                    horizontal = spacing.large,
+                    vertical = spacing.default
                 ),
             verticalArrangement = Arrangement.spacedBy(
-                LocalSpacing.current.default,
+                spacing.default,
                 Alignment.CenterVertically
             ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Start your journey",
+                text = stringResource(R.string.start_your_journey),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
             )
             Text(
-                text = "There are no plants in the list, please add your first plant",
+                text = stringResource(R.string.there_are_no_plants_in_the_list_please_add_your_first_plant),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onBackgroundVariant
             )
             Column(
-                modifier = Modifier.padding(all = LocalSpacing.current.large),
+                modifier = Modifier.padding(all = spacing.large),
                 verticalArrangement = Arrangement.spacedBy(
-                    LocalSpacing.current.small,
+                    spacing.small,
                     Alignment.CenterVertically
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
                 CustomFloatingActionButtonWithText(
-                    modifier =   Modifier.padding(all = LocalSpacing.current.default),
+                    modifier = Modifier.padding(all = spacing.default),
                     onClick = {
-                      onEvent(WelcomeEvent.OnAddFirstPlantClick)
+                        onEvent(WelcomeAction.OnAddFirstPlantClick)
                     },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
-                    icon =  Icons.Default.Add,
-                    text = "Add your first plant"
+                    icon = Icons.Default.Add,
+                    text = stringResource(R.string.add_your_first_plant)
                 )
             }
         }
@@ -161,6 +165,6 @@ fun BodyWelcomeScreen(modifier: Modifier, onEvent: (WelcomeEvent) -> Unit) {
 @Composable
 fun PreviewWelcomeCompose() {
     WaterMyPlantsTheme {
-        WelcomeScreen(){}
+        WelcomeScreen() {}
     }
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
@@ -21,10 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
-import pmediero.com.core_ui.LocalSpacing
 
 @Composable
 fun CustomFloatingActionButton(
@@ -106,11 +105,10 @@ fun Icon(icon: Any) {
 fun PreviewIconButton() {
     CustomFloatingActionButtonWithText(
         onClick = {},
-        modifier = Modifier.padding(all = LocalSpacing.current.default),
         contentColor = MaterialTheme.colorScheme.onSecondary,
         containerColor = MaterialTheme.colorScheme.secondary,
         icon = R.drawable.add_plant_add_images_icon_header,
-        text = "Add Image"
+        text = stringResource(R.string.add_image)
     )
     CustomFloatingActionButtonWithText(
         modifier = Modifier.fillMaxWidth(),
@@ -119,6 +117,6 @@ fun PreviewIconButton() {
         containerColor = Color.White,
         icon = Icons.Outlined.Add,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-        text = "Create plant"
+        text = stringResource(R.string.create_plant)
     )
 }
