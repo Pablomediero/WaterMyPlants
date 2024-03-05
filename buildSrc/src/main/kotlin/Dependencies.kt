@@ -25,4 +25,7 @@ object Dependencies {
     const val splash = "androidx.core:core-splashscreen:${Versions.splash}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.navigation}"
     const val fonts = "androidx.compose.ui:ui-text-google-fonts:${Versions.font}"
+
+    const val koin = "io.insert-koin:koin-android:${Versions.koin}"
+    const val koincompose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
 }

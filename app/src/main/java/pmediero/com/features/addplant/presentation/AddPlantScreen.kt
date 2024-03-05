@@ -330,7 +330,7 @@ fun FormAddPlantFigma(
         ) {
             CustomTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = state.plantName,
+                value = state.plantName.asString(),
                 onValueChange = { onPlantNameChange(it) },
                 placeholder = stringResource(R.string.plant_name),
                 isDescription = false,
@@ -345,7 +345,7 @@ fun FormAddPlantFigma(
         ) {
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = state.wateringDays,
+                value = state.wateringDays.asString(),
                 placeholder = stringResource(R.string.watering_days),
                 onClick = {
                     showDialogCheckBox.value = true
@@ -353,7 +353,7 @@ fun FormAddPlantFigma(
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = state.wateringTime,
+                value = state.wateringTime.asString(),
                 placeholder = stringResource(R.string.watering_time),
                 onClick = {
                     showDialogTimePicker.value = true
@@ -369,14 +369,14 @@ fun FormAddPlantFigma(
         ) {
             CustomTextField(
                 modifier = Modifier.weight(1f),
-                value = state.waterAmount,
+                value = state.waterAmount.asString(),
                 onValueChange = { onPlantWaterAmountChange(it) },
                 placeholder = stringResource(R.string.water_amount),
                 isDescription = false,
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = state.plantSize,
+                value = state.plantSize.asString(),
                 placeholder = stringResource(R.string.plant_size),
                 onClick = {
                     showDialogPlantSize.value = true
@@ -391,7 +391,7 @@ fun FormAddPlantFigma(
         ) {
             CustomTextField(
                 modifier = Modifier.fillMaxSize(),
-                value = state.plantDescription,
+                value = state.plantDescription.asString(),
                 onValueChange = { onPlantDescriptionChange(it) },
                 placeholder = stringResource(R.string.description),
                 isDescription = true,

@@ -50,6 +50,7 @@ fun DialogWateringDays(
         stringResource(R.string.sunday)
     )
 
+
     if (showDialog.value) {
         AlertDialog(
             onDismissRequest = { showDialog.value = false },

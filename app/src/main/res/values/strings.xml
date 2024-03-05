@@ -27,4 +27,10 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="plant_name_state" />
+    <string name="watering_days_state" />
+    <string name="watering_time_state" />
+    <string name="water_amount_state" />
+    <string name="plant_size_state" />
+    <string name="plant_description_state" />
 </resources>

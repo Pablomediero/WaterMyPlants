@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import pmediero.com.core.util.UiText
 import pmediero.com.features.addplant.domain.FilterWateringDaysUseCase
 import pmediero.com.features.addplant.presentation.action.AddPlantAction
 import pmediero.com.features.addplant.presentation.action.OnCreatePlant
@@ -15,8 +16,9 @@ import pmediero.com.features.addplant.presentation.action.OnPlantWaterAmountChan
 import pmediero.com.features.addplant.presentation.action.OnPlantWateringDaysChange
 import pmediero.com.features.addplant.presentation.action.OnPlantWateringTimeChange
 
-class AddPlantViewModel() : ViewModel() {
-    private val filterWateringDaysUseCase = FilterWateringDaysUseCase()
+class AddPlantViewModel(
+    private val filterWateringDaysUseCase : FilterWateringDaysUseCase
+) : ViewModel() {
 
     var state by mutableStateOf(AddPlantState())
         private set
@@ -28,48 +30,40 @@ class AddPlantViewModel() : ViewModel() {
             }
             is OnPlantNameChange -> {
                 state = state.copy(
-                    plantName = event.plantName
+                    plantName = UiText.DynamicString(event.plantName)
+                    //plantName = event.plantName
                 )
             }
 
             is OnPlantSizeChange -> {
                 state = state.copy(
-                    plantSize = event.plantSize
+                    plantSize =UiText.DynamicString(event.plantSize)
                 )
             }
 
             is OnPlantWaterAmountChange -> {
                 state = state.copy(
-                    waterAmount = event.waterAmount
+                    waterAmount = UiText.DynamicString(event.waterAmount)
                 )
             }
 
             is OnPlantWateringDaysChange -> {
-//                state = state.copy(
-//                    wateringDays = when {
-//                        event.wateringDays.all { it.value } -> "EveryDay"
-//                        else -> event.wateringDays.filter { it.value }.keys.joinToString {
-//                            if (it.length >= 2) it.substring(0, 2) else it
-//                        }
-//                    }
-//                )
                 state = state.copy(
-                    wateringDays = filterWateringDaysUseCase.execute(event.wateringDays)
+                    wateringDays = UiText.DynamicString(filterWateringDaysUseCase(event.wateringDays))
                 )
             }
 
             is OnPlantWateringTimeChange -> {
                 state = state.copy(
-                    wateringTime = event.wateringTime
+                    wateringTime = UiText.DynamicString(event.wateringTime)
                 )
             }
 
             is OnPlantDescriptionChange -> {
                 state = state.copy(
-                    plantDescription = event.plantDescription
+                    plantDescription =UiText.DynamicString(event.plantDescription)
                 )
             }
-
         }
     }
 }
