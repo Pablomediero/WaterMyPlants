@@ -64,6 +64,9 @@ dependencies {
     implementation(Dependencies.navigation)
     implementation(Dependencies.fonts)
 
+    implementation(Dependencies.koin)
+    implementation(Dependencies.koincompose)
+
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.test_junit)
     androidTestImplementation(Dependencies.test_expresso)

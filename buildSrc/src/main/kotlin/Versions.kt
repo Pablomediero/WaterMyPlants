@@ -17,4 +17,6 @@ object Versions {
     const val splash = "1.0.0"
     const val navigation = "2.5.3"
     const val font = "1.6.1"
+
+    const val koin = "3.5.3"
 }

@@ -2,47 +2,57 @@ package pmediero.com.features.welcome.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import pmediero.com.R
 import pmediero.com.core.common.CustomFloatingActionButtonWithText
 import pmediero.com.core_ui.LocalSpacing
+import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.core.navigation.AppRoutes
 import pmediero.com.core_ui.onBackgroundVariant
+import pmediero.com.features.welcome.action.WelcomeAction
 
 @Composable
-fun WelcomeScreen(navController: NavController) {
+fun WelcomeScreen(
+    onEvent: (WelcomeAction) -> Unit,
+) {
+    val spacing = LocalSpacing.current
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(all = LocalSpacing.current.default)
+            .padding(all = spacing.default)
     ) {
         HeaderWelcomeScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .padding(LocalSpacing.current.default)
+                .padding(spacing.default)
         )
         BodyWelcomeScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(2f),
-            navController = navController
+            spacing = spacing,
+            onEvent = onEvent,
         )
     }
 }
@@ -63,7 +73,7 @@ fun HeaderWelcomeScreen(modifier: Modifier) {
         )
 
         Text(
-            text = "Welcome to Water My Plants!",
+            text = stringResource(R.string.welcome_to_water_my_plants),
             style = MaterialTheme.typography.displaySmall,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onBackground,
@@ -73,11 +83,11 @@ fun HeaderWelcomeScreen(modifier: Modifier) {
 }
 
 @Composable
-fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
+fun BodyWelcomeScreen(modifier: Modifier, spacing: Spacing, onEvent: (WelcomeAction) -> Unit) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(
-            LocalSpacing.current.default,
+            spacing.default,
             Alignment.CenterVertically
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -87,7 +97,7 @@ fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
                 .fillMaxWidth()
                 .weight(1f),
             verticalArrangement = Arrangement.spacedBy(
-                LocalSpacing.current.default,
+                spacing.default,
                 Alignment.CenterVertically
             ),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -106,45 +116,44 @@ fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
                 .fillMaxWidth()
                 .weight(1f)
                 .padding(
-                    horizontal = LocalSpacing.current.large,
-                    vertical = LocalSpacing.current.default
+                    horizontal = spacing.large,
+                    vertical = spacing.default
                 ),
             verticalArrangement = Arrangement.spacedBy(
-                LocalSpacing.current.default,
+                spacing.default,
                 Alignment.CenterVertically
             ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Start your journey",
+                text = stringResource(R.string.start_your_journey),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
             )
             Text(
-                text = "There are no plants in the list, please add your first plant",
+                text = stringResource(R.string.there_are_no_plants_in_the_list_please_add_your_first_plant),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onBackgroundVariant
             )
             Column(
-                modifier = Modifier.padding(all = LocalSpacing.current.large),
+                modifier = Modifier.padding(all = spacing.large),
                 verticalArrangement = Arrangement.spacedBy(
-                    LocalSpacing.current.small,
+                    spacing.small,
                     Alignment.CenterVertically
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
                 CustomFloatingActionButtonWithText(
-                    modifier =   Modifier.padding(all = LocalSpacing.current.default),
+                    modifier = Modifier.padding(all = spacing.default),
                     onClick = {
-                        navController.popBackStack()
-                        navController.navigate(AppRoutes.AddPlantScreen.route)
+                        onEvent(WelcomeAction.OnAddFirstPlantClick)
                     },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
-                    icon =  Icons.Default.Add,
-                    text = "Add your first plant"
+                    icon = Icons.Default.Add,
+                    text = stringResource(R.string.add_your_first_plant)
                 )
             }
         }
@@ -156,7 +165,6 @@ fun BodyWelcomeScreen(modifier: Modifier, navController: NavController) {
 @Composable
 fun PreviewWelcomeCompose() {
     WaterMyPlantsTheme {
-        val navController = rememberNavController()
-        WelcomeScreen(navController)
+        WelcomeScreen() {}
     }
 }
