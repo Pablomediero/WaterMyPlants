@@ -1,4 +1,4 @@
-package pmediero.com.core.util
+package pmediero.com.core.model.util
 
 import android.content.Context
 import androidx.compose.runtime.Composable

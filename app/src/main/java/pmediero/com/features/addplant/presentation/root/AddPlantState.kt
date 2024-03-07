@@ -1,7 +1,7 @@
-package pmediero.com.features.addplant.presentation
+package pmediero.com.features.addplant.presentation.root
 
 import pmediero.com.R
-import pmediero.com.core.util.UiText
+import pmediero.com.core.model.util.UiText
 
 data class AddPlantState(
     var plantName: UiText = UiText.StringResource((R.string.plant_name_state)),

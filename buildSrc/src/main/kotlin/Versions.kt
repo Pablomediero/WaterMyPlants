@@ -19,4 +19,5 @@ object Versions {
     const val font = "1.6.1"
 
     const val koin = "3.5.3"
+    const val realmDb = "1.11.0"
 }
