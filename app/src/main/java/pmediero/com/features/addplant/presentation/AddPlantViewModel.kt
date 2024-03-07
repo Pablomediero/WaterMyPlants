@@ -1,4 +1,4 @@
-package pmediero.com.features.addplant.presentation.viewmodel
+package pmediero.com.features.addplant.presentation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

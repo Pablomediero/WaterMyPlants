@@ -7,7 +7,7 @@ import org.koin.dsl.module
 import pmediero.com.core.data.repository.PlantRepository
 import pmediero.com.features.addplant.domain.AddPlantUseCase
 import pmediero.com.features.addplant.domain.FilterWateringDaysUseCase
-import pmediero.com.features.addplant.presentation.viewmodel.AddPlantViewModel
+import pmediero.com.features.addplant.presentation.AddPlantViewModel
 
 val addPlantModule = module {
     domainModule()

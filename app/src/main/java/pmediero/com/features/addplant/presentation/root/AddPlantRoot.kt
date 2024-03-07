@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import pmediero.com.core.presentation.navigation.AppRoutes
 import pmediero.com.features.addplant.presentation.AddPlantScreen
-import pmediero.com.features.addplant.presentation.viewmodel.AddPlantViewModel
+import pmediero.com.features.addplant.presentation.AddPlantViewModel
 
 @Composable
 fun AddPlantRoot(

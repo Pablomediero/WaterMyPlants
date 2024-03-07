@@ -17,7 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.flow.StateFlow
-import pmediero.com.core.model.realm.PlantEntity
+import pmediero.com.core.model.local.Plant
 import pmediero.com.features.home.presentation.root.HomeAction
 import pmediero.com.features.home.presentation.root.OnLoadingHome
 
@@ -30,7 +30,7 @@ fun HomeScreen(
         onEvent(OnLoadingHome)
     }
 
-    val plants: StateFlow<List<PlantEntity>> = viewModel.plants
+    val plants: StateFlow<List<Plant>> = viewModel.plants
 
     if (plants.collectAsState().value.isNotEmpty()) {
         PlantInfo(plants)
@@ -43,7 +43,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun PlantInfo(plants: StateFlow<List<PlantEntity>>) {
+fun PlantInfo(plants: StateFlow<List<Plant>>) {
     val plantList by plants.collectAsState(emptyList())
 
     if (plantList.isNotEmpty()) {
@@ -63,7 +63,7 @@ fun PlantInfo(plants: StateFlow<List<PlantEntity>>) {
 
 @Composable
 fun PlantItem(
-    plant: PlantEntity,
+    plant: Plant,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -76,6 +76,7 @@ fun PlantItem(
                 fontWeight = FontWeight.Bold
             )
         )
+        Text(text = "ID: ${plant.id}")
         Text(text = "Días de riego: ${plant.wateringDays}")
         Text(text = "Hora de riego: ${plant.wateringTime}")
         Text(text = "Cantidad de agua: ${plant.waterAmount}")

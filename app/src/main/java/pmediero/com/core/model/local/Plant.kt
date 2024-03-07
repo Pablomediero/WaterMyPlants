@@ -1,7 +1,7 @@
 package pmediero.com.core.model.local
 
 data class Plant(
-    val id: Long = 0,
+    var id: Long = 0,
     var name: String = "",
     var wateringDays: String = "",
     var wateringTime: String = "",
