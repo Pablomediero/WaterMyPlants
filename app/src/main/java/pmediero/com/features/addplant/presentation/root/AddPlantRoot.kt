@@ -19,11 +19,10 @@ fun AddPlantRoot(
         state = addPlantViewModel.state,
         onEvent = { event ->
             when (event) {
-                OnCreatePlant -> {
+                OnNavigateHome -> {
                     navController.popBackStack()
                     navController.navigate(AppRoutes.HomeScreen.route)
                 }
-
                 else -> {
                     coroutineScope.launch {
                         addPlantViewModel.onEvent(event)

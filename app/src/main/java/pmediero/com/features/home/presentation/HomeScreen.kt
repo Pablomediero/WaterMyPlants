@@ -9,7 +9,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -19,16 +18,12 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.flow.StateFlow
 import pmediero.com.core.model.local.Plant
 import pmediero.com.features.home.presentation.root.HomeAction
-import pmediero.com.features.home.presentation.root.OnLoadingHome
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
     onEvent: (HomeAction) -> Unit
 ) {
-    LaunchedEffect(Unit) {
-        onEvent(OnLoadingHome)
-    }
 
     val plants: StateFlow<List<Plant>> = viewModel.plants
 

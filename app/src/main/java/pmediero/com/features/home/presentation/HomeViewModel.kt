@@ -1,13 +1,17 @@
 package pmediero.com.features.home.presentation
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import pmediero.com.core.model.local.Plant
 import pmediero.com.features.home.domain.GetPlantsUseCase
-import pmediero.com.features.home.presentation.root.HomeAction
-import pmediero.com.features.home.presentation.root.OnLoadingHome
+import pmediero.com.features.home.presentation.root.HomeState
 
 class HomeViewModel(
     private val getPlantsUseCase: GetPlantsUseCase
@@ -16,16 +20,27 @@ class HomeViewModel(
     private val _plantsState = MutableStateFlow<List<Plant>>(emptyList())
     val plants: StateFlow<List<Plant>> = _plantsState.asStateFlow()
 
-    suspend fun onEvent(event: HomeAction) {
-        when (event) {
-            OnLoadingHome -> {
-                getPlantsUseCase.invoke()
-                    .collect { plantList ->
+    var state by mutableStateOf(HomeState())
+        private set
+
+    init {
+        getPlantsUseCase.invoke().fold(
+            onError = {
+
+            },
+            onSuccess = {
+                viewModelScope.launch {
+                    updateLoadingState(true)
+                    it.collect { plantList ->
                         _plantsState.emit(plantList)
                     }
+                    updateLoadingState(false)
+                }
             }
+        )
+    }
 
-            else -> {}
-        }
+    private fun updateLoadingState(param: Boolean) {
+        state = state.copy(isLoading = param)
     }
 }

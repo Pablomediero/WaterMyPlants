@@ -55,8 +55,8 @@ import pmediero.com.features.addplant.presentation.components.DialogWateringTime
 import pmediero.com.features.addplant.presentation.components.PlantSize
 import pmediero.com.features.addplant.presentation.root.AddPlantAction
 import pmediero.com.features.addplant.presentation.root.AddPlantState
-import pmediero.com.features.addplant.presentation.root.OnCreatePlant
 import pmediero.com.features.addplant.presentation.root.OnCreatePlantClick
+import pmediero.com.features.addplant.presentation.root.OnNavigateHome
 import pmediero.com.features.addplant.presentation.root.OnPlantDescriptionChange
 import pmediero.com.features.addplant.presentation.root.OnPlantNameChange
 import pmediero.com.features.addplant.presentation.root.OnPlantSizeChange
@@ -149,7 +149,7 @@ fun AddPlantScreen(
                         )
                     )
                 )
-                onEvent(OnCreatePlant)
+               onEvent(OnNavigateHome)
             },
         )
     }

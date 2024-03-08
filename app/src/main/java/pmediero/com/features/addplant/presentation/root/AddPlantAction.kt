@@ -3,7 +3,7 @@ package pmediero.com.features.addplant.presentation.root
 import pmediero.com.core.model.local.Plant
 
 sealed class AddPlantAction
-data object OnCreatePlant : AddPlantAction()
+data object OnNavigateHome : AddPlantAction()
 data class OnCreatePlantClick(val plant: Plant) : AddPlantAction()
 data class OnPlantNameChange(val plantName: String) : AddPlantAction()
 data class OnPlantWateringDaysChange(val wateringDays: Map<String, Boolean>) : AddPlantAction()

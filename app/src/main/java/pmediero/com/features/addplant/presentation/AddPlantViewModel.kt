@@ -27,11 +27,20 @@ class AddPlantViewModel(
     var state by mutableStateOf(AddPlantState())
         private set
 
-     fun onEvent(event: AddPlantAction) {
+    fun onEvent(event: AddPlantAction) {
         when (event) {
             is OnCreatePlantClick -> {
                 viewModelScope.launch {
-                    addPlantUseCase(event.plant)
+                    updateLoadingState(true)
+                    addPlantUseCase(event.plant).fold(
+                        onError = {
+
+                        },
+                        onSuccess = {
+                            //Navigate
+                        }
+                    )
+                    updateLoadingState(false)
                 }
             }
 
@@ -73,5 +82,10 @@ class AddPlantViewModel(
 
             else -> {}
         }
+
+    }
+
+    private fun updateLoadingState(param: Boolean) {
+        state = state.copy(isLoading = param)
     }
 }
