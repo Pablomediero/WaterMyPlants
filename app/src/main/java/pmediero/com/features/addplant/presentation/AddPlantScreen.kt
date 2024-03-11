@@ -35,7 +35,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,7 +69,6 @@ fun AddPlantScreen(
     onEvent: (AddPlantAction) -> Unit
 ) {
     val spacing = LocalSpacing.current
-    val context = LocalContext.current
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(
@@ -140,12 +138,12 @@ fun AddPlantScreen(
                 onEvent(
                     OnCreatePlantClick(
                         Plant(
-                            name = state.plantName.asString(context),
-                            wateringDays = state.wateringDays.asString(context),
-                            wateringTime = state.wateringTime.asString(context),
-                            waterAmount = state.waterAmount.asString(context),
-                            plantSize = state.plantSize.asString(context),
-                            description = state.plantDescription.asString(context)
+                            name = state.plantName,
+                            wateringDays = state.wateringDays,
+                            wateringTime = state.wateringTime,
+                            waterAmount = state.waterAmount,
+                            plantSize = state.plantSize,
+                            description = state.plantDescription
                         )
                     )
                 )
@@ -347,7 +345,7 @@ fun FormAddPlantFigma(
         ) {
             CustomTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = state.plantName.asString(),
+                value = state.plantName,
                 onValueChange = { onPlantNameChange(it) },
                 placeholder = stringResource(R.string.plant_name),
                 isDescription = false,
@@ -362,7 +360,7 @@ fun FormAddPlantFigma(
         ) {
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = state.wateringDays.asString(),
+                value = state.wateringDays,
                 placeholder = stringResource(R.string.watering_days),
                 onClick = {
                     showDialogCheckBox.value = true
@@ -370,7 +368,7 @@ fun FormAddPlantFigma(
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = state.wateringTime.asString(),
+                value = state.wateringTime,
                 placeholder = stringResource(R.string.watering_time),
                 onClick = {
                     showDialogTimePicker.value = true
@@ -386,14 +384,14 @@ fun FormAddPlantFigma(
         ) {
             CustomTextField(
                 modifier = Modifier.weight(1f),
-                value = state.waterAmount.asString(),
+                value = state.waterAmount,
                 onValueChange = { onPlantWaterAmountChange(it) },
                 placeholder = stringResource(R.string.water_amount),
                 isDescription = false,
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = state.plantSize.asString(),
+                value = state.plantSize,
                 placeholder = stringResource(R.string.plant_size),
                 onClick = {
                     showDialogPlantSize.value = true
@@ -408,7 +406,7 @@ fun FormAddPlantFigma(
         ) {
             CustomTextField(
                 modifier = Modifier.fillMaxSize(),
-                value = state.plantDescription.asString(),
+                value = state.plantDescription,
                 onValueChange = { onPlantDescriptionChange(it) },
                 placeholder = stringResource(R.string.description),
                 isDescription = true,

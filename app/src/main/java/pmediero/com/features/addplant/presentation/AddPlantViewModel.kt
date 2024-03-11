@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pmediero.com.core.model.util.UiText
 import pmediero.com.features.addplant.domain.AddPlantUseCase
 import pmediero.com.features.addplant.domain.FilterWateringDaysUseCase
 import pmediero.com.features.addplant.presentation.root.AddPlantAction
@@ -46,37 +45,37 @@ class AddPlantViewModel(
 
             is OnPlantNameChange -> {
                 state = state.copy(
-                    plantName = UiText.DynamicString(event.plantName)
+                    plantName =event.plantName
                 )
             }
 
             is OnPlantSizeChange -> {
                 state = state.copy(
-                    plantSize = UiText.DynamicString(event.plantSize)
+                    plantSize = event.plantSize
                 )
             }
 
             is OnPlantWaterAmountChange -> {
                 state = state.copy(
-                    waterAmount = UiText.DynamicString(event.waterAmount)
+                    waterAmount = event.waterAmount
                 )
             }
 
             is OnPlantWateringDaysChange -> {
                 state = state.copy(
-                    wateringDays = UiText.DynamicString(filterWateringDaysUseCase(event.wateringDays))
+                    wateringDays = filterWateringDaysUseCase(event.wateringDays)
                 )
             }
 
             is OnPlantWateringTimeChange -> {
                 state = state.copy(
-                    wateringTime = UiText.DynamicString(event.wateringTime)
+                    wateringTime = event.wateringTime
                 )
             }
 
             is OnPlantDescriptionChange -> {
                 state = state.copy(
-                    plantDescription = UiText.DynamicString(event.plantDescription)
+                    plantDescription = event.plantDescription
                 )
             }
 

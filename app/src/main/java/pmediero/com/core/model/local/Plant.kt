@@ -8,5 +8,4 @@ data class Plant(
     var waterAmount: String = "",
     var plantSize: String = "",
     var description: String = "",
-   // val plantPhoto: String = "",
 )
