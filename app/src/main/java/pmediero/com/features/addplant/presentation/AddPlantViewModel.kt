@@ -1,23 +1,26 @@
 package pmediero.com.features.addplant.presentation
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import pmediero.com.core.util.UiText
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import pmediero.com.features.addplant.domain.AddPlantUseCase
 import pmediero.com.features.addplant.domain.FilterWateringDaysUseCase
-import pmediero.com.features.addplant.presentation.action.AddPlantAction
-import pmediero.com.features.addplant.presentation.action.OnCreatePlant
-import pmediero.com.features.addplant.presentation.action.OnPlantDescriptionChange
-import pmediero.com.features.addplant.presentation.action.OnPlantNameChange
-import pmediero.com.features.addplant.presentation.action.OnPlantSizeChange
-import pmediero.com.features.addplant.presentation.action.OnPlantWaterAmountChange
-import pmediero.com.features.addplant.presentation.action.OnPlantWateringDaysChange
-import pmediero.com.features.addplant.presentation.action.OnPlantWateringTimeChange
+import pmediero.com.features.addplant.presentation.root.AddPlantAction
+import pmediero.com.features.addplant.presentation.root.AddPlantState
+import pmediero.com.features.addplant.presentation.root.OnCreatePlantClick
+import pmediero.com.features.addplant.presentation.root.OnPlantDescriptionChange
+import pmediero.com.features.addplant.presentation.root.OnPlantNameChange
+import pmediero.com.features.addplant.presentation.root.OnPlantSizeChange
+import pmediero.com.features.addplant.presentation.root.OnPlantWaterAmountChange
+import pmediero.com.features.addplant.presentation.root.OnPlantWateringDaysChange
+import pmediero.com.features.addplant.presentation.root.OnPlantWateringTimeChange
 
 class AddPlantViewModel(
-    private val filterWateringDaysUseCase : FilterWateringDaysUseCase
+    private val filterWateringDaysUseCase: FilterWateringDaysUseCase,
+    private val addPlantUseCase: AddPlantUseCase,
 ) : ViewModel() {
 
     var state by mutableStateOf(AddPlantState())
@@ -25,45 +28,63 @@ class AddPlantViewModel(
 
     fun onEvent(event: AddPlantAction) {
         when (event) {
-            OnCreatePlant -> {
-                Log.d("CreatePlant",state.toString())
+            is OnCreatePlantClick -> {
+                viewModelScope.launch {
+                    updateLoadingState(true)
+                    addPlantUseCase(event.plant).fold(
+                        onError = {
+
+                        },
+                        onSuccess = {
+                            //Navigate
+                        }
+                    )
+                    updateLoadingState(false)
+                }
             }
+
             is OnPlantNameChange -> {
                 state = state.copy(
-                    plantName = UiText.DynamicString(event.plantName)
-                    //plantName = event.plantName
+                    plantName =event.plantName
                 )
             }
 
             is OnPlantSizeChange -> {
                 state = state.copy(
-                    plantSize =UiText.DynamicString(event.plantSize)
+                    plantSize = event.plantSize
                 )
             }
 
             is OnPlantWaterAmountChange -> {
                 state = state.copy(
-                    waterAmount = UiText.DynamicString(event.waterAmount)
+                    waterAmount = event.waterAmount
                 )
             }
 
             is OnPlantWateringDaysChange -> {
                 state = state.copy(
-                    wateringDays = UiText.DynamicString(filterWateringDaysUseCase(event.wateringDays))
+                    wateringDays = filterWateringDaysUseCase(event.wateringDays)
                 )
             }
 
             is OnPlantWateringTimeChange -> {
                 state = state.copy(
-                    wateringTime = UiText.DynamicString(event.wateringTime)
+                    wateringTime = event.wateringTime
                 )
             }
 
             is OnPlantDescriptionChange -> {
                 state = state.copy(
-                    plantDescription =UiText.DynamicString(event.plantDescription)
+                    plantDescription = event.plantDescription
                 )
             }
+
+            else -> {}
         }
+
+    }
+
+    private fun updateLoadingState(param: Boolean) {
+        state = state.copy(isLoading = param)
     }
 }

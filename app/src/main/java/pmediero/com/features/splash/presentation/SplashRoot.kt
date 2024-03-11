@@ -2,7 +2,7 @@ package pmediero.com.features.splash.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import pmediero.com.core.navigation.AppRoutes
+import pmediero.com.core.presentation.navigation.AppRoutes
 import pmediero.com.features.splash.action.SplashAction
 
 @Composable

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("io.realm.kotlin")
 }
 
 android {
@@ -66,6 +67,8 @@ dependencies {
 
     implementation(Dependencies.koin)
     implementation(Dependencies.koincompose)
+
+    implementation(Dependencies.realmDb)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.test_junit)

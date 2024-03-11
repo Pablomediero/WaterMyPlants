@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+/buildSrc/build
+/app/detekt-baseline.xml
+/config/
+/.idea/

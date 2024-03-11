@@ -40,25 +40,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
-import pmediero.com.core.common.CustomFloatingActionButton
-import pmediero.com.core.common.CustomFloatingActionButtonWithText
+import pmediero.com.core.model.local.Plant
+import pmediero.com.core.presentation.common.CustomFloatingActionButton
+import pmediero.com.core.presentation.common.CustomFloatingActionButtonWithText
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.addplant.presentation.action.AddPlantAction
-import pmediero.com.features.addplant.presentation.action.OnCreatePlant
-import pmediero.com.features.addplant.presentation.action.OnPlantDescriptionChange
-import pmediero.com.features.addplant.presentation.action.OnPlantNameChange
-import pmediero.com.features.addplant.presentation.action.OnPlantSizeChange
-import pmediero.com.features.addplant.presentation.action.OnPlantWaterAmountChange
-import pmediero.com.features.addplant.presentation.action.OnPlantWateringDaysChange
-import pmediero.com.features.addplant.presentation.action.OnPlantWateringTimeChange
 import pmediero.com.features.addplant.presentation.components.CustomTextField
 import pmediero.com.features.addplant.presentation.components.CustomTextFieldModal
 import pmediero.com.features.addplant.presentation.components.DialogPlantSize
 import pmediero.com.features.addplant.presentation.components.DialogWateringDays
 import pmediero.com.features.addplant.presentation.components.DialogWateringTime
 import pmediero.com.features.addplant.presentation.components.PlantSize
+import pmediero.com.features.addplant.presentation.root.AddPlantAction
+import pmediero.com.features.addplant.presentation.root.AddPlantState
+import pmediero.com.features.addplant.presentation.root.OnCreatePlantClick
+import pmediero.com.features.addplant.presentation.root.OnNavigateHome
+import pmediero.com.features.addplant.presentation.root.OnPlantDescriptionChange
+import pmediero.com.features.addplant.presentation.root.OnPlantNameChange
+import pmediero.com.features.addplant.presentation.root.OnPlantSizeChange
+import pmediero.com.features.addplant.presentation.root.OnPlantWaterAmountChange
+import pmediero.com.features.addplant.presentation.root.OnPlantWateringDaysChange
+import pmediero.com.features.addplant.presentation.root.OnPlantWateringTimeChange
 
 @Composable
 fun AddPlantScreen(
@@ -74,14 +77,14 @@ fun AddPlantScreen(
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        HeaderAddPlantFigma(
+        HeaderAddPlant(
             modifier = Modifier
                 .weight(5f)
                 .fillMaxWidth()
                 .padding(all = spacing.default),
             spacing = spacing,
         )
-        BodyAddPlantFigma(
+        BodyAddPlant(
             modifier = Modifier
                 .weight(5f)
                 .verticalScroll(rememberScrollState())
@@ -124,7 +127,7 @@ fun AddPlantScreen(
             }
 
         )
-        FooterAddPlantFigma(
+        FooterAddPlant(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
@@ -132,14 +135,26 @@ fun AddPlantScreen(
                     vertical = spacing.small
                 ),
             onFooterBtnClick = {
-                onEvent(OnCreatePlant)
+                onEvent(
+                    OnCreatePlantClick(
+                        Plant(
+                            name = state.plantName,
+                            wateringDays = state.wateringDays,
+                            wateringTime = state.wateringTime,
+                            waterAmount = state.waterAmount,
+                            plantSize = state.plantSize,
+                            description = state.plantDescription
+                        )
+                    )
+                )
+               onEvent(OnNavigateHome)
             },
         )
     }
 }
 
 @Composable
-fun HeaderAddPlantFigma(modifier: Modifier, spacing: Spacing) {
+fun HeaderAddPlant(modifier: Modifier, spacing: Spacing) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
@@ -261,7 +276,7 @@ fun HeaderAddPlantFigma(modifier: Modifier, spacing: Spacing) {
 }
 
 @Composable
-fun BodyAddPlantFigma(
+fun BodyAddPlant(
     modifier: Modifier,
     state: AddPlantState,
     spacing: Spacing,
@@ -330,7 +345,7 @@ fun FormAddPlantFigma(
         ) {
             CustomTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = state.plantName.asString(),
+                value = state.plantName,
                 onValueChange = { onPlantNameChange(it) },
                 placeholder = stringResource(R.string.plant_name),
                 isDescription = false,
@@ -345,7 +360,7 @@ fun FormAddPlantFigma(
         ) {
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = state.wateringDays.asString(),
+                value = state.wateringDays,
                 placeholder = stringResource(R.string.watering_days),
                 onClick = {
                     showDialogCheckBox.value = true
@@ -353,7 +368,7 @@ fun FormAddPlantFigma(
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = state.wateringTime.asString(),
+                value = state.wateringTime,
                 placeholder = stringResource(R.string.watering_time),
                 onClick = {
                     showDialogTimePicker.value = true
@@ -369,14 +384,14 @@ fun FormAddPlantFigma(
         ) {
             CustomTextField(
                 modifier = Modifier.weight(1f),
-                value = state.waterAmount.asString(),
+                value = state.waterAmount,
                 onValueChange = { onPlantWaterAmountChange(it) },
                 placeholder = stringResource(R.string.water_amount),
                 isDescription = false,
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
-                value = state.plantSize.asString(),
+                value = state.plantSize,
                 placeholder = stringResource(R.string.plant_size),
                 onClick = {
                     showDialogPlantSize.value = true
@@ -391,7 +406,7 @@ fun FormAddPlantFigma(
         ) {
             CustomTextField(
                 modifier = Modifier.fillMaxSize(),
-                value = state.plantDescription.asString(),
+                value = state.plantDescription,
                 onValueChange = { onPlantDescriptionChange(it) },
                 placeholder = stringResource(R.string.description),
                 isDescription = true,
@@ -429,7 +444,7 @@ fun FormAddPlantFigma(
 
 
 @Composable
-fun FooterAddPlantFigma(modifier: Modifier, onFooterBtnClick: () -> Unit) {
+fun FooterAddPlant(modifier: Modifier, onFooterBtnClick: () -> Unit) {
     CustomFloatingActionButtonWithText(
         modifier = modifier.fillMaxWidth(),
         onClick = onFooterBtnClick,
