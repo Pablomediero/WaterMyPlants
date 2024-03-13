@@ -1,6 +1,7 @@
 package pmediero.com.features.home.presentation
 
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import kotlinx.coroutines.flow.StateFlow
 import pmediero.com.core.model.local.Plant
 import pmediero.com.features.home.presentation.root.HomeAction
@@ -22,7 +25,7 @@ import pmediero.com.features.home.presentation.root.HomeAction
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
-    onEvent: (HomeAction) -> Unit
+    onAction: (HomeAction) -> Unit
 ) {
 
     val plants: StateFlow<List<Plant>> = viewModel.plants
@@ -30,9 +33,9 @@ fun HomeScreen(
     if (plants.collectAsState().value.isNotEmpty()) {
         PlantInfo(plants)
     } else {
-       Column {
-           Text(text = "No hay ninguna planta en la bbdd")
-       }
+        Column {
+            Text(text = "No hay ninguna planta en la bbdd")
+        }
     }
 
 }
@@ -77,6 +80,12 @@ fun PlantItem(
         Text(text = "Cantidad de agua: ${plant.waterAmount}")
         Text(text = "Tamaño de la planta: ${plant.plantSize}")
         Text(text = "Descripcion de la planta: ${plant.description}")
+        AsyncImage(
+            model = Uri.parse(plant.photo),
+            contentDescription = "image",
+            modifier = Modifier,
+            contentScale = ContentScale.FillBounds
+        )
         Divider()
     }
 }

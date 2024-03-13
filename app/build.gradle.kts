@@ -70,6 +70,8 @@ dependencies {
 
     implementation(Dependencies.realmDb)
 
+    implementation(Dependencies.coil)
+
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.test_junit)
     androidTestImplementation(Dependencies.test_expresso)

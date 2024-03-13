@@ -12,7 +12,7 @@ fun WelcomeRoot (
     WelcomeScreen(){ state ->
         when (state) {
             is WelcomeAction.OnAddFirstPlantClick -> {
-                navController.popBackStack()
+               // navController.popBackStack()
                 navController.navigate(AppRoutes.AddPlantScreen.route)
             }
         }

@@ -30,4 +30,5 @@ object Dependencies {
     const val koincompose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
 
     const val realmDb = "io.realm.kotlin:library-base:${Versions.realmDb}"
+    const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
 }

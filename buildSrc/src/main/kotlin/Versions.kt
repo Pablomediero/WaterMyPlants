@@ -20,4 +20,6 @@ object Versions {
 
     const val koin = "3.5.3"
     const val realmDb = "1.11.0"
+
+    const val coil = "2.6.0"
 }

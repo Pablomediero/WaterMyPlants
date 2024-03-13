@@ -24,20 +24,20 @@ class HomeViewModel(
         private set
 
     init {
-        getPlantsUseCase.invoke().fold(
-            onError = {
+        viewModelScope.launch {
+            getPlantsUseCase.invoke().fold(
+                onError = {
 
-            },
-            onSuccess = {
-                viewModelScope.launch {
+                },
+                onSuccess = {
                     updateLoadingState(true)
                     it.collect { plantList ->
                         _plantsState.emit(plantList)
                     }
                     updateLoadingState(false)
                 }
-            }
-        )
+            )
+        }
     }
 
     private fun updateLoadingState(param: Boolean) {

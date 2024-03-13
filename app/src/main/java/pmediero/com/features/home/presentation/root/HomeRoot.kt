@@ -11,18 +11,9 @@ fun HomeRoot(
     navController: NavController,
     homeViewModel: HomeViewModel = koinViewModel()
 ) {
-    //val coroutineScope = rememberCoroutineScope()
+
     HomeScreen(
         viewModel = homeViewModel,
-        onEvent = { event ->
-//            when (event) {
-//                else -> {
-//                    coroutineScope.launch {
-//                        homeViewModel.onEvent(event)
-//                    }
-//                }
-//            }
-
-        }
+        onAction = { }
     )
 }
