@@ -34,30 +34,24 @@ class AddPlantViewModel(
 
                         },
                         onSuccess = {
-                           _uiEvent.send(AddPlantUiEvent.NavigateToHome)
+                            _uiEvent.send(AddPlantUiEvent.NavigateToHome)
                         }
                     )
                     updateLoadingState(false)
                 }
             }
-            is AddPlantAction.OnIconButtonChange -> {
+            is AddPlantAction.OnAddImageButtonClick -> {
                 state = state.copy(
-                    iconButtonName = action.iconButtonName
+                    plantPhoto = action.plantPhoto,
+                    isPhotoSelected = true
                 )
-            }
 
-            is AddPlantAction.OnPlantPhotoChange -> {
-                state = state.copy(
-                    plantPhoto = action.plantPhoto
-                )
             }
-
             is AddPlantAction.OnPlantNameChange -> {
                 state = state.copy(
                     plantName = action.plantName
                 )
             }
-
             is AddPlantAction.OnPlantSizeChange -> {
                 state = state.copy(
                     plantSize = action.plantSize
@@ -87,8 +81,6 @@ class AddPlantViewModel(
                     plantDescription = action.plantDescription
                 )
             }
-
-            else -> {}
         }
 
     }

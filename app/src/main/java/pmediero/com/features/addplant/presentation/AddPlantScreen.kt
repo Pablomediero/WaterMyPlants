@@ -1,7 +1,6 @@
 package pmediero.com.features.addplant.presentation
 
 import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -84,12 +83,10 @@ fun AddPlantScreen(
                 .padding(all = spacing.default),
             spacing = spacing,
             state = state,
-            onPlantPhotoChange = { plantPhoto ->
-                onAction(AddPlantAction.OnPlantPhotoChange(plantPhoto))
+            onAddImageButtonClick = { imageUrl ->
+                onAction(AddPlantAction.OnAddImageButtonClick(imageUrl))
             },
-            onIconButtonChange = {iconButtonName ->
-                onAction(AddPlantAction.OnIconButtonChange(iconButtonName))
-            }
+
         )
         BodyAddPlant(
             modifier = Modifier
@@ -161,7 +158,13 @@ fun AddPlantScreen(
 }
 
 @Composable
-fun HeaderAddPlant(modifier: Modifier, spacing: Spacing, state: AddPlantState,  onPlantPhotoChange: (String) -> Unit,  onIconButtonChange: (String) -> Unit,) {
+fun HeaderAddPlant(
+    modifier: Modifier,
+    spacing: Spacing,
+    state: AddPlantState,
+    onAddImageButtonClick: (String) -> Unit,
+
+) {
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
@@ -171,9 +174,7 @@ fun HeaderAddPlant(modifier: Modifier, spacing: Spacing, state: AddPlantState,  
         onResult = { uri ->
             selectedImageUri = uri
             uri?.toString()?.let { imageUrl ->
-                // UiText???
-                onIconButtonChange("Change image")
-                onPlantPhotoChange(imageUrl)
+                onAddImageButtonClick(imageUrl)
             }
         }
     )
@@ -189,16 +190,14 @@ fun HeaderAddPlant(modifier: Modifier, spacing: Spacing, state: AddPlantState,  
                 .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
-            if(state.plantPhoto.isEmpty()){
+            if (state.plantPhoto.isEmpty()) {
                 Image(
                     painter = painterResource(id = R.drawable.add_plant_background_header),
                     contentDescription = null,
                     modifier = Modifier
                         .alpha(0.8f)
-                        .width(484.dp)
-                        .height(516.dp),
+                        .fillMaxSize(),
                     contentScale = ContentScale.FillBounds
-
                 )
 
                 Image(
@@ -273,7 +272,9 @@ fun HeaderAddPlant(modifier: Modifier, spacing: Spacing, state: AddPlantState,  
                             isVisible = false
                         )
                         CustomFloatingActionButton(
-                            onClick = { },
+                            onClick = {
+
+                            },
                             modifier = Modifier
                                 .width(48.dp)
                                 .height(48.dp)
@@ -297,12 +298,6 @@ fun HeaderAddPlant(modifier: Modifier, spacing: Spacing, state: AddPlantState,  
                             singlePhotoPickerLauncher.launch(
                                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                             )
-                            Log.i(
-                                "Imagen",
-                                "Uri Image Content: ${selectedImageUri.toString()}"
-
-                            )
-
                         },
                         modifier = Modifier
                             .wrapContentWidth()
@@ -310,8 +305,7 @@ fun HeaderAddPlant(modifier: Modifier, spacing: Spacing, state: AddPlantState,  
                         contentColor = MaterialTheme.colorScheme.onSecondary,
                         containerColor = MaterialTheme.colorScheme.secondary,
                         icon = R.drawable.add_plant_add_images_icon_header,
-                        text = state.iconButtonName
-                        //text = stringResource(R.string.add_image)
+                        text = stringResource(if(state.isPhotoSelected){R.string.change_image} else {R.string.add_image})
                     )
                 }
             }

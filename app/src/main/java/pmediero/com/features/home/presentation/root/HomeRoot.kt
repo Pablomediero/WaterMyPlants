@@ -13,7 +13,7 @@ fun HomeRoot(
 ) {
 
     HomeScreen(
-        viewModel = homeViewModel,
+        state = homeViewModel.state,
         onAction = { }
     )
 }

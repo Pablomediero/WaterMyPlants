@@ -8,11 +8,6 @@ object Dependencies {
     const val ui_tooling = "androidx.compose.ui:ui-tooling-preview"
     const val material = "androidx.compose.material3:material3"
 
-    /*const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val okHttp = "com.squareup.okhttp3:okhttp:${Versions.okHttp}"
-    const val okHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"*/
-
     const val junit = "junit:junit:${Versions.junit}"
     const val test_junit = "androidx.test.ext:junit:${Versions.test_junit}"
     const val test_expresso = "androidx.test.espresso:espresso-core:${Versions.test_expresso}"

@@ -20,7 +20,6 @@ fun AddPlantRoot(
                 is AddPlantUiEvent.NavigateToHome -> {
                     navController.navigate(AppRoutes.HomeScreen.route)
                     }
-                else -> Unit
             }
         }
     }

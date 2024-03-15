@@ -1,7 +1,6 @@
 package pmediero.com.features.addplant.presentation.root
 
 data class AddPlantState(
-    var iconButtonName: String = "Add image",
     var plantName: String = "",
     var wateringDays: String = "",
     var wateringTime: String = "",
@@ -9,5 +8,6 @@ data class AddPlantState(
     var plantSize: String = "",
     var plantDescription: String = "",
     var plantPhoto: String = "",
-    var isLoading: Boolean = false
+    var isLoading: Boolean = false,
+    var isPhotoSelected: Boolean = false
 )
