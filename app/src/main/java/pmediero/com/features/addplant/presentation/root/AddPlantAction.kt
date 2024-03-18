@@ -11,6 +11,7 @@ sealed class AddPlantAction{
     data class OnPlantSizeChange(val plantSize: String) : AddPlantAction()
     data class OnPlantDescriptionChange(val plantDescription: String) : AddPlantAction()
     data class OnAddImageButtonClick(val plantPhoto: String) : AddPlantAction()
+    data object OnRemoveImageButtonClick: AddPlantAction()
 
 
 }
