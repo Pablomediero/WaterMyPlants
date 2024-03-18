@@ -47,6 +47,13 @@ class AddPlantViewModel(
                 )
 
             }
+            is AddPlantAction.OnRemoveImageButtonClick -> {
+                state = state.copy(
+                    plantPhoto = "",
+                    isPhotoSelected = false
+                )
+
+            }
             is AddPlantAction.OnPlantNameChange -> {
                 state = state.copy(
                     plantName = action.plantName

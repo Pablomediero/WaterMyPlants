@@ -86,6 +86,9 @@ fun AddPlantScreen(
             onAddImageButtonClick = { imageUrl ->
                 onAction(AddPlantAction.OnAddImageButtonClick(imageUrl))
             },
+            onRemoveImageButtonClick = {
+                onAction(AddPlantAction.OnRemoveImageButtonClick)
+            }
 
         )
         BodyAddPlant(
@@ -163,6 +166,7 @@ fun HeaderAddPlant(
     spacing: Spacing,
     state: AddPlantState,
     onAddImageButtonClick: (String) -> Unit,
+    onRemoveImageButtonClick: () -> Unit
 
 ) {
     var selectedImageUri by remember {
@@ -273,7 +277,7 @@ fun HeaderAddPlant(
                         )
                         CustomFloatingActionButton(
                             onClick = {
-
+                              onRemoveImageButtonClick()
                             },
                             modifier = Modifier
                                 .width(48.dp)
@@ -282,7 +286,7 @@ fun HeaderAddPlant(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                             icon = R.drawable.add_plant_cancel_icon_header,
-                            isVisible = false
+                            isVisible = state.isPhotoSelected
                         )
                     }
                 }
@@ -304,7 +308,7 @@ fun HeaderAddPlant(
                             .padding(all = spacing.default),
                         contentColor = MaterialTheme.colorScheme.onSecondary,
                         containerColor = MaterialTheme.colorScheme.secondary,
-                        icon = R.drawable.add_plant_add_images_icon_header,
+                        icon =if(state.isPhotoSelected) {R.drawable.add_plant_change_image_icon_header} else {R.drawable.add_plant_add_images_icon_header},
                         text = stringResource(if(state.isPhotoSelected){R.string.change_image} else {R.string.add_image})
                     )
                 }
