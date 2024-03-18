@@ -5,6 +5,7 @@
     <string name="there_are_no_plants_in_the_list_please_add_your_first_plant">There are no plants in the list, please add your first plant</string>
     <string name="add_your_first_plant">Add your first plant</string>
     <string name="add_image">Add Image</string>
+    <string name="change_image">Change Image</string>
     <string name="plant_name">Plant name*</string>
     <string name="watering_days">Watering days*</string>
     <string name="watering_time">Watering time</string>

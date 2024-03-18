@@ -1,6 +1,8 @@
 package pmediero.com.features.home.presentation
 
 
+import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,43 +11,42 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.flow.StateFlow
+import coil.compose.AsyncImage
 import pmediero.com.core.model.local.Plant
 import pmediero.com.features.home.presentation.root.HomeAction
+import pmediero.com.features.home.presentation.root.HomeState
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel,
-    onEvent: (HomeAction) -> Unit
+    state: HomeState,
+    onAction: (HomeAction) -> Unit
 ) {
 
-    val plants: StateFlow<List<Plant>> = viewModel.plants
+   // val plants: StateFlow<List<Plant>> = viewModel.plants
 
-    if (plants.collectAsState().value.isNotEmpty()) {
-        PlantInfo(plants)
+    if (state.plantList.isNotEmpty()) {
+        PlantInfo(state.plantList)
     } else {
-       Column {
-           Text(text = "No hay ninguna planta en la bbdd")
-       }
+        Column {
+            Text(text = "No hay ninguna planta en la bbdd")
+        }
     }
 
 }
 
 @Composable
-fun PlantInfo(plants: StateFlow<List<Plant>>) {
-    val plantList by plants.collectAsState(emptyList())
+fun PlantInfo(plants: List<Plant>) {
 
-    if (plantList.isNotEmpty()) {
+    if (plants.isNotEmpty()) {
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            items(plantList) { plant ->
+            items(plants) { plant ->
                 PlantItem(plant = plant)
             }
         }
@@ -77,6 +78,13 @@ fun PlantItem(
         Text(text = "Cantidad de agua: ${plant.waterAmount}")
         Text(text = "Tamaño de la planta: ${plant.plantSize}")
         Text(text = "Descripcion de la planta: ${plant.description}")
+        AsyncImage(
+            model = Uri.parse(plant.photo),
+            contentDescription = "image",
+            modifier = Modifier,
+            contentScale = ContentScale.FillBounds
+        )
+        Log.i("ImagenScreen","Foto: ${plant.photo}")
         Divider()
     }
 }

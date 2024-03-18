@@ -13,6 +13,7 @@ fun toPlant(type: PlantEntity): Plant {
         waterAmount = type.waterAmount,
         plantSize = type.plantSize,
         description = type.description,
+        photo = type.photo
     )
 }
 
@@ -25,5 +26,7 @@ fun toPlantEntity(plant: Plant): PlantEntity {
         waterAmount = plant.waterAmount
         plantSize = plant.plantSize
         description = plant.description
+        photo = plant.photo
+
     }
 }

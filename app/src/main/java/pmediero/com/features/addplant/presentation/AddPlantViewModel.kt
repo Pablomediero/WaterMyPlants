@@ -5,18 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import pmediero.com.features.addplant.domain.AddPlantUseCase
 import pmediero.com.features.addplant.domain.FilterWateringDaysUseCase
 import pmediero.com.features.addplant.presentation.root.AddPlantAction
 import pmediero.com.features.addplant.presentation.root.AddPlantState
-import pmediero.com.features.addplant.presentation.root.OnCreatePlantClick
-import pmediero.com.features.addplant.presentation.root.OnPlantDescriptionChange
-import pmediero.com.features.addplant.presentation.root.OnPlantNameChange
-import pmediero.com.features.addplant.presentation.root.OnPlantSizeChange
-import pmediero.com.features.addplant.presentation.root.OnPlantWaterAmountChange
-import pmediero.com.features.addplant.presentation.root.OnPlantWateringDaysChange
-import pmediero.com.features.addplant.presentation.root.OnPlantWateringTimeChange
+import pmediero.com.features.addplant.presentation.root.AddPlantUiEvent
 
 class AddPlantViewModel(
     private val filterWateringDaysUseCase: FilterWateringDaysUseCase,
@@ -25,61 +21,66 @@ class AddPlantViewModel(
 
     var state by mutableStateOf(AddPlantState())
         private set
+    private val _uiEvent = Channel<AddPlantUiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
-    fun onEvent(event: AddPlantAction) {
-        when (event) {
-            is OnCreatePlantClick -> {
+    fun onAction(action: AddPlantAction) {
+        when (action) {
+            is AddPlantAction.OnCreatePlantClick -> {
                 viewModelScope.launch {
                     updateLoadingState(true)
-                    addPlantUseCase(event.plant).fold(
+                    addPlantUseCase(action.plant).fold(
                         onError = {
 
                         },
                         onSuccess = {
-                            //Navigate
+                            _uiEvent.send(AddPlantUiEvent.NavigateToHome)
                         }
                     )
                     updateLoadingState(false)
                 }
             }
-
-            is OnPlantNameChange -> {
+            is AddPlantAction.OnAddImageButtonClick -> {
                 state = state.copy(
-                    plantName =event.plantName
+                    plantPhoto = action.plantPhoto,
+                    isPhotoSelected = true
+                )
+
+            }
+            is AddPlantAction.OnPlantNameChange -> {
+                state = state.copy(
+                    plantName = action.plantName
+                )
+            }
+            is AddPlantAction.OnPlantSizeChange -> {
+                state = state.copy(
+                    plantSize = action.plantSize
                 )
             }
 
-            is OnPlantSizeChange -> {
+            is AddPlantAction.OnPlantWaterAmountChange -> {
                 state = state.copy(
-                    plantSize = event.plantSize
+                    waterAmount = action.waterAmount
                 )
             }
 
-            is OnPlantWaterAmountChange -> {
+            is AddPlantAction.OnPlantWateringDaysChange -> {
                 state = state.copy(
-                    waterAmount = event.waterAmount
+                    wateringDays = filterWateringDaysUseCase(action.wateringDays)
                 )
             }
 
-            is OnPlantWateringDaysChange -> {
+            is AddPlantAction.OnPlantWateringTimeChange -> {
                 state = state.copy(
-                    wateringDays = filterWateringDaysUseCase(event.wateringDays)
+                    wateringTime = action.wateringTime
                 )
             }
 
-            is OnPlantWateringTimeChange -> {
+            is AddPlantAction.OnPlantDescriptionChange -> {
                 state = state.copy(
-                    wateringTime = event.wateringTime
+                    plantDescription = action.plantDescription
                 )
             }
-
-            is OnPlantDescriptionChange -> {
-                state = state.copy(
-                    plantDescription = event.plantDescription
-                )
-            }
-
-            else -> {}
         }
 
     }

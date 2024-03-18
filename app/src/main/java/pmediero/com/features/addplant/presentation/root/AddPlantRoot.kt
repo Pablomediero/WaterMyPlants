@@ -1,9 +1,8 @@
 package pmediero.com.features.addplant.presentation.root
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import pmediero.com.core.presentation.navigation.AppRoutes
 import pmediero.com.features.addplant.presentation.AddPlantScreen
@@ -14,19 +13,22 @@ fun AddPlantRoot(
     navController: NavController,
     addPlantViewModel: AddPlantViewModel = koinViewModel()
 ) {
-    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = true) {
+        addPlantViewModel.uiEvent.collect { event ->
+            when (event) {
+                is AddPlantUiEvent.NavigateToHome -> {
+                    navController.navigate(AppRoutes.HomeScreen.route)
+                    }
+            }
+        }
+    }
     AddPlantScreen(
         state = addPlantViewModel.state,
-        onEvent = { event ->
-            when (event) {
-                OnNavigateHome -> {
-                    navController.popBackStack()
-                    navController.navigate(AppRoutes.HomeScreen.route)
-                }
+        onAction = { action ->
+            when (action) {
                 else -> {
-                    coroutineScope.launch {
-                        addPlantViewModel.onEvent(event)
-                    }
+                    addPlantViewModel.onAction(action)
                 }
             }
         }

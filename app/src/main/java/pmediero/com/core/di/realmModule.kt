@@ -25,6 +25,5 @@ private fun Module.initDatabase() {
     }
 }
 private fun Module.dataModule() {
-
     factoryOf(::PlantRepository)
 }

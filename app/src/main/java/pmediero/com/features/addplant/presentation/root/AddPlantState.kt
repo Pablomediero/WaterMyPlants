@@ -7,5 +7,7 @@ data class AddPlantState(
     var waterAmount: String = "",
     var plantSize: String = "",
     var plantDescription: String = "",
-    var isLoading: Boolean = false
+    var plantPhoto: String = "",
+    var isLoading: Boolean = false,
+    var isPhotoSelected: Boolean = false
 )

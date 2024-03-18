@@ -134,6 +134,7 @@ fun DialogWateringTime(
     onConfirm: (String) -> Unit,
     onCancel: () -> Unit
 ) {
+
     if (showDialog.value) {
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
@@ -286,9 +287,8 @@ fun PreviewDialog() {
         DialogWateringTime(
             showDialog = showDialogTimeInput,
             timePickerState = timePickerStateHorizontal,
-            onConfirm = {},
-            onCancel = {}
-        )
+            onConfirm = {}
+        ) {}
 
         val showDialogCheckBox = remember { mutableStateOf(true) }
         val checkboxState = remember { mutableStateMapOf<String, Boolean>().withDefault { false } }

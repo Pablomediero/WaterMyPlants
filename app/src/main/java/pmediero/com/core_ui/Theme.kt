@@ -1,16 +1,12 @@
 package pmediero.com.core_ui
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
     primary = primary80,
@@ -85,12 +81,7 @@ fun WaterMyPlantsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    // Dynamic color is available on Android 12+
-    val supportsDynamicColors = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-
     val colorScheme = when {
-        supportsDynamicColors && darkTheme -> dynamicDarkColorScheme(LocalContext.current)
-        supportsDynamicColors && !darkTheme -> dynamicLightColorScheme(LocalContext.current)
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

@@ -1,5 +1,9 @@
 package pmediero.com.features.addplant.presentation
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,9 +29,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -39,6 +45,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core.presentation.common.CustomFloatingActionButton
@@ -54,19 +61,11 @@ import pmediero.com.features.addplant.presentation.components.DialogWateringTime
 import pmediero.com.features.addplant.presentation.components.PlantSize
 import pmediero.com.features.addplant.presentation.root.AddPlantAction
 import pmediero.com.features.addplant.presentation.root.AddPlantState
-import pmediero.com.features.addplant.presentation.root.OnCreatePlantClick
-import pmediero.com.features.addplant.presentation.root.OnNavigateHome
-import pmediero.com.features.addplant.presentation.root.OnPlantDescriptionChange
-import pmediero.com.features.addplant.presentation.root.OnPlantNameChange
-import pmediero.com.features.addplant.presentation.root.OnPlantSizeChange
-import pmediero.com.features.addplant.presentation.root.OnPlantWaterAmountChange
-import pmediero.com.features.addplant.presentation.root.OnPlantWateringDaysChange
-import pmediero.com.features.addplant.presentation.root.OnPlantWateringTimeChange
 
 @Composable
 fun AddPlantScreen(
     state: AddPlantState,
-    onEvent: (AddPlantAction) -> Unit
+    onAction: (AddPlantAction) -> Unit
 ) {
     val spacing = LocalSpacing.current
     Column(
@@ -83,6 +82,11 @@ fun AddPlantScreen(
                 .fillMaxWidth()
                 .padding(all = spacing.default),
             spacing = spacing,
+            state = state,
+            onAddImageButtonClick = { imageUrl ->
+                onAction(AddPlantAction.OnAddImageButtonClick(imageUrl))
+            },
+
         )
         BodyAddPlant(
             modifier = Modifier
@@ -108,22 +112,22 @@ fun AddPlantScreen(
             state = state,
             spacing = spacing,
             onPlantNameChange = { plantName ->
-                onEvent(OnPlantNameChange(plantName))
+                onAction(AddPlantAction.OnPlantNameChange(plantName))
             },
             onPlantWateringDaysChange = { wateringDays ->
-                onEvent(OnPlantWateringDaysChange(wateringDays))
+                onAction(AddPlantAction.OnPlantWateringDaysChange(wateringDays))
             },
             onPlantWateringTimeChange = { wateringTime ->
-                onEvent(OnPlantWateringTimeChange(wateringTime))
+                onAction(AddPlantAction.OnPlantWateringTimeChange(wateringTime))
             },
             onPlantWaterAmountChange = { waterAmount ->
-                onEvent(OnPlantWaterAmountChange(waterAmount))
+                onAction(AddPlantAction.OnPlantWaterAmountChange(waterAmount))
             },
             onPlantSizeChange = { plantSize ->
-                onEvent(OnPlantSizeChange(plantSize))
+                onAction(AddPlantAction.OnPlantSizeChange(plantSize))
             },
             onPlantDescriptionChange = { plantDescription ->
-                onEvent(OnPlantDescriptionChange(plantDescription))
+                onAction(AddPlantAction.OnPlantDescriptionChange(plantDescription))
             }
 
         )
@@ -135,26 +139,46 @@ fun AddPlantScreen(
                     vertical = spacing.small
                 ),
             onFooterBtnClick = {
-                onEvent(
-                    OnCreatePlantClick(
+                onAction(
+                    AddPlantAction.OnCreatePlantClick(
                         Plant(
                             name = state.plantName,
                             wateringDays = state.wateringDays,
                             wateringTime = state.wateringTime,
                             waterAmount = state.waterAmount,
                             plantSize = state.plantSize,
-                            description = state.plantDescription
+                            description = state.plantDescription,
+                            photo = state.plantPhoto
                         )
                     )
                 )
-               onEvent(OnNavigateHome)
             },
         )
     }
 }
 
 @Composable
-fun HeaderAddPlant(modifier: Modifier, spacing: Spacing) {
+fun HeaderAddPlant(
+    modifier: Modifier,
+    spacing: Spacing,
+    state: AddPlantState,
+    onAddImageButtonClick: (String) -> Unit,
+
+) {
+    var selectedImageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+
+    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            selectedImageUri = uri
+            uri?.toString()?.let { imageUrl ->
+                onAddImageButtonClick(imageUrl)
+            }
+        }
+    )
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
@@ -166,26 +190,35 @@ fun HeaderAddPlant(modifier: Modifier, spacing: Spacing) {
                 .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.add_plant_background_header),
-                contentDescription = null,
-                modifier = Modifier
-                    .alpha(0.8f)
-                    .width(484.dp)
-                    .height(516.dp),
-                contentScale = ContentScale.FillBounds
+            if (state.plantPhoto.isEmpty()) {
+                Image(
+                    painter = painterResource(id = R.drawable.add_plant_background_header),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .alpha(0.8f)
+                        .fillMaxSize(),
+                    contentScale = ContentScale.FillBounds
+                )
 
-            )
-            Image(
-                painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
-                modifier = Modifier
-                    .padding(1.dp)
-                    .width(134.dp)
-                    .height(242.dp),
-                contentDescription = "image description",
-                contentScale = ContentScale.None
+                Image(
+                    painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
+                    modifier = Modifier
+                        .padding(1.dp)
+                        .width(134.dp)
+                        .height(242.dp),
+                    contentDescription = "image description",
+                    contentScale = ContentScale.None
 
-            )
+                )
+            } else {
+                AsyncImage(
+                    model = state.plantPhoto,
+                    contentDescription = "image description",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.FillBounds
+                )
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -239,7 +272,9 @@ fun HeaderAddPlant(modifier: Modifier, spacing: Spacing) {
                             isVisible = false
                         )
                         CustomFloatingActionButton(
-                            onClick = { },
+                            onClick = {
+
+                            },
                             modifier = Modifier
                                 .width(48.dp)
                                 .height(48.dp)
@@ -259,18 +294,21 @@ fun HeaderAddPlant(modifier: Modifier, spacing: Spacing) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     CustomFloatingActionButtonWithText(
-                        onClick = {},
+                        onClick = {
+                            singlePhotoPickerLauncher.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        },
                         modifier = Modifier
                             .wrapContentWidth()
                             .padding(all = spacing.default),
                         contentColor = MaterialTheme.colorScheme.onSecondary,
                         containerColor = MaterialTheme.colorScheme.secondary,
                         icon = R.drawable.add_plant_add_images_icon_header,
-                        text = stringResource(R.string.add_image)
+                        text = stringResource(if(state.isPhotoSelected){R.string.change_image} else {R.string.add_image})
                     )
                 }
             }
-
         }
     }
 }
@@ -328,7 +366,7 @@ fun FormAddPlantFigma(
     val selectedSize = remember { mutableStateOf(PlantSize.Default) }
 
     val showDialogTimePicker = remember { mutableStateOf(false) }
-    val timePickerStateHorizontal = rememberTimePickerState()
+    val timePickerStateHorizontal = rememberTimePickerState(is24Hour = true)
 
     val showDialogCheckBox = remember { mutableStateOf(false) }
     val checkboxState = remember { mutableStateMapOf<String, Boolean>().withDefault { false } }
@@ -428,9 +466,8 @@ fun FormAddPlantFigma(
         onConfirm = { selectedTime ->
             onPlantWateringTimeChange(selectedTime)
             showDialogTimePicker.value = false
-        },
-        onCancel = { showDialogPlantSize.value = false }
-    )
+        }
+    ) { showDialogPlantSize.value = false }
     DialogPlantSize(
         showDialog = showDialogPlantSize,
         selectedSize = selectedSize,
