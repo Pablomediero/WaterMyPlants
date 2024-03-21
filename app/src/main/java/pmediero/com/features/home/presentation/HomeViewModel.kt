@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import pmediero.com.features.home.domain.GetPlantsUseCase
+import pmediero.com.features.home.presentation.root.HomeAction
 import pmediero.com.features.home.presentation.root.HomeState
 
 class HomeViewModel(
@@ -25,7 +26,6 @@ class HomeViewModel(
                 onSuccess = {
                     updateLoadingState(true)
                     it.collect { plantList ->
-                        //_plantsState.emit(plantList)
                         state = state.copy(
                             plantList = plantList
                         )
@@ -34,6 +34,17 @@ class HomeViewModel(
                 }
             )
 
+        }
+    }
+
+    fun onAction(action: HomeAction){
+        when(action){
+            is HomeAction.OnCardLongClick -> {
+                state = state.copy(
+                    plant = action.plant
+                )
+            }
+            is HomeAction.OnDeletePlant -> {}
         }
     }
 

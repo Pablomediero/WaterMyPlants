@@ -14,6 +14,12 @@ fun HomeRoot(
 
     HomeScreen(
         state = homeViewModel.state,
-        onAction = { }
+        onAction = {  action ->
+            when (action) {
+                else -> {
+                    homeViewModel.onAction(action)
+                }
+            }
+        }
     )
 }
