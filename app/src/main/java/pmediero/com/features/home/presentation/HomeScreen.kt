@@ -9,18 +9,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -142,11 +142,13 @@ fun HomeScreen(
             contentScale = ContentScale.FillBounds
         )
     }
-    Column {
+    Column(
+        modifier = Modifier.padding(spacing.medium)
+    ) {
         HeaderHomeScreen(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = spacing.medium)
+
                 .fillMaxSize(),
         )
         BodyHomeScreen(
@@ -208,7 +210,7 @@ fun BodyHomeScreen(
         modifier = modifier
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            TabView(
+            TabViewv2(
                 plants = plants,
                 spacing = spacing,
                 onLongClick = { plant ->
@@ -220,9 +222,8 @@ fun BodyHomeScreen(
     }
 }
 
-
 @Composable
-fun TabView(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit) {
+fun TabViewv2(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit) {
     var tabIndex by remember { mutableStateOf(0) }
     val tabs = listOf(
         stringResource(R.string.upcoming),
@@ -234,20 +235,21 @@ fun TabView(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit)
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
-        ScrollableTabRow(
-            edgePadding = spacing.default,
+
+        TabRow(
             modifier = Modifier
-                .background(Color.Transparent)
-                .padding(horizontal = spacing.medium)
-                .align(Alignment.Start),
+                .fillMaxWidth()
+                .background(Color.Transparent),
             selectedTabIndex = tabIndex,
             containerColor = Color.Transparent,
             divider = {},
             indicator = { tabPositions ->
+                val tabSize = tabPositions.maxOf { it.right - it.left }
+                val indicatorWidth = tabSize / 3f
                 Box(
                     modifier = Modifier
                         .tabIndicatorOffset(tabPositions[tabIndex])
-                        .padding(end = 50.dp)
+                        .padding(end = indicatorWidth)
                         .height(2.dp)
                         .background(color = MaterialTheme.colorScheme.primary)
                 )
@@ -255,38 +257,43 @@ fun TabView(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit)
         ) {
             tabs.forEachIndexed { index, title ->
                 val isSelected = tabIndex == index
-                Row(
+                Column(
+
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = spacing.small)
+                        .padding(vertical = spacing.medium)
                         .clickable {
                             tabIndex = index
-                        }
+                        },
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         modifier = Modifier
-                            .wrapContentWidth()
-                            .padding(end = spacing.small),
+                            .fillMaxHeight(),
                         text = title,
                         color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                        style = MaterialTheme.typography.titleMedium
                     )
                 }
+
             }
         }
 
         when (tabIndex) {
             0 -> {
-
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(spacing.medium),
+                    contentPadding = PaddingValues(top = spacing.medium),
                     verticalArrangement = Arrangement.spacedBy(spacing.medium),
                     horizontalArrangement = Arrangement.spacedBy(spacing.medium),
                     content = {
                         items(plants) { itemPlant ->
                             CustomCardView(
-                                plant = itemPlant,
+                                titleCard = itemPlant.name,
+                                subtitleCard = itemPlant.description,
+                                imageCard = itemPlant.photo,
+                                icon = R.drawable.home_card_icon_water,
+                                wateringDaysLabel = itemPlant.wateringDays,
+                                waterAmountLabel = itemPlant.waterAmount,
                                 onClick = {},
                                 onLongClick = {
                                     onLongClick(itemPlant)

@@ -39,7 +39,6 @@ fun DeletePlantConfirmationModal(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
 
-
                 ) {
 
                     Icon(
@@ -59,7 +58,6 @@ fun DeletePlantConfirmationModal(
             },
             confirmButton = {
                 Button(
-
                     onClick = onConfirm,
                     shape = MaterialTheme.shapes.small
                 ) {
