@@ -14,7 +14,7 @@ fun WaterMyPlantsNavHost(){
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppRoutes.HomeScreen.route) {
+        startDestination = AppRoutes.SplashScreen.route) {
         composable( AppRoutes.SplashScreen.route){
             SplashRoot(navController = navController)
         }

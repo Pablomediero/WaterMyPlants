@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import pmediero.com.R
 import pmediero.com.core.presentation.common.CustomFloatingActionButton
 import pmediero.com.core_ui.LocalSpacing
@@ -37,8 +38,7 @@ fun CustomCardView(
     titleCard: String,
     subtitleCard: String,
     imageCard: String,
-    waterAmountLabel: String,
-    wateringDaysLabel: String,
+    labelCard: List<String>,
     icon: Any,
     onClick: () -> Unit,
     onLongClick: () -> Unit
@@ -57,14 +57,15 @@ fun CustomCardView(
             .height(250.dp)
             .fillMaxWidth(),
 
-    ) {
+        ) {
         HeaderCardView(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(3f),
             spacing = spacing,
-            labelWateringAmount = waterAmountLabel,
-            labelWateringDay = wateringDaysLabel
+            imageCard = imageCard,
+            labelWateringAmount = labelCard[0],
+            labelWateringDay = labelCard[1]
         )
         BodyCardView(
             modifier = Modifier
@@ -84,6 +85,7 @@ fun CustomCardView(
 fun HeaderCardView(
     modifier: Modifier,
     spacing: Spacing,
+    imageCard: String,
     labelWateringAmount: String,
     labelWateringDay: String
 ) {
@@ -92,19 +94,28 @@ fun HeaderCardView(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Red),
+                .background(Color(0xFFDFF0DC)),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
-                modifier = Modifier
-                    .padding(1.dp)
-                    .width(61.dp)
-                    .height(113.dp),
-                contentDescription = "image description",
-                contentScale = ContentScale.Crop
+            if (imageCard.isEmpty()) {
+                Image(
+                    painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
+                    modifier = Modifier
+                        .padding(1.dp)
+                        .width(61.dp)
+                        .height(113.dp),
+                    contentDescription = "image description",
+                    contentScale = ContentScale.Crop
 
-            )
+                )
+            } else {
+
+                AsyncImage(
+                    model = imageCard,
+                    contentDescription = "",
+                    contentScale = ContentScale.FillBounds
+                )
+            }
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -142,7 +153,13 @@ fun HeaderCardView(
 }
 
 @Composable
-fun BodyCardView(modifier: Modifier, spacing: Spacing, titleCard: String, subtitleCard: String, icon: Any) {
+fun BodyCardView(
+    modifier: Modifier,
+    spacing: Spacing,
+    titleCard: String,
+    subtitleCard: String,
+    icon: Any
+) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Center
@@ -195,8 +212,7 @@ fun PreviewCustomCard() {
         CustomCardView(
             titleCard = "Planta 1",
             subtitleCard = "Descript",
-            waterAmountLabel = "",
-            wateringDaysLabel = "",
+            labelCard = listOf("5 ml","Mo, Tu"),
             icon = R.drawable.home_card_icon_water,
             imageCard = "",
             onClick = {},

@@ -12,24 +12,28 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
-import pmediero.com.core_ui.Spacing
+import pmediero.com.core_ui.LocalSpacing
+import pmediero.com.core_ui.WaterMyPlantsTheme
 
 @Composable
 fun DeletePlantConfirmationModal(
     showDialog: MutableState<Boolean>,
-    spacing: Spacing,
     plant: Plant,
     onConfirm: () -> Unit,
     onCancel: () -> Unit
 ) {
+    val spacing = LocalSpacing.current
     if (showDialog.value) {
         AlertDialog(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -79,5 +83,25 @@ fun DeletePlantConfirmationModal(
                 }
             }
         )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewModal() {
+    WaterMyPlantsTheme {
+        val showModal = remember { mutableStateOf(true) }
+        DeletePlantConfirmationModal(showDialog = showModal,
+            plant =Plant(
+                id = 1,
+                name = "Planta 2",
+                plantSize = "Large",
+                waterAmount = "25 ml",
+                wateringTime = "2:00",
+                wateringDays = "Fr Sa",
+                description = "Descript"
+            ),
+            onConfirm = { },
+            onCancel = {  })
     }
 }

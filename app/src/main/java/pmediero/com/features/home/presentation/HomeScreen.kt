@@ -53,81 +53,81 @@ fun HomeScreen(
     state: HomeState,
     onAction: (HomeAction) -> Unit
 ) {
-    val listaPlantas = listOf(
-        Plant(
-            id = 0,
-            name = "Planta 1",
-            plantSize = "Small",
-            waterAmount = "5 ml",
-            wateringTime = "12:00",
-            wateringDays = "EveryDay",
-            description = "Descript"
-        ),
-        Plant(
-            id = 1,
-            name = "Planta 2",
-            plantSize = "Large",
-            waterAmount = "25 ml",
-            wateringTime = "2:00",
-            wateringDays = "Fr Sa",
-            description = "Descript"
-        ),
-        Plant(
-            id = 2,
-            name = "Planta 3",
-            plantSize = "Medium",
-            waterAmount = "80 ml",
-            wateringTime = "17:00",
-            wateringDays = "Mo",
-            description = "Descript"
-        ),
-        Plant(
-            id = 3,
-            name = "Planta 4",
-            plantSize = "Extra Large",
-            waterAmount = "50 ml",
-            wateringTime = "19:00",
-            wateringDays = "We",
-            description = "Descript"
-        ),
-        Plant(
-            id = 0,
-            name = "Planta 1",
-            plantSize = "Small",
-            waterAmount = "5 ml",
-            wateringTime = "12:00",
-            wateringDays = "EveryDay",
-            description = "Descript"
-        ),
-        Plant(
-            id = 1,
-            name = "Planta 2",
-            plantSize = "Large",
-            waterAmount = "25 ml",
-            wateringTime = "2:00",
-            wateringDays = "Fr Sa",
-            description = "Descript"
-        ),
-        Plant(
-            id = 2,
-            name = "Planta 3",
-            plantSize = "Medium",
-            waterAmount = "80 ml",
-            wateringTime = "17:00",
-            wateringDays = "Mo",
-            description = "Descript"
-        ),
-        Plant(
-            id = 3,
-            name = "Planta 4",
-            plantSize = "Extra Large",
-            waterAmount = "50 ml",
-            wateringTime = "19:00",
-            wateringDays = "We",
-            photo = "",
-            description = "Descript"
-        ),
-    )
+//    val listaPlantas = listOf(
+//        Plant(
+//            id = 0,
+//            name = "Planta 1",
+//            plantSize = "Small",
+//            waterAmount = "5 ml",
+//            wateringTime = "12:00",
+//            wateringDays = "EveryDay",
+//            description = "Descript"
+//        ),
+//        Plant(
+//            id = 1,
+//            name = "Planta 2",
+//            plantSize = "Large",
+//            waterAmount = "25 ml",
+//            wateringTime = "2:00",
+//            wateringDays = "Fr Sa",
+//            description = "Descript"
+//        ),
+//        Plant(
+//            id = 2,
+//            name = "Planta 3",
+//            plantSize = "Medium",
+//            waterAmount = "80 ml",
+//            wateringTime = "17:00",
+//            wateringDays = "Mo",
+//            description = "Descript"
+//        ),
+//        Plant(
+//            id = 3,
+//            name = "Planta 4",
+//            plantSize = "Extra Large",
+//            waterAmount = "50 ml",
+//            wateringTime = "19:00",
+//            wateringDays = "We",
+//            description = "Descript"
+//        ),
+//        Plant(
+//            id = 0,
+//            name = "Planta 1",
+//            plantSize = "Small",
+//            waterAmount = "5 ml",
+//            wateringTime = "12:00",
+//            wateringDays = "EveryDay",
+//            description = "Descript"
+//        ),
+//        Plant(
+//            id = 1,
+//            name = "Planta 2",
+//            plantSize = "Large",
+//            waterAmount = "25 ml",
+//            wateringTime = "2:00",
+//            wateringDays = "Fr Sa",
+//            description = "Descript"
+//        ),
+//        Plant(
+//            id = 2,
+//            name = "Planta 3",
+//            plantSize = "Medium",
+//            waterAmount = "80 ml",
+//            wateringTime = "17:00",
+//            wateringDays = "Mo",
+//            description = "Descript"
+//        ),
+//        Plant(
+//            id = 3,
+//            name = "Planta 4",
+//            plantSize = "Extra Large",
+//            waterAmount = "50 ml",
+//            wateringTime = "19:00",
+//            wateringDays = "We",
+//            photo = "",
+//            description = "Descript"
+//        ),
+//    )
     val spacing = LocalSpacing.current
     Box(
         modifier = Modifier
@@ -156,7 +156,7 @@ fun HomeScreen(
                 .weight(4f)
                 .fillMaxSize(),
             spacing = spacing,
-            plants = listaPlantas,
+            plants = state.plantList,
             state = state,
             onCardLongClick = { plant ->
                 onAction(HomeAction.OnCardLongClick(plant))
@@ -201,7 +201,6 @@ fun BodyHomeScreen(
     val showModal = remember { mutableStateOf(false) }
     DeletePlantConfirmationModal(
         showDialog = showModal,
-        spacing = spacing,
         plant = state.plant,
         onConfirm = { },
         onCancel = { showModal.value = false }
@@ -210,7 +209,7 @@ fun BodyHomeScreen(
         modifier = modifier
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            TabViewv2(
+            TabView(
                 plants = plants,
                 spacing = spacing,
                 onLongClick = { plant ->
@@ -223,7 +222,7 @@ fun BodyHomeScreen(
 }
 
 @Composable
-fun TabViewv2(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit) {
+fun TabView(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit) {
     var tabIndex by remember { mutableStateOf(0) }
     val tabs = listOf(
         stringResource(R.string.upcoming),
@@ -292,8 +291,7 @@ fun TabViewv2(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Uni
                                 subtitleCard = itemPlant.description,
                                 imageCard = itemPlant.photo,
                                 icon = R.drawable.home_card_icon_water,
-                                wateringDaysLabel = itemPlant.wateringDays,
-                                waterAmountLabel = itemPlant.waterAmount,
+                                labelCard = listOf(itemPlant.waterAmount, itemPlant.wateringDays),
                                 onClick = {},
                                 onLongClick = {
                                     onLongClick(itemPlant)
