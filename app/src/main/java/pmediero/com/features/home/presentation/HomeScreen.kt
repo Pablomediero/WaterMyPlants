@@ -201,7 +201,7 @@ fun BodyHomeScreen(
     val showModal = remember { mutableStateOf(false) }
     DeletePlantConfirmationModal(
         showDialog = showModal,
-        plant = state.plant,
+        itemName = state.plant.name,
         onConfirm = { },
         onCancel = { showModal.value = false }
     )
@@ -286,6 +286,7 @@ fun TabView(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit)
                     horizontalArrangement = Arrangement.spacedBy(spacing.medium),
                     content = {
                         items(plants) { itemPlant ->
+
                             CustomCardView(
                                 titleCard = itemPlant.name,
                                 subtitleCard = itemPlant.description,

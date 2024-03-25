@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -38,7 +41,7 @@ fun CustomCardView(
     titleCard: String,
     subtitleCard: String,
     imageCard: String,
-    labelCard: List<String>,
+    labelCard: List<Any>,
     icon: Any,
     onClick: () -> Unit,
     onLongClick: () -> Unit
@@ -64,8 +67,7 @@ fun CustomCardView(
                 .weight(3f),
             spacing = spacing,
             imageCard = imageCard,
-            labelWateringAmount = labelCard[0],
-            labelWateringDay = labelCard[1]
+            labelCard = labelCard
         )
         BodyCardView(
             modifier = Modifier
@@ -86,8 +88,7 @@ fun HeaderCardView(
     modifier: Modifier,
     spacing: Spacing,
     imageCard: String,
-    labelWateringAmount: String,
-    labelWateringDay: String
+    labelCard: List<Any>
 ) {
     Column(modifier = modifier) {
 
@@ -122,29 +123,44 @@ fun HeaderCardView(
                     .padding(spacing.small),
                 verticalArrangement = Arrangement.spacedBy(spacing.small, Alignment.Top),
             ) {
-                Text(
-                    text = labelWateringAmount,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .background(
-                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.56f),
-                            shape = MaterialTheme.shapes.extraSmall
+                LazyColumn ( verticalArrangement = Arrangement.spacedBy(spacing.small)) {
+                    items(labelCard) { itemTextLabel ->
+                        Text(
+                            text = itemTextLabel.toString(),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier
+                                .background(
+                                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.56f),
+                                    shape = MaterialTheme.shapes.extraSmall
+                                )
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
                         )
-                        .padding(horizontal = 6.dp, vertical = 2.dp)
-                )
-                Text(
-                    text = labelWateringDay,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .background(
-                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.56f),
-                            shape = MaterialTheme.shapes.extraSmall
-                        )
-                        .padding(horizontal = 6.dp, vertical = 2.dp)
-
-                )
+                    }
+                }
+//                Text(
+//                    text = labelWateringAmount,
+//                    style = MaterialTheme.typography.labelSmall,
+//                    color = MaterialTheme.colorScheme.onSurface,
+//                    modifier = Modifier
+//                        .background(
+//                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.56f),
+//                            shape = MaterialTheme.shapes.extraSmall
+//                        )
+//                        .padding(horizontal = 6.dp, vertical = 2.dp)
+//                )
+//                Text(
+//                    text = labelWateringDay,
+//                    style = MaterialTheme.typography.labelSmall,
+//                    color = MaterialTheme.colorScheme.onSurface,
+//                    modifier = Modifier
+//                        .background(
+//                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.56f),
+//                            shape = MaterialTheme.shapes.extraSmall
+//                        )
+//                        .padding(horizontal = 6.dp, vertical = 2.dp)
+//
+//                )
 
             }
         }
@@ -209,14 +225,27 @@ fun BodyCardView(
 @Composable
 fun PreviewCustomCard() {
     WaterMyPlantsTheme {
-        CustomCardView(
-            titleCard = "Planta 1",
-            subtitleCard = "Descript",
-            labelCard = listOf("5 ml","Mo, Tu"),
-            icon = R.drawable.home_card_icon_water,
-            imageCard = "",
-            onClick = {},
-            onLongClick = {}
-        )
+        Column {
+            CustomCardView(
+                titleCard = "Planta 1",
+                subtitleCard = "Descript",
+                labelCard = listOf("5 ml", "Mo, Tu, We, Th, Fr, Sa"),
+                icon = R.drawable.home_card_icon_water,
+                imageCard = "",
+                onClick = {},
+                onLongClick = {}
+            )
+            Spacer(modifier = Modifier.padding(12.dp))
+            CustomCardView(
+                titleCard = "Planta 1",
+                subtitleCard = "Descript",
+                labelCard = listOf("5 ml", "Mo","Tu","We","Th","Fr","Sa"),
+                icon = R.drawable.home_card_icon_water,
+                imageCard = "",
+                onClick = {},
+                onLongClick = {}
+            )
+        }
+
     }
 }

@@ -22,14 +22,13 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
-import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 
 @Composable
 fun DeletePlantConfirmationModal(
     showDialog: MutableState<Boolean>,
-    plant: Plant,
+    itemName: String,
     onConfirm: () -> Unit,
     onCancel: () -> Unit
 ) {
@@ -57,7 +56,7 @@ fun DeletePlantConfirmationModal(
             text = {
                 Text(text = stringResource(
                     R.string.do_you_really_want_to_delete_the_this_process_cannot_be_undone,
-                    plant.name
+                    itemName
                 ))
             },
             confirmButton = {
@@ -92,15 +91,7 @@ fun PreviewModal() {
     WaterMyPlantsTheme {
         val showModal = remember { mutableStateOf(true) }
         DeletePlantConfirmationModal(showDialog = showModal,
-            plant =Plant(
-                id = 1,
-                name = "Planta 2",
-                plantSize = "Large",
-                waterAmount = "25 ml",
-                wateringTime = "2:00",
-                wateringDays = "Fr Sa",
-                description = "Descript"
-            ),
+           itemName = "Planta 1",
             onConfirm = { },
             onCancel = {  })
     }

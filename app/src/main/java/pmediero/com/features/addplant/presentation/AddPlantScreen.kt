@@ -1,6 +1,5 @@
 package pmediero.com.features.addplant.presentation
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -71,7 +70,6 @@ fun AddPlantScreen(
     onAction: (AddPlantAction) -> Unit
 ) {
     val spacing = LocalSpacing.current
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -87,7 +85,7 @@ fun AddPlantScreen(
                 .fillMaxWidth()
                 .padding(all = spacing.default),
             spacing = spacing,
-            context = context,
+
             state = state,
             onAddImageButtonClick = { imageUrl ->
                 onAction(AddPlantAction.OnAddImageButtonClick(imageUrl))
@@ -170,12 +168,12 @@ fun AddPlantScreen(
 fun HeaderAddPlant(
     modifier: Modifier,
     spacing: Spacing,
-    context: Context,
     state: AddPlantState,
     onAddImageButtonClick: (String) -> Unit,
     onRemoveImageButtonClick: () -> Unit
 
 ) {
+    val context = LocalContext.current
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
