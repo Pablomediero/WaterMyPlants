@@ -1,5 +1,6 @@
 package pmediero.com.features.addplant.presentation
 
+import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -41,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -68,6 +70,7 @@ fun AddPlantScreen(
     onAction: (AddPlantAction) -> Unit
 ) {
     val spacing = LocalSpacing.current
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(
@@ -82,6 +85,7 @@ fun AddPlantScreen(
                 .fillMaxWidth()
                 .padding(all = spacing.default),
             spacing = spacing,
+
             state = state,
             onAddImageButtonClick = { imageUrl ->
                 onAction(AddPlantAction.OnAddImageButtonClick(imageUrl))
@@ -169,6 +173,7 @@ fun HeaderAddPlant(
     onRemoveImageButtonClick: () -> Unit
 
 ) {
+    val context = LocalContext.current
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
@@ -178,6 +183,8 @@ fun HeaderAddPlant(
         onResult = { uri ->
             selectedImageUri = uri
             uri?.toString()?.let { imageUrl ->
+                val flag = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                context.contentResolver.takePersistableUriPermission(uri, flag)
                 onAddImageButtonClick(imageUrl)
             }
         }
@@ -277,7 +284,7 @@ fun HeaderAddPlant(
                         )
                         CustomFloatingActionButton(
                             onClick = {
-                              onRemoveImageButtonClick()
+                                onRemoveImageButtonClick()
                             },
                             modifier = Modifier
                                 .width(48.dp)
@@ -308,8 +315,18 @@ fun HeaderAddPlant(
                             .padding(all = spacing.default),
                         contentColor = MaterialTheme.colorScheme.onSecondary,
                         containerColor = MaterialTheme.colorScheme.secondary,
-                        icon =if(state.isPhotoSelected) {R.drawable.add_plant_change_image_icon_header} else {R.drawable.add_plant_add_images_icon_header},
-                        text = stringResource(if(state.isPhotoSelected){R.string.change_image} else {R.string.add_image})
+                        icon = if (state.isPhotoSelected) {
+                            R.drawable.add_plant_change_image_icon_header
+                        } else {
+                            R.drawable.add_plant_add_images_icon_header
+                        },
+                        text = stringResource(
+                            if (state.isPhotoSelected) {
+                                R.string.change_image
+                            } else {
+                                R.string.add_image
+                            }
+                        )
                     )
                 }
             }

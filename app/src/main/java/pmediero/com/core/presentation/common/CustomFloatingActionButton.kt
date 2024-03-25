@@ -2,15 +2,17 @@ package pmediero.com.core.presentation.common
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material3.Badge
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.FloatingActionButtonElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,18 +20,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import pmediero.com.R
 
 @Composable
 fun CustomFloatingActionButton(
     onClick: () -> Unit,
     containerColor: Color,
     contentColor: Color,
+    elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
+    shape: Shape = FloatingActionButtonDefaults.shape,
     modifier: Modifier = Modifier,
     icon: Any,
     isVisible: Boolean
@@ -38,6 +41,8 @@ fun CustomFloatingActionButton(
         FloatingActionButton(
             onClick = onClick,
             modifier = modifier,
+            elevation = elevation,
+            shape = shape,
             containerColor = containerColor,
             contentColor = contentColor
         ) {
@@ -46,13 +51,51 @@ fun CustomFloatingActionButton(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomFloatingActionButtonNotification(
+    onClick: () -> Unit,
+    containerColor: Color,
+    contentColor: Color,
+    modifier: Modifier = Modifier,
+    icon: Any,
+    isVisible: Boolean,
+    isNotify: Boolean = false
+) {
+    if (isVisible) {
+        Box(
+            modifier = modifier,
+        ) {
+            FloatingActionButton(
+                onClick = onClick,
+                shape = MaterialTheme.shapes.extraLarge,
+                containerColor = containerColor,
+                modifier = Modifier.align(Alignment.Center)
+            ) {
+                Icon(icon = icon)
+            }
+            if (isNotify) {
+                Badge(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd),
+                    containerColor = MaterialTheme.colorScheme.error,
+                    contentColor = contentColor
+                ) {
+
+                }
+            }
+        }
+    }
+}
+
+
 @Composable
 fun CustomFloatingActionButtonWithText(
     onClick: () -> Unit,
     containerColor: Color,
     contentColor: Color,
     modifier: Modifier = Modifier,
-    border: BorderStroke = BorderStroke(0.dp, Color.Transparent), // Set default to no border
+    border: BorderStroke = BorderStroke(0.dp, Color.Transparent),
     icon: Any,
     text: String
 ) {
@@ -103,20 +146,5 @@ fun Icon(icon: Any) {
 @Preview
 @Composable
 fun PreviewIconButton() {
-    CustomFloatingActionButtonWithText(
-        onClick = {},
-        contentColor = MaterialTheme.colorScheme.onSecondary,
-        containerColor = MaterialTheme.colorScheme.secondary,
-        icon = R.drawable.add_plant_add_images_icon_header,
-        text = stringResource(R.string.add_image)
-    )
-    CustomFloatingActionButtonWithText(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { /*TODO*/ },
-        contentColor = MaterialTheme.colorScheme.primary,
-        containerColor = Color.White,
-        icon = Icons.Outlined.Add,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-        text = stringResource(R.string.create_plant)
-    )
+
 }

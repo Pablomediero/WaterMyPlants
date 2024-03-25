@@ -126,3 +126,5 @@ val neutralVariant95 = Color(0xFFF0F1F3)
 val neutralVariant98 = Color(0xFFF8FAFA)
 val neutralVariant99 = Color(0xFFFBFCFE)
 val neutralVariant100 = Color(0xFFFFFFFF)
+
+val customColor = Color(0xFFDFF0DC)
