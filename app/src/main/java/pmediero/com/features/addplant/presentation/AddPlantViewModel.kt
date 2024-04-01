@@ -49,7 +49,7 @@ class AddPlantViewModel(
             }
             is AddPlantAction.OnRemoveImageButtonClick -> {
                 state = state.copy(
-                    plantPhoto = "",
+                    plantPhoto = "" ,
                     isPhotoSelected = false
                 )
 

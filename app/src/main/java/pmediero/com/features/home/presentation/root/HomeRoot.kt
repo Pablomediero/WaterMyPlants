@@ -16,6 +16,7 @@ fun HomeRoot(
         state = homeViewModel.state,
         onAction = {  action ->
             when (action) {
+
                 else -> {
                     homeViewModel.onAction(action)
                 }

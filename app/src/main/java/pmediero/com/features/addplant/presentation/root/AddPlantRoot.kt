@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import org.koin.androidx.compose.koinViewModel
-import pmediero.com.core.presentation.navigation.AppRoutes
 import pmediero.com.features.addplant.presentation.AddPlantScreen
 import pmediero.com.features.addplant.presentation.AddPlantViewModel
+import pmediero.com.navigation.AppRoutes
 
 @Composable
 fun AddPlantRoot(

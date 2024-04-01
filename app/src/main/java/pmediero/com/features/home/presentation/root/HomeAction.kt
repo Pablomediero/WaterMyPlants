@@ -4,5 +4,6 @@ import pmediero.com.core.model.local.Plant
 
 sealed class HomeAction {
     data class OnCardLongClick(val plant: Plant): HomeAction()
+    data class OnTabClicked(val index: Int): HomeAction()
     data class OnDeletePlant(val plant: Plant): HomeAction()
 }

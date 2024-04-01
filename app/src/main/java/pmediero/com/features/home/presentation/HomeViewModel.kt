@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import pmediero.com.features.home.domain.GetPlantsUseCase
+import pmediero.com.features.home.presentation.model.TabType
 import pmediero.com.features.home.presentation.root.HomeAction
 import pmediero.com.features.home.presentation.root.HomeState
 
@@ -19,7 +20,7 @@ class HomeViewModel(
 
     init {
         viewModelScope.launch {
-            getPlantsUseCase.invoke().fold(
+            getPlantsUseCase().fold(
                 onError = {
 
                 },
@@ -37,14 +38,23 @@ class HomeViewModel(
         }
     }
 
-    fun onAction(action: HomeAction){
-        when(action){
+    fun onAction(action: HomeAction) {
+        when (action) {
             is HomeAction.OnCardLongClick -> {
                 state = state.copy(
                     plant = action.plant
                 )
             }
+
+            is HomeAction.OnTabClicked -> {
+                state = state.copy(
+                    tabSelected = TabType.entries[action.index]
+
+                )
+            }
+
             is HomeAction.OnDeletePlant -> {}
+            else -> {}
         }
     }
 

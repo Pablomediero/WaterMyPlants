@@ -39,7 +39,7 @@
     <string name="label_watering_amount_card">50ml</string>
     <string name="label_watering_day_card">Today</string>
     <string name="upcoming">Upcoming</string>
-    <string name="forgot_to_water">Forgot to Water</string>
+    <string name="forgot_to_water">Forgot Water</string>
     <string name="history">History</string>
     <string name="are_you_sure">Are you sure?</string>
     <string name="do_you_really_want_to_delete_the_this_process_cannot_be_undone">Do you really want to delete the %1$s This process cannot be undone.</string>

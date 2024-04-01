@@ -2,8 +2,8 @@ package pmediero.com.features.welcome.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import pmediero.com.core.presentation.navigation.AppRoutes
 import pmediero.com.features.welcome.action.WelcomeAction
+import pmediero.com.navigation.AppRoutes
 
 @Composable
 fun WelcomeRoot (
@@ -12,7 +12,6 @@ fun WelcomeRoot (
     WelcomeScreen(){ state ->
         when (state) {
             is WelcomeAction.OnAddFirstPlantClick -> {
-               // navController.popBackStack()
                 navController.navigate(AppRoutes.AddPlantScreen.route)
             }
         }

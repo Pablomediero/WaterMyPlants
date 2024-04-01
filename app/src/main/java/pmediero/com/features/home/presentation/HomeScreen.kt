@@ -44,7 +44,9 @@ import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.features.home.presentation.components.CustomCardView
+import pmediero.com.features.home.presentation.components.CustomTabRow
 import pmediero.com.features.home.presentation.components.DeletePlantConfirmationModal
+import pmediero.com.features.home.presentation.model.TabType
 import pmediero.com.features.home.presentation.root.HomeAction
 import pmediero.com.features.home.presentation.root.HomeState
 
@@ -53,6 +55,7 @@ fun HomeScreen(
     state: HomeState,
     onAction: (HomeAction) -> Unit
 ) {
+
 //    val listaPlantas = listOf(
 //        Plant(
 //            id = 0,
@@ -128,6 +131,7 @@ fun HomeScreen(
 //            description = "Descript"
 //        ),
 //    )
+
     val spacing = LocalSpacing.current
     Box(
         modifier = Modifier
@@ -158,6 +162,7 @@ fun HomeScreen(
             spacing = spacing,
             plants = state.plantList,
             state = state,
+            onTabClicked = { index -> onAction(HomeAction.OnTabClicked(index)) },
             onCardLongClick = { plant ->
                 onAction(HomeAction.OnCardLongClick(plant))
             }
@@ -196,6 +201,7 @@ fun BodyHomeScreen(
     modifier: Modifier,
     state: HomeState,
     spacing: Spacing,
+    onTabClicked: (Int) -> Unit,
     onCardLongClick: (Plant) -> Unit
 ) {
     val showModal = remember { mutableStateOf(false) }
@@ -209,17 +215,20 @@ fun BodyHomeScreen(
         modifier = modifier
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            TabView(
-                plants = plants,
-                spacing = spacing,
-                onLongClick = { plant ->
-                    showModal.value = true
-                    onCardLongClick(plant)
-                }
+            CustomTabRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Transparent),
+                selectedTabIndex = state.tabSelected.ordinal,
+                tabs = TabType.entries.map { it.stringId },
+                containerColor = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.primary,
+                onTabClick = {index -> onTabClicked(index)}
             )
         }
     }
 }
+
 
 @Composable
 fun TabView(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit) {
@@ -248,7 +257,7 @@ fun TabView(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit)
                 Box(
                     modifier = Modifier
                         .tabIndicatorOffset(tabPositions[tabIndex])
-                        .padding(end = indicatorWidth)
+                        .padding(horizontal = indicatorWidth)
                         .height(2.dp)
                         .background(color = MaterialTheme.colorScheme.primary)
                 )
@@ -257,7 +266,6 @@ fun TabView(plants: List<Plant>, spacing: Spacing, onLongClick: (Plant) -> Unit)
             tabs.forEachIndexed { index, title ->
                 val isSelected = tabIndex == index
                 Column(
-
                     modifier = Modifier
                         .padding(vertical = spacing.medium)
                         .clickable {

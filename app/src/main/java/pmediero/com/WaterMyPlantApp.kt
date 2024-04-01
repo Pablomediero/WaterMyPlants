@@ -4,6 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
+import pmediero.com.core.di.mainModule
 import pmediero.com.core.di.realmModule
 import pmediero.com.features.addplant.di.addPlantModule
 import pmediero.com.features.home.di.homeModule
@@ -17,6 +18,7 @@ class WaterMyPlantApp : Application() {
             androidContext(this@WaterMyPlantApp)
             modules(
                 realmModule,
+                mainModule,
                 addPlantModule,
                 homeModule
             )
