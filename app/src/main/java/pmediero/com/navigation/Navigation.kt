@@ -1,13 +1,16 @@
 package pmediero.com.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import pmediero.com.features.addplant.presentation.root.AddPlantRoot
-import pmediero.com.features.home.presentation.root.HomeRoot
-import pmediero.com.features.welcome.presentation.WelcomeRoot
+import pmediero.com.features.plant.presentation.addplant.root.AddPlantRoot
+import pmediero.com.features.plant.presentation.home.root.HomeRoot
+import pmediero.com.features.plant.presentation.welcome.WelcomeRoot
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WaterMyPlantsNavHost(
     isPlantDataSaved: Boolean
@@ -32,3 +35,4 @@ fun WaterMyPlantsNavHost(
         }
     }
 }
+

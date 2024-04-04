@@ -13,4 +13,5 @@ class PlantEntity: RealmObject {
     var plantSize: String = "tamaño de la planta"
     var description: String = "Descripcion"
     var photo: String = "URL"
+    var isWatered: Boolean = false
 }

@@ -6,20 +6,21 @@ import pmediero.com.core.model.realm.PlantEntity
 
 fun toPlant(type: PlantEntity): Plant {
     return Plant(
-        id = type._id.toString().hashCode().toLong(),
+        id = type._id.toHexString(),
         name = type.name,
         wateringDays = type.wateringDays,
         wateringTime = type.wateringTime,
         waterAmount = type.waterAmount,
         plantSize = type.plantSize,
         description = type.description,
-        photo = type.photo
+        photo = type.photo,
+        isWatered = type.isWatered
     )
 }
 
 fun toPlantEntity(plant: Plant): PlantEntity {
     return PlantEntity().apply {
-        _id = ObjectId(plant.id)
+        _id = if (plant.id == "0") { ObjectId() } else ObjectId(plant.id)
         name = plant.name
         wateringDays = plant.wateringDays
         wateringTime = plant.wateringTime
@@ -27,6 +28,6 @@ fun toPlantEntity(plant: Plant): PlantEntity {
         plantSize = plant.plantSize
         description = plant.description
         photo = plant.photo
-
+        isWatered = plant.isWatered
     }
 }

@@ -15,16 +15,11 @@ class MainViewModel(
     val isPlantDataSaved = _isPlantDataSaved.asStateFlow()
 
     private val _isDataCheck = MutableStateFlow(false)
-     val isDataCheck = _isDataCheck.asStateFlow()
+    val isDataCheck = _isDataCheck.asStateFlow()
 
     init {
         viewModelScope.launch {
-            checkPlantExistUseCase().fold(
-                onError = {},
-                onSuccess = {
-                    _isPlantDataSaved.value = it
-                }
-            )
+            _isPlantDataSaved.value = checkPlantExistUseCase()
             _isDataCheck.value = true
         }
     }
