@@ -19,34 +19,11 @@ class PlantRepository(
 ) {
 
 
-    suspend fun addPlant(plant: Plant): Result<Unit, RootError> {
-
+    suspend fun savePlant(plant: Plant): Result<Unit, RootError> {
         return try {
-            val map = toPlantEntity(plant)
-            realm.write {
-                copyToRealm(map, UpdatePolicy.ALL)
-            }
-            Result.Success(Unit)
-        } catch (e: Exception) {
-            Result.Error(LocalError)
-        }
-
-    }
-
-    suspend fun updateIsWateredPlant(plant: Plant): Result<Unit, RootError> {
-        return try {
-//            val cachePlant = toPlantEntity(plant)
-//            Log.i("BBDDRESULT", "UPDATE PLANTS ${cachePlant._id}")
-//            realm.write {
-//                val updatePlant = query<PlantEntity>("_id == $cachePlant._id").find().first()
-//                updatePlant.isWatered = cachePlant.isWatered
-//
-//            }
             realm.write {
                 copyToRealm(toPlantEntity(plant), UpdatePolicy.ALL)
             }
-
-
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Error(LocalError)

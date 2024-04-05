@@ -74,24 +74,7 @@ fun CustomTabRow(
         tabs.forEachIndexed { tabIndex, resId ->
             val isSelected = selectedTabIndex == tabIndex
             val title = context.getString(resId)
-//            Column(
-//                modifier = Modifier
-//                    .clickable {
-//                        onTabClick(tabIndex)
-//                    },
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.spacedBy(10.dp)
-//            ) {
-//                Text(
-//                    modifier = Modifier.padding(spacing.medium),
-//                    text = title ,
-//                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-//                    style = MaterialTheme.typography.titleSmall,
-//                    onTextLayout = { textLayoutResult ->
-//                        tabWidths[tabIndex] =
-//                            with(density) { textLayoutResult.size.width.toDp() }
-//                    }
-//                )
+
             Tab(
                 modifier = Modifier.padding(horizontal = spacing.default),
                 selected = isSelected,

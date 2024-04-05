@@ -73,11 +73,4 @@ class HomeViewModel(
         state = state.copy(isLoading = param)
     }
 
-//    private fun updatePlantListMapState(param: Map<TabType, List<Plant>>) {
-//        state = state.copy(
-//            plantListMap = param.entries.associate { (key, value) ->
-//                key to value.toList()
-//            }
-//        )
-//    }
 }

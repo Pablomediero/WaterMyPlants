@@ -112,11 +112,10 @@ fun HeaderCardView(
 
                 )
             } else {
-
                 AsyncImage(
                     model = imageCard,
                     contentDescription = "",
-                    contentScale = ContentScale.FillBounds
+                    contentScale = ContentScale.Crop
                 )
             }
             Column(
@@ -140,33 +139,8 @@ fun HeaderCardView(
                         )
                     }
                 }
-//                Text(
-//                    text = labelWateringAmount,
-//                    style = MaterialTheme.typography.labelSmall,
-//                    color = MaterialTheme.colorScheme.onSurface,
-//                    modifier = Modifier
-//                        .background(
-//                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.56f),
-//                            shape = MaterialTheme.shapes.extraSmall
-//                        )
-//                        .padding(horizontal = 6.dp, vertical = 2.dp)
-//                )
-//                Text(
-//                    text = labelWateringDay,
-//                    style = MaterialTheme.typography.labelSmall,
-//                    color = MaterialTheme.colorScheme.onSurface,
-//                    modifier = Modifier
-//                        .background(
-//                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.56f),
-//                            shape = MaterialTheme.shapes.extraSmall
-//                        )
-//                        .padding(horizontal = 6.dp, vertical = 2.dp)
-//
-//                )
-
             }
         }
-
     }
 }
 

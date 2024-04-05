@@ -33,12 +33,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core.presentation.common.CustomFloatingActionButtonNotification
+import pmediero.com.core.presentation.common.DeletePlantConfirmationModal
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.features.plant.presentation.home.components.CustomCardView
 import pmediero.com.features.plant.presentation.home.components.CustomTabRow
-import pmediero.com.features.plant.presentation.home.components.DeletePlantConfirmationModal
 import pmediero.com.features.plant.presentation.home.model.TabType
 import pmediero.com.features.plant.presentation.home.root.HomeAction
 import pmediero.com.features.plant.presentation.home.root.HomeState

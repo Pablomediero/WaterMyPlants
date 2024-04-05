@@ -1,7 +1,6 @@
 package pmediero.com.features.plant.domain.useCase
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -17,7 +16,6 @@ class GetFilteredPlantsUseCase(
     @RequiresApi(Build.VERSION_CODES.O)
     suspend operator fun invoke(): Flow<Map<TabType, List<Plant>>> {
         return plantRepository.observePlants().map { listAllPlants ->
-            Log.i("BBDDRESULT", "After ${listAllPlants[0].id}")
             mapOf(
                 TabType.HISTORY to listAllPlants,
                 TabType.UPCOMING to filterUpcomingPlants(listAllPlants),
@@ -31,7 +29,6 @@ class GetFilteredPlantsUseCase(
         val currentDayOfWeek = LocalDate.now().dayOfWeek.name.substring(0, 2).lowercase(Locale.ROOT)
         return listPlants.filter { plant ->
             plant.wateringDays.split(" ").any { day ->
-                Log.i("Filtromapplants", "$day y $currentDayOfWeek")
                 day.equals("everyday", ignoreCase = true) || day.lowercase(Locale.ROOT) == currentDayOfWeek
             }
         }

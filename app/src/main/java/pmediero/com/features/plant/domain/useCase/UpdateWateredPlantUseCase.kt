@@ -9,6 +9,6 @@ class UpdateWateredPlantUseCase(
     private val plantRepository: PlantRepository
 ) {
     suspend operator fun invoke(plant: Plant): Result<Unit, RootError> {
-        return plantRepository.updateIsWateredPlant(plant = plant)
+        return plantRepository.savePlant(plant = plant)
     }
 }
