@@ -1,0 +1,7 @@
+package pmediero.com.navigation
+
+sealed class AppRoutes(val route: String){
+    data object WelcomeScreen: AppRoutes("welcome_screen")
+    data object AddPlantScreen: AppRoutes("add_plant_screen")
+    data object HomeScreen: AppRoutes("home_screen")
+}

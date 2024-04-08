@@ -1,14 +1,17 @@
 package pmediero.com
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
+import pmediero.com.core.di.mainModule
 import pmediero.com.core.di.realmModule
-import pmediero.com.features.addplant.di.addPlantModule
-import pmediero.com.features.home.di.homeModule
+import pmediero.com.features.plant.di.plantModule
 
 class WaterMyPlantApp : Application() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
 
@@ -17,8 +20,8 @@ class WaterMyPlantApp : Application() {
             androidContext(this@WaterMyPlantApp)
             modules(
                 realmModule,
-                addPlantModule,
-                homeModule
+                mainModule,
+                plantModule
             )
         }
     }
