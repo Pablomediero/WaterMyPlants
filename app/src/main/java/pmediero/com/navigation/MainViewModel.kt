@@ -8,7 +8,9 @@ import kotlinx.coroutines.launch
 import pmediero.com.core.domain.CheckPlantExistUseCase
 
 class MainViewModel(
-    private val checkPlantExistUseCase: CheckPlantExistUseCase
+    //private val application: Application,
+    private val checkPlantExistUseCase: CheckPlantExistUseCase,
+   // private val schedulePlantUpdateUseCase: SchedulePlantUpdateUseCase
 ) : ViewModel() {
 
     private val _isPlantDataSaved = MutableStateFlow(false)
@@ -19,6 +21,9 @@ class MainViewModel(
 
     init {
         viewModelScope.launch {
+
+
+            //schedulePlantUpdateUseCase.schedulePlantUpdate(application.applicationContext)
             _isPlantDataSaved.value = checkPlantExistUseCase()
             _isDataCheck.value = true
         }

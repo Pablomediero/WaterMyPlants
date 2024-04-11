@@ -9,12 +9,13 @@ import org.koin.core.context.GlobalContext.startKoin
 import pmediero.com.core.di.mainModule
 import pmediero.com.core.di.realmModule
 import pmediero.com.features.plant.di.plantModule
+import pmediero.com.features.plant.presentation.worker.SchedulePlantUpdateUseCase
 
 class WaterMyPlantApp : Application() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
-
+        SchedulePlantUpdateUseCase().schedulePlantUpdate(applicationContext)
         startKoin {
             androidLogger()
             androidContext(this@WaterMyPlantApp)

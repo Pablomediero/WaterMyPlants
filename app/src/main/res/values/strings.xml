@@ -44,4 +44,5 @@
     <string name="are_you_sure">Are you sure?</string>
     <string name="do_you_really_want_to_delete_the_this_process_cannot_be_undone">Do you really want to delete the %1$s This process cannot be undone.</string>
     <string name="let_s_care_my_plants">Let\'s Care \nMy Plants</string>
+    <string name="all_plants_have_been_watered">All plants have been watered</string>
 </resources>

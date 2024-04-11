@@ -157,7 +157,13 @@ fun BodyHomeScreen(
             )
         }
         if (plants.isEmpty()) {
-            Text(text = "EMPTY")
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(R.string.all_plants_have_been_watered), modifier = Modifier.padding(top = spacing.large), style = MaterialTheme.typography.titleSmall.copy(MaterialTheme.colorScheme.onSurfaceVariant))
+            }
         }
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),

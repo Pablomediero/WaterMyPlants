@@ -1,6 +1,5 @@
 package pmediero.com.core.data.repository
 
-import android.util.Log
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
@@ -31,15 +30,26 @@ class PlantRepository(
 
     }
 
+    suspend fun saveAllPlant(plants: List<Plant>): Result<Unit, RootError> {
+        return try {
+            realm.write {
+                plants.forEach { plant ->
+                    copyToRealm(toPlantEntity(plant), UpdatePolicy.ALL)
+                }
+            }
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(LocalError)
+        }
+
+    }
+
     suspend fun observePlants(): Flow<List<Plant>> = realm
         .query<PlantEntity>()
         .asFlow()
         .map { results ->
             results.list.toList().map {
-                Log.i("BBDDRESULT", "GET PLANTS ${it._id}")
                 toPlant(it)
-
-
             }
         }
 
