@@ -1,7 +1,6 @@
 package pmediero.com.features.plant.presentation.worker
 
 import android.content.Context
-import android.util.Log
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -29,7 +28,6 @@ class SchedulePlantUpdateUseCase(){
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }
-        Log.i("WorkerUpdatePlant", "Media noche:  ${timeToUpdate.timeInMillis - now.timeInMillis}")
         return timeToUpdate.timeInMillis - now.timeInMillis
     }
 }
