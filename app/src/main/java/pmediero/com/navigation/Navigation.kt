@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import pmediero.com.features.plant.presentation.addplant.root.AddPlantRoot
+import pmediero.com.features.plant.presentation.detailplant.root.DetailRoot
 import pmediero.com.features.plant.presentation.home.root.HomeRoot
 import pmediero.com.features.plant.presentation.welcome.WelcomeRoot
 
@@ -29,6 +30,9 @@ fun WaterMyPlantsNavHost(
         }
         composable(AppRoutes.AddPlantScreen.route) {
             AddPlantRoot(navController = navController)
+        }
+        composable(AppRoutes.DetailPlantScreen.route) {
+            DetailRoot(navController = navController)
         }
         composable(AppRoutes.HomeScreen.route) {
             HomeRoot(navController = navController)

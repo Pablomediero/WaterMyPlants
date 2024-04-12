@@ -84,8 +84,11 @@ fun HomeScreen(
             onTabClicked = { index ->
                 onAction(HomeAction.OnTabClicked(index))
             },
-            onIconClicked = {plant ->
+            onIconClicked = { plant ->
                 onAction(HomeAction.OnIconCardPlantClicked(plant))
+            },
+            onCardClick = {
+                onAction(HomeAction.OnClickPlant)
             },
             onCardLongClick = { plant ->
                 onAction(HomeAction.OnCardLongClick(plant))
@@ -130,6 +133,7 @@ fun BodyHomeScreen(
     plants: List<Plant>,
     onTabClicked: (Int) -> Unit,
     onIconClicked: (Plant) -> Unit,
+    onCardClick: () -> Unit,
     onCardLongClick: (Plant) -> Unit
 ) {
     val showModal = remember { mutableStateOf(false) }
@@ -162,7 +166,11 @@ fun BodyHomeScreen(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = stringResource(R.string.all_plants_have_been_watered), modifier = Modifier.padding(top = spacing.large), style = MaterialTheme.typography.titleSmall.copy(MaterialTheme.colorScheme.onSurfaceVariant))
+                Text(
+                    text = stringResource(R.string.all_plants_have_been_watered),
+                    modifier = Modifier.padding(top = spacing.large),
+                    style = MaterialTheme.typography.titleSmall.copy(MaterialTheme.colorScheme.onSurfaceVariant)
+                )
             }
         }
         LazyVerticalGrid(
@@ -176,9 +184,11 @@ fun BodyHomeScreen(
                         titleCard = itemPlant.name,
                         subtitleCard = itemPlant.description,
                         imageCard = itemPlant.photo,
-                        icon = if(!itemPlant.isWatered) R.drawable.home_card_icon_water else Icons.Filled.Check,
+                        icon = if (!itemPlant.isWatered) R.drawable.home_card_icon_water else Icons.Filled.Check,
                         labelCard = listOf(itemPlant.waterAmount, itemPlant.wateringDays),
-                        onClick = {},
+                        onClick = {
+                            onCardClick()
+                        },
                         onIconClicked = {
                             onIconClicked(itemPlant)
                         },

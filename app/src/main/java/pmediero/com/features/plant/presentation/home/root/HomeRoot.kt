@@ -23,7 +23,9 @@ fun HomeRoot(
                 is HomeAction.NavigateAddPlant -> {
                     navController.navigate(AppRoutes.AddPlantScreen.route)
                 }
-
+                is HomeAction.OnClickPlant -> {
+                    navController.navigate(AppRoutes.DetailPlantScreen.route)
+                }
                 else -> {
                     homeViewModel.onAction(action)
                 }
