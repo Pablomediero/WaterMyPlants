@@ -97,7 +97,7 @@ fun CustomFloatingActionButtonNotification(
 
 
 @Composable
-fun CustomFloatingActionButtonWithText(
+fun CustomIconButton(
     onClick: () -> Unit,
     containerColor: Color,
     contentColor: Color,
@@ -156,7 +156,7 @@ fun Icon(icon: Any) {
 @Composable
 fun PreviewIconButton() {
 WaterMyPlantsTheme {
-    CustomFloatingActionButtonWithText(
+    CustomIconButton(
         modifier = Modifier.fillMaxWidth(),
         onClick = {},
         contentColor = MaterialTheme.colorScheme.surface,

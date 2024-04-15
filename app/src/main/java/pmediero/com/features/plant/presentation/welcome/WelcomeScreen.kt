@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
-import pmediero.com.core.presentation.common.CustomFloatingActionButtonWithText
+import pmediero.com.core.presentation.common.CustomIconButton
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
@@ -145,7 +145,7 @@ fun BodyWelcomeScreen(modifier: Modifier, spacing: Spacing, onEvent: (WelcomeAct
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                CustomFloatingActionButtonWithText(
+                CustomIconButton(
                     modifier = Modifier.padding(all = spacing.default),
                     onClick = {
                         onEvent(WelcomeAction.OnAddFirstPlantClick)

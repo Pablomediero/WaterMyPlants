@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
 import pmediero.com.core.presentation.common.CustomFloatingActionButton
-import pmediero.com.core.presentation.common.CustomFloatingActionButtonWithText
+import pmediero.com.core.presentation.common.CustomIconButton
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
@@ -62,143 +62,148 @@ fun DetailScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(
-                    spacing.default,
-                    Alignment.CenterVertically
-                ),
-                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
-                HeaderDetailScreen(
+                Column(
                     modifier = Modifier
-                        .weight(6f)
-                        .fillMaxWidth()
-                        .padding(all = spacing.default),
-                    spacing = spacing,
+                        .weight(9f)
+                        .verticalScroll(rememberScrollState())
+                        .height(IntrinsicSize.Max),
+                    verticalArrangement = Arrangement.spacedBy(
+                        spacing.default,
+                        Alignment.Top
+                    ),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
 
-                    )
-                BodyDetailPlant(
-                    modifier = Modifier
-                        .weight(5f)
-                        .background(
-                            color = MaterialTheme.colorScheme.surface,
-                            shape = MaterialTheme.shapes.extraLarge.copy(
-                                bottomStart = CornerSize(0.dp),
-                                bottomEnd = CornerSize(0.dp)
-                            )
+                    HeaderDetailPlant(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(all = spacing.medium),
+                        spacing = spacing,
                         )
-                        .fillMaxWidth()
-                        .padding(
-                            top = spacing.medium,
-                            start = spacing.medium,
-                            end = spacing.medium,
-                            bottom = spacing.default
-                        ),
-                    spacing = spacing
-                )
-                FooterDetailPlant(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.surface)
-                        .padding(
-                            horizontal = spacing.medium,
-                            vertical = spacing.small
-                        ),
-                )
+                    BodyDetailPlant(
+                        modifier = Modifier
+                            .weight(5f)
+                            .background(
+                                color = MaterialTheme.colorScheme.surface,
+                                shape = MaterialTheme.shapes.extraLarge.copy(
+                                    bottomStart = CornerSize(0.dp),
+                                    bottomEnd = CornerSize(0.dp)
+                                )
+                            )
+                            .fillMaxWidth()
+                            .padding(
+                                top = spacing.medium,
+                                start = spacing.medium,
+                                end = spacing.medium,
+                                bottom = spacing.default
+                            ),
+                        spacing = spacing
+                    )
+
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(
+                        spacing.default,
+                        Alignment.CenterVertically
+                    ),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    FooterDetailPlant(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.surface)
+                            .padding(
+                                horizontal = spacing.medium,
+                                vertical = spacing.small
+                            ),
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun HeaderDetailScreen(
+fun HeaderDetailPlant(
     modifier: Modifier,
     spacing: Spacing,
     //state: AddPlantState
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(spacing.medium),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+
         ) {
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .width(452.dp)
-                    .height(48.dp)
-
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        spacing.default,
-                        Alignment.Start
-                    ),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    CustomFloatingActionButton(
-                        onClick = { },
-                        modifier = Modifier
-                            .width(48.dp)
-                            .height(48.dp)
-                            .clip(CircleShape),
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary,
-                        icon = Icons.Default.ArrowBack,
-                        isVisible = true
-                    )
-                }
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        spacing.small,
-                        Alignment.End
-                    ),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-
-                    CustomFloatingActionButton(
-                        onClick = {
-
-                        },
-                        modifier = Modifier
-                            .width(48.dp)
-                            .height(48.dp)
-                            .clip(CircleShape),
-                        containerColor = MaterialTheme.colorScheme.onSecondary,
-                        contentColor = MaterialTheme.colorScheme.secondary,
-                        icon = Icons.Outlined.Edit,
-                        isVisible = true
-                    )
-                }
-            }
-            Row(
                 horizontalArrangement = Arrangement.spacedBy(
-                    spacing.medium,
+                    spacing.default,
                     Alignment.Start
                 ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val infoList = listOf(
-                    "Watering Days" to "18:00",
-                    "Watering Time" to "Mo Tu We Th Fr a",
-                    "Water Amount" to "250 ml",
-                )
-                CustomPoster(
-                    infoList = infoList,
-                    containerColor = Color.White,
-                    titleColor = Color.Black,
-                    valueColor = Color.Black,
-                    shape = MaterialTheme.shapes.small
+                CustomFloatingActionButton(
+                    onClick = { },
+                    modifier = Modifier
+                        .width(48.dp)
+                        .height(48.dp)
+                        .clip(CircleShape),
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary,
+                    icon = Icons.Default.ArrowBack,
+                    isVisible = true
                 )
             }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(
+                    spacing.small,
+                    Alignment.End
+                ),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+
+                CustomFloatingActionButton(
+                    onClick = {
+
+                    },
+                    modifier = Modifier
+                        .width(48.dp)
+                        .height(48.dp)
+                        .clip(CircleShape),
+                    containerColor = MaterialTheme.colorScheme.onSecondary,
+                    contentColor = MaterialTheme.colorScheme.secondary,
+                    icon = Icons.Outlined.Edit,
+                    isVisible = true
+                )
+            }
+        }
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(
+                spacing.medium,
+                Alignment.Start
+            ),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            val infoList = listOf(
+                "Watering Days" to "18:00",
+                "Watering Time" to "Mo Tu We Th Fr a",
+                "Water Amount" to "250 ml",
+            )
+            CustomPoster(
+                infoList = infoList,
+                containerColor = Color.White,
+                titleColor = Color.Black,
+                valueColor = Color.Black,
+                shape = MaterialTheme.shapes.small
+            )
         }
     }
 }
@@ -222,8 +227,7 @@ fun BodyDetailPlant(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .height(IntrinsicSize.Max)
+
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -241,8 +245,8 @@ fun FooterDetailPlant(modifier: Modifier) {
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CustomFloatingActionButtonWithText(
-            onClick = {  },
+        CustomIconButton(
+            onClick = { },
             contentColor = MaterialTheme.colorScheme.surface,
             containerColor = MaterialTheme.colorScheme.primary,
             icon = Icons.Outlined.Add,
