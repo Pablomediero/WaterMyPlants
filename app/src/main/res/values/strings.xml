@@ -13,6 +13,7 @@
     <string name="plant_size">Plant size</string>
     <string name="description">Description</string>
     <string name="create_plant">Create plant</string>
+    <string name="edit_plant">Edit plant</string>
     <string name="mark_as_watered">Mark as watered</string>
     <string name="mark_as_unwatered">Mark as Unwatered</string>
     <string name="small">Small</string>

@@ -36,6 +36,8 @@ class AddPlantViewModel(
                 updateLoadingState(true)
                 val plant =  getPlantByIdUseCase(_plantIdParam)
                 state = state.copy(
+                    isEditPlant = true,
+                    plantId = plant.id,
                     plantName = plant.name,
                     wateringDays = plant.wateringDays,
                     wateringTime = plant.wateringTime,
