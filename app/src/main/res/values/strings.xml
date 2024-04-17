@@ -14,6 +14,7 @@
     <string name="description">Description</string>
     <string name="create_plant">Create plant</string>
     <string name="mark_as_watered">Mark as watered</string>
+    <string name="mark_as_unwatered">Mark as Unwatered</string>
     <string name="small">Small</string>
     <string name="medium">Medium</string>
     <string name="large">Large</string>
@@ -46,12 +47,9 @@
     <string name="do_you_really_want_to_delete_the_this_process_cannot_be_undone">Do you really want to delete the %1$s This process cannot be undone.</string>
     <string name="let_s_care_my_plants">Let\'s Care \nMy Plants</string>
     <string name="all_plants_have_been_watered">All plants have been watered</string>
-
+    <string name="example_short_text">Short Text</string>
     <string name="example_large_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ullamcorper, eros eu viverra egestas, est magna sagittis massa, nec faucibus diam velit non nunc. Curabitur accumsan sapien et mi eleifend posuere. Praesent vel viverra justo. In urna nibh, dictum vel consequat non, pulvinar quis massa. Aliquam fermentum nulla quis ex gravida mollis. Donec interdum augue sed metus molestie rhoncus. Praesent egestas magna vel feugiat congue. Vivamus non ullamcorper nisi. Vestibulum dictum ante sit amet tortor dignissim vestibulum et ut magna. Donec pellentesque sodales accumsan. Aliquam erat volutpat. Donec at vestibulum odio. Etiam tempus, augue a pulvinar bibendum, est quam suscipit arcu, in accumsan felis leo non dui.
-
 Phasellus sollicitudin finibus augue, non pretium magna laoreet lacinia. Sed dapibus nisi eget tempus malesuada. Integer mollis tempor erat at sagittis. Nam fringilla ligula id tellus ultricies gravida. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent malesuada dolor ac velit dignissim suscipit. Morbi fringilla pretium tortor, sed hendrerit neque ultrices et. Mauris ut ultrices purus, id congue libero. Aenean consequat venenatis metus, a suscipit orci eleifend et. Nullam ornare, ipsum eget ultrices efficitur, tortor tellus fringilla eros, ut dignissim elit urna in lectus. Quisque blandit tincidunt felis, vel fringilla sapien gravida non. Nam luctus dapibus imperdiet. Aenean placerat enim vitae felis gravida tempor. Nullam rutrum consequat nisi eget suscipit. Phasellus sit amet aliquam orci. Praesent eget risus malesuada, lobortis sapien non, ornare neque.
-
 Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam gravida, massa sit amet fermentum luctus, lorem tortor gravida metus, et dapibus elit justo nec tellus. Duis quis hendrerit lacus. Nullam efficitur aliquam dolor, et semper magna dapibus ac. Pellentesque vitae nunc feugiat tellus finibus porttitor. Pellentesque leo diam, porta at sollicitudin ut, faucibus vitae turpis. Aenean vestibulum, mauris at pellentesque condimentum, urna libero auctor sapien, vitae bibendum orci justo eget tortor. Aliquam neque augue, rutrum eu tellus et, fermentum tempus purus. Donec consectetur velit at luctus tincidunt. Vestibulum ornare blandit lectus, quis mattis lacus elementum eu. In venenatis neque ut pharetra viverra. Phasellus ac turpis in leo feugiat dignissim. Proin tempus magna eget vestibulum pretium. Proin odio ante, iaculis vel sollicitudin vel, blandit id lectus. Integer gravida suscipit sem. Sed ut purus nulla.
-
 Proin mattis, ex vehicula gravida scelerisque, lacus arcu mattis leo, et sagittis elit purus at purus. Mauris imperdiet semper hendrerit. Fusce pharetra malesuada scelerisque. Vivamus lobortis libero ut nulla fermentum consectetur sit amet sed mi. Sed eu ligula massa. Suspendisse sollicitudin sodales orci eget volutpat. Fusce auctor lacus ac massa placerat, vitae imperdiet erat elementum. Donec ultrices euismod arcu eget consequat. Nullam eget nisl ac justo condimentum aliquet. Quisque felis nulla, euismod convallis malesuada at, vehicula ac eros. Donec quis libero ipsum. Suspendisse velit neque, congue ut massa eget, placerat viverra felis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse eget rutrum nunc. Suspendisse mollis condimentum dolor eu dapibus.</string>
 </resources>

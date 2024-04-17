@@ -18,7 +18,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,18 +33,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import pmediero.com.R
+import pmediero.com.core.model.local.Plant
 import pmediero.com.core.presentation.common.CustomFloatingActionButton
 import pmediero.com.core.presentation.common.CustomIconButton
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.features.plant.presentation.detailplant.components.CustomPoster
+import pmediero.com.features.plant.presentation.detailplant.root.DetailAction
+import pmediero.com.features.plant.presentation.detailplant.root.DetailState
 
 
 @Composable
 fun DetailScreen(
-
+    state: DetailState,
+    onAction: (DetailAction) -> Unit
 ) {
     val spacing = LocalSpacing.current
     val height = LocalConfiguration.current.screenHeightDp.dp
@@ -55,13 +60,28 @@ fun DetailScreen(
             .background(Color(0xFFDFF0DC)),
         contentAlignment = Alignment.TopCenter
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
-            modifier = Modifier.padding(top = spacing.extraLarge),
-            contentDescription = "image description",
-            contentScale = ContentScale.FillWidth
-        )
-
+        if (state.plant.photo.isEmpty()) {
+            Image(
+                painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
+                modifier = Modifier.padding(top = spacing.large),
+                contentDescription = "image description",
+                contentScale = ContentScale.FillWidth
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(500.dp)
+                    .background(Color(0xFFDFF0DC)),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                AsyncImage(
+                    model = state.plant.photo,
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -83,7 +103,13 @@ fun DetailScreen(
                         .fillMaxWidth()
                         .padding(all = spacing.medium),
                     spacing = spacing,
-
+                    state = state,
+                    onEditButtonClick = { plantIdParam ->
+                        onAction(DetailAction.OnEditButtonClick(plantIdParam))
+                    },
+                    onReturnClick = {
+                        onAction(DetailAction.OnReturnClick)
+                    }
                 )
                 BodyDetailPlant(
                     modifier = Modifier
@@ -103,7 +129,7 @@ fun DetailScreen(
                             bottom = spacing.default
                         ),
                     spacing = spacing,
-
+                    state = state,
                 )
 
             }
@@ -124,16 +150,24 @@ fun DetailScreen(
                             horizontal = spacing.medium,
                             vertical = spacing.small
                         ),
+                    state = state,
+                    onIsWaterUpdateButtonClick = { plant ->
+                        onAction(DetailAction.OnIsWaterUpdateButtonClick(plant))
+                    }
 
                 )
             }
         }
     }
 }
+
 @Composable
 fun HeaderDetailPlant(
     modifier: Modifier,
     spacing: Spacing,
+    state: DetailState,
+    onEditButtonClick: (String) -> Unit,
+    onReturnClick: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -155,7 +189,9 @@ fun HeaderDetailPlant(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 CustomFloatingActionButton(
-                    onClick = { },
+                    onClick = {
+                        onReturnClick()
+                    },
                     modifier = Modifier
                         .width(48.dp)
                         .height(48.dp)
@@ -176,7 +212,7 @@ fun HeaderDetailPlant(
 
                 CustomFloatingActionButton(
                     onClick = {
-
+                        onEditButtonClick(state.plant.id)
                     },
                     modifier = Modifier
                         .width(48.dp)
@@ -197,9 +233,9 @@ fun HeaderDetailPlant(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             val infoList = listOf(
-                "Watering Days" to "18:00",
-                "Watering Time" to "Mo Tu We Th Fr a",
-                "Water Amount" to "250 ml",
+                "Watering Days" to state.plant.wateringDays,
+                "Watering Time" to state.plant.wateringTime,
+                "Water Amount" to state.plant.waterAmount,
             )
             CustomPoster(
                 infoList = infoList,
@@ -217,6 +253,7 @@ fun HeaderDetailPlant(
 fun BodyDetailPlant(
     modifier: Modifier,
     spacing: Spacing,
+    state: DetailState,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(spacing.medium, Alignment.Top),
@@ -225,7 +262,7 @@ fun BodyDetailPlant(
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Nombre",
+            text = state.plant.name,
             style = MaterialTheme.typography.headlineMedium
         )
         Column(
@@ -235,7 +272,7 @@ fun BodyDetailPlant(
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.example_large_text),
+                text = state.plant.description,
                 style = MaterialTheme.typography.bodyLarge
             )
         }
@@ -243,18 +280,22 @@ fun BodyDetailPlant(
 }
 
 @Composable
-fun FooterDetailPlant(modifier: Modifier) {
+fun FooterDetailPlant(
+    modifier: Modifier,
+    state: DetailState,
+    onIsWaterUpdateButtonClick: (Plant) -> Unit
+) {
 
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CustomIconButton(
-            onClick = { },
+            onClick = { onIsWaterUpdateButtonClick(state.plant) },
             contentColor = MaterialTheme.colorScheme.surface,
             containerColor = MaterialTheme.colorScheme.primary,
-            icon = Icons.Outlined.Add,
-            text = stringResource(R.string.mark_as_watered)
+            icon = if (!state.plant.isWatered) R.drawable.home_card_icon_water else Icons.Filled.Check,
+            text = stringResource(if (!state.plant.isWatered) R.string.mark_as_watered else R.string.mark_as_unwatered)
         )
     }
 }
@@ -263,6 +304,6 @@ fun FooterDetailPlant(modifier: Modifier) {
 @Composable
 fun DetailScreenPreview() {
     WaterMyPlantsTheme {
-        DetailScreen()
+        DetailScreen(state = DetailState(), onAction = {})
     }
 }

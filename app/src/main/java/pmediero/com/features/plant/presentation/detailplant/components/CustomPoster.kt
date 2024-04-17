@@ -71,7 +71,7 @@ fun CustomPoster(
 @Composable
 fun CustomPosterPreview() {
     val infoList = listOf(
-        "Size" to "Mediumssssssssssssssssssssssssssssssssssssssssssssss",
+        "Size" to "Mediumssss",
         "WaterAmount" to "250 ml",
         "Time" to "22:00"
     )

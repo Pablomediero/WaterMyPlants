@@ -10,8 +10,10 @@ import pmediero.com.core.data.repository.PlantRepository
 import pmediero.com.features.plant.domain.useCase.AddPlantUseCase
 import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetFilteredPlantsUseCase
+import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
 import pmediero.com.features.plant.domain.useCase.UpdateWateredPlantUseCase
 import pmediero.com.features.plant.presentation.addplant.AddPlantViewModel
+import pmediero.com.features.plant.presentation.detailplant.DetailViewModel
 import pmediero.com.features.plant.presentation.home.HomeViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -26,6 +28,7 @@ private fun Module.domainModule() {
     factoryOf(::AddPlantUseCase)
     factoryOf(::GetFilteredPlantsUseCase)
     factoryOf(::UpdateWateredPlantUseCase)
+    factoryOf(::GetPlantByIdUseCase)
 }
 
 private fun Module.dataModule() {
@@ -35,5 +38,6 @@ private fun Module.dataModule() {
 @RequiresApi(Build.VERSION_CODES.O)
 private fun Module.presentationModule() {
     viewModelOf(::HomeViewModel)
+    viewModelOf(::DetailViewModel)
     viewModelOf(::AddPlantViewModel)
 }

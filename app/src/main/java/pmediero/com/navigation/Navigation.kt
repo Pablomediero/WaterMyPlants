@@ -3,10 +3,12 @@ package pmediero.com.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import pmediero.com.features.plant.presentation.addplant.root.AddPlantRoot
+import androidx.navigation.navArgument
+import pmediero.com.features.plant.presentation.addplant.root.AddEditPlantRoot
 import pmediero.com.features.plant.presentation.detailplant.root.DetailRoot
 import pmediero.com.features.plant.presentation.home.root.HomeRoot
 import pmediero.com.features.plant.presentation.welcome.WelcomeRoot
@@ -28,10 +30,22 @@ fun WaterMyPlantsNavHost(
         composable(AppRoutes.WelcomeScreen.route) {
             WelcomeRoot(navController = navController)
         }
-        composable(AppRoutes.AddPlantScreen.route) {
-            AddPlantRoot(navController = navController)
+        composable(
+            route = "${AppRoutes.AddEditPlantScreen.route}/{plantIdParam}",
+            arguments = listOf(navArgument("plantIdParam") {
+                type = NavType.StringType
+                nullable = true
+                defaultValue = "0"
+            }),
+        ) {
+            AddEditPlantRoot(navController = navController)
         }
-        composable(AppRoutes.DetailPlantScreen.route) {
+        composable(
+            route = "${AppRoutes.DetailPlantScreen.route}/{plantIdParam}",
+            arguments = listOf(navArgument("plantIdParam") {
+                type = NavType.StringType
+            }),
+        ) {
             DetailRoot(navController = navController)
         }
         composable(AppRoutes.HomeScreen.route) {

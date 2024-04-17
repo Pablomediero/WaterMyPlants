@@ -87,8 +87,8 @@ fun HomeScreen(
             onIconClicked = { plant ->
                 onAction(HomeAction.OnIconCardPlantClicked(plant))
             },
-            onCardClick = {
-                onAction(HomeAction.OnClickPlant)
+            onCardClick = { ipPlantParam ->
+                onAction(HomeAction.OnClickPlant(ipPlantParam))
             },
             onCardLongClick = { plant ->
                 onAction(HomeAction.OnCardLongClick(plant))
@@ -133,7 +133,7 @@ fun BodyHomeScreen(
     plants: List<Plant>,
     onTabClicked: (Int) -> Unit,
     onIconClicked: (Plant) -> Unit,
-    onCardClick: () -> Unit,
+    onCardClick: (String) -> Unit,
     onCardLongClick: (Plant) -> Unit
 ) {
     val showModal = remember { mutableStateOf(false) }
@@ -187,7 +187,7 @@ fun BodyHomeScreen(
                         icon = if (!itemPlant.isWatered) R.drawable.home_card_icon_water else Icons.Filled.Check,
                         labelCard = listOf(itemPlant.waterAmount, itemPlant.wateringDays),
                         onClick = {
-                            onCardClick()
+                            onCardClick(itemPlant.id)
                         },
                         onIconClicked = {
                             onIconClicked(itemPlant)
