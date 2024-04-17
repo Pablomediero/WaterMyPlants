@@ -31,7 +31,7 @@ class AddPlantViewModel(
 
 
     init {
-        if (!_plantIdParam.isNullOrEmpty() && _plantIdParam != "0") {
+        if (!_plantIdParam.isNullOrEmpty() && _plantIdParam != "null") {
             viewModelScope.launch {
                 updateLoadingState(true)
                 val plant =  getPlantByIdUseCase(_plantIdParam)
@@ -76,7 +76,6 @@ class AddPlantViewModel(
                 )
 
             }
-
             is AddPlantAction.OnRemoveImageButtonClick -> {
                 state = state.copy(
                     plantPhoto = "",
@@ -84,13 +83,11 @@ class AddPlantViewModel(
                 )
 
             }
-
             is AddPlantAction.OnPlantNameChange -> {
                 state = state.copy(
                     plantName = action.plantName
                 )
             }
-
             is AddPlantAction.OnPlantSizeChange -> {
                 state = state.copy(
                     plantSize = action.plantSize

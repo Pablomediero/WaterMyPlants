@@ -45,12 +45,9 @@ import pmediero.com.features.plant.presentation.detailplant.components.CustomPos
 import pmediero.com.features.plant.presentation.detailplant.root.DetailAction
 import pmediero.com.features.plant.presentation.detailplant.root.DetailState
 
-
 @Composable
-fun DetailScreen(
-    state: DetailState,
-    onAction: (DetailAction) -> Unit
-) {
+fun DetailScreen(state: DetailState,
+                 onAction: (DetailAction) -> Unit) {
     val spacing = LocalSpacing.current
     val height = LocalConfiguration.current.screenHeightDp.dp
 
