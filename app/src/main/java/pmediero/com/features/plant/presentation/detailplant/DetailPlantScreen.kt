@@ -5,8 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,96 +41,99 @@ import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.features.plant.presentation.detailplant.components.CustomPoster
 
-@Composable
-fun DetailScreen() {
-    val spacing = LocalSpacing.current
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFFDFF0DC)),
-            contentAlignment = Alignment.TopCenter
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
-                modifier = Modifier.padding(top = spacing.extraLarge),
-                contentDescription = "image description",
-                contentScale = ContentScale.FillWidth
-            )
 
+@Composable
+fun DetailScreen(
+
+) {
+    val spacing = LocalSpacing.current
+    val height = LocalConfiguration.current.screenHeightDp.dp
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFDFF0DC)),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
+            modifier = Modifier.padding(top = spacing.extraLarge),
+            contentDescription = "image description",
+            contentScale = ContentScale.FillWidth
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+        ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .height(height * 0.9f)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(
+                    spacing.default,
+                    Alignment.Top
+                ),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
+
+                HeaderDetailPlant(
                     modifier = Modifier
-                        .weight(9f)
-                        .verticalScroll(rememberScrollState())
-                        .height(IntrinsicSize.Max),
-                    verticalArrangement = Arrangement.spacedBy(
-                        spacing.default,
-                        Alignment.Top
-                    ),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
+                        .height(height * 0.45f)
+                        .fillMaxWidth()
+                        .padding(all = spacing.medium),
+                    spacing = spacing,
 
-                    HeaderDetailPlant(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(all = spacing.medium),
-                        spacing = spacing,
-                        )
-                    BodyDetailPlant(
-                        modifier = Modifier
-                            .weight(5f)
-                            .background(
-                                color = MaterialTheme.colorScheme.surface,
-                                shape = MaterialTheme.shapes.extraLarge.copy(
-                                    bottomStart = CornerSize(0.dp),
-                                    bottomEnd = CornerSize(0.dp)
-                                )
+                )
+                BodyDetailPlant(
+                    modifier = Modifier
+                        .background(
+                            color = MaterialTheme.colorScheme.surface,
+                            shape = MaterialTheme.shapes.extraLarge.copy(
+                                bottomStart = CornerSize(0.dp),
+                                bottomEnd = CornerSize(0.dp)
                             )
-                            .fillMaxWidth()
-                            .padding(
-                                top = spacing.medium,
-                                start = spacing.medium,
-                                end = spacing.medium,
-                                bottom = spacing.default
-                            ),
-                        spacing = spacing
-                    )
+                        )
+                        .defaultMinSize(minHeight = height * 0.45f)
+                        .fillMaxWidth()
+                        .padding(
+                            top = spacing.medium,
+                            start = spacing.medium,
+                            end = spacing.medium,
+                            bottom = spacing.default
+                        ),
+                    spacing = spacing,
 
-                }
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(
-                        spacing.default,
-                        Alignment.CenterVertically
-                    ),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    FooterDetailPlant(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.surface)
-                            .padding(
-                                horizontal = spacing.medium,
-                                vertical = spacing.small
-                            ),
-                    )
-                }
+                )
+
+            }
+            Column(
+                modifier = Modifier
+                    .height(height * 0.1f).background(MaterialTheme.colorScheme.surface),
+                verticalArrangement = Arrangement.spacedBy(
+                    spacing.default,
+                    Alignment.CenterVertically
+                ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                FooterDetailPlant(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(
+                            horizontal = spacing.medium,
+                            vertical = spacing.small
+                        ),
+
+                )
             }
         }
     }
 }
-
 @Composable
 fun HeaderDetailPlant(
     modifier: Modifier,
     spacing: Spacing,
-    //state: AddPlantState
 ) {
     Column(
         modifier = modifier,
