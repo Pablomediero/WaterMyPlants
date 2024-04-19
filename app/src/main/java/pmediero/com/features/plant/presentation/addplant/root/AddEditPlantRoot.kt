@@ -9,17 +9,16 @@ import pmediero.com.features.plant.presentation.addplant.AddPlantViewModel
 import pmediero.com.navigation.AppRoutes
 
 @Composable
-fun AddPlantRoot(
+fun AddEditPlantRoot(
     navController: NavController,
     addPlantViewModel: AddPlantViewModel = koinViewModel()
 ) {
-
     LaunchedEffect(key1 = true) {
         addPlantViewModel.uiEvent.collect { event ->
             when (event) {
                 is AddPlantUiEvent.NavigateToHome -> {
                     navController.navigate(AppRoutes.HomeScreen.route)
-                    }
+                }
             }
         }
     }

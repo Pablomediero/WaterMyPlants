@@ -21,11 +21,15 @@ fun HomeRoot(
         onAction = { action ->
             when (action) {
                 is HomeAction.NavigateAddPlant -> {
-                    navController.navigate(AppRoutes.AddPlantScreen.route)
+                    navController.navigate("${AppRoutes.AddEditPlantScreen.route}/0")
                 }
+
                 is HomeAction.OnClickPlant -> {
-                    navController.navigate(AppRoutes.DetailPlantScreen.route)
+                    navController.navigate(
+                       "${ AppRoutes.DetailPlantScreen.route}/${action.idPlantParam}"
+                    )
                 }
+
                 else -> {
                     homeViewModel.onAction(action)
                 }

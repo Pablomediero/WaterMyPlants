@@ -25,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.twotone.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -144,10 +145,12 @@ fun AddPlantScreen(
                     horizontal = spacing.medium,
                     vertical = spacing.small
                 ),
+            state = state,
             onFooterBtnClick = {
                 onAction(
                     AddPlantAction.OnCreatePlantClick(
                         Plant(
+                            id = state.plantId,
                             name = state.plantName,
                             wateringDays = state.wateringDays,
                             wateringTime = state.wateringTime,
@@ -499,15 +502,15 @@ fun FormAddPlantFigma(
 
 
 @Composable
-fun FooterAddPlant(modifier: Modifier, onFooterBtnClick: () -> Unit) {
+fun FooterAddPlant(modifier: Modifier, state: AddPlantState, onFooterBtnClick: () -> Unit) {
     CustomIconButton(
         modifier = modifier.fillMaxWidth(),
         onClick = onFooterBtnClick,
         contentColor = MaterialTheme.colorScheme.primary,
         containerColor = Color.White,
-        icon = Icons.Outlined.Add,
+        icon = if (state.isEditPlant) Icons.Outlined.Edit else Icons.Outlined.Add,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-        text = stringResource(R.string.create_plant)
+        text = stringResource(if (state.isEditPlant) R.string.edit_plant else R.string.create_plant)
     )
 }
 

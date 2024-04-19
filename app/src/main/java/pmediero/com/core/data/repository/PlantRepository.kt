@@ -5,6 +5,7 @@ import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.mongodb.kbson.ObjectId
 import pmediero.com.core.data.mappers.toPlant
 import pmediero.com.core.data.mappers.toPlantEntity
 import pmediero.com.core.model.local.Plant
@@ -53,7 +54,13 @@ class PlantRepository(
             }
         }
 
+
     suspend fun getPlants(): List<Plant> = realm.query<PlantEntity>().find().map { toPlant(it) }
+    suspend fun getPlantById(plantIdParam: String):Plant {
+        val plantEntity = ObjectId(plantIdParam)
+        return toPlant(realm.query<PlantEntity>("_id == $0", plantEntity).find().first())
+    }
+
 
 }
 
