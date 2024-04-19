@@ -1,11 +1,15 @@
 package pmediero.com.core.presentation.common
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -23,8 +27,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pmediero.com.R
+import pmediero.com.core_ui.WaterMyPlantsTheme
 
 @Composable
 fun CustomFloatingActionButton(
@@ -90,7 +97,7 @@ fun CustomFloatingActionButtonNotification(
 
 
 @Composable
-fun CustomFloatingActionButtonWithText(
+fun CustomIconButton(
     onClick: () -> Unit,
     containerColor: Color,
     contentColor: Color,
@@ -110,12 +117,14 @@ fun CustomFloatingActionButtonWithText(
         )
     ) {
         Row(
-            modifier = modifier,
+            modifier = modifier.background(containerColor),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(icon = icon)
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier
+                .width(8.dp)
+                .background(containerColor))
             Text(text = text, style = MaterialTheme.typography.bodyLarge)
         }
     }
@@ -146,5 +155,14 @@ fun Icon(icon: Any) {
 @Preview
 @Composable
 fun PreviewIconButton() {
-
+WaterMyPlantsTheme {
+    CustomIconButton(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = {},
+        contentColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.primary,
+        icon = Icons.Outlined.Add,
+        text = stringResource(R.string.mark_as_watered)
+    )
+}
 }

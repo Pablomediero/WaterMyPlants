@@ -51,7 +51,7 @@ import coil.compose.AsyncImage
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core.presentation.common.CustomFloatingActionButton
-import pmediero.com.core.presentation.common.CustomFloatingActionButtonWithText
+import pmediero.com.core.presentation.common.CustomIconButton
 import pmediero.com.core.presentation.common.DialogPlantSize
 import pmediero.com.core.presentation.common.DialogWateringDays
 import pmediero.com.core.presentation.common.DialogWateringTime
@@ -239,9 +239,7 @@ fun HeaderAddPlant(
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .width(452.dp)
-                        .height(48.dp)
+                    modifier = Modifier.fillMaxWidth()
 
                 ) {
                     Row(
@@ -303,7 +301,7 @@ fun HeaderAddPlant(
                     ),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    CustomFloatingActionButtonWithText(
+                    CustomIconButton(
                         onClick = {
                             singlePhotoPickerLauncher.launch(
                                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -502,7 +500,7 @@ fun FormAddPlantFigma(
 
 @Composable
 fun FooterAddPlant(modifier: Modifier, onFooterBtnClick: () -> Unit) {
-    CustomFloatingActionButtonWithText(
+    CustomIconButton(
         modifier = modifier.fillMaxWidth(),
         onClick = onFooterBtnClick,
         contentColor = MaterialTheme.colorScheme.primary,

@@ -18,4 +18,5 @@ object Versions {
     const val realmDb = "1.11.0"
 
     const val coil = "2.6.0"
+    const val work_manager = "2.9.0"
 }

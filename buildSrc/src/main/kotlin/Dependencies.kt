@@ -16,7 +16,7 @@ object Dependencies {
     const val test_ui_tooling = "androidx.compose.ui:ui-tooling"
     const val test_ui_manifest = "androidx.compose.ui:ui-test-manifest"
 
-    const val lottie =  "com.airbnb.android:lottie-compose:${Versions.lottie}"
+    const val lottie = "com.airbnb.android:lottie-compose:${Versions.lottie}"
     const val splash = "androidx.core:core-splashscreen:${Versions.splash}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.navigation}"
     const val fonts = "androidx.compose.ui:ui-text-google-fonts:${Versions.font}"
@@ -26,4 +26,8 @@ object Dependencies {
 
     const val realmDb = "io.realm.kotlin:library-base:${Versions.realmDb}"
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
+
+    const val work_manager_coroutines = "androidx.work:work-runtime-ktx:${Versions.work_manager}"
+    const val work_manager = "androidx.work:work-runtime:${Versions.work_manager}"
+
 }
