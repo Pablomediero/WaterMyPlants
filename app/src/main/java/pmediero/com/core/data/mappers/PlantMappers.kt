@@ -20,7 +20,7 @@ fun toPlant(type: PlantEntity): Plant {
 
 fun toPlantEntity(plant: Plant): PlantEntity {
     return PlantEntity().apply {
-        _id = if (plant.id == "0") { ObjectId() } else ObjectId(plant.id)
+        _id = if (plant.id == "0" || plant.id == "") { ObjectId() } else ObjectId(plant.id)
         name = plant.name
         wateringDays = plant.wateringDays
         wateringTime = plant.wateringTime

@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import pmediero.com.features.plant.presentation.addplant.root.AddEditPlantRoot
+import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantRoot
 import pmediero.com.features.plant.presentation.detailplant.root.DetailRoot
 import pmediero.com.features.plant.presentation.home.root.HomeRoot
 import pmediero.com.features.plant.presentation.welcome.WelcomeRoot

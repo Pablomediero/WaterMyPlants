@@ -1,4 +1,4 @@
-package pmediero.com.features.plant.presentation.addplant.components
+package pmediero.com.features.plant.presentation.addeditplant.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize

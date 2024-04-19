@@ -12,7 +12,7 @@ fun WelcomeRoot (
     WelcomeScreen(){ state ->
         when (state) {
             is WelcomeAction.OnAddFirstPlantClick -> {
-                navController.navigate(AppRoutes.AddEditPlantScreen.route)
+                navController.navigate("${AppRoutes.AddEditPlantScreen.route}/${null}")
             }
         }
     }

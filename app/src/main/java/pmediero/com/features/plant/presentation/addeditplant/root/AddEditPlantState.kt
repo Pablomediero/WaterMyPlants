@@ -1,6 +1,6 @@
-package pmediero.com.features.plant.presentation.addplant.root
+package pmediero.com.features.plant.presentation.addeditplant.root
 
-data class AddPlantState(
+data class AddEditPlantState(
     var plantId: String = "",
     var plantName: String = "",
     var wateringDays: String = "",

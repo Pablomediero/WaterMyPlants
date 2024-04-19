@@ -1,33 +1,33 @@
-package pmediero.com.features.plant.presentation.addplant.root
+package pmediero.com.features.plant.presentation.addeditplant.root
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import org.koin.androidx.compose.koinViewModel
-import pmediero.com.features.plant.presentation.addplant.AddPlantScreen
-import pmediero.com.features.plant.presentation.addplant.AddPlantViewModel
+import pmediero.com.features.plant.presentation.addeditplant.AddEditPlantScreen
+import pmediero.com.features.plant.presentation.addeditplant.AddEditPlantViewModel
 import pmediero.com.navigation.AppRoutes
 
 @Composable
 fun AddEditPlantRoot(
     navController: NavController,
-    addPlantViewModel: AddPlantViewModel = koinViewModel()
+    addEditPlantViewModel: AddEditPlantViewModel = koinViewModel()
 ) {
     LaunchedEffect(key1 = true) {
-        addPlantViewModel.uiEvent.collect { event ->
+        addEditPlantViewModel.uiEvent.collect { event ->
             when (event) {
-                is AddPlantUiEvent.NavigateToHome -> {
+                is AddEditPlantUiEvent.NavigateToHome -> {
                     navController.navigate(AppRoutes.HomeScreen.route)
                 }
             }
         }
     }
-    AddPlantScreen(
-        state = addPlantViewModel.state,
+    AddEditPlantScreen(
+        state = addEditPlantViewModel.state,
         onAction = { action ->
             when (action) {
                 else -> {
-                    addPlantViewModel.onAction(action)
+                    addEditPlantViewModel.onAction(action)
                 }
             }
         }

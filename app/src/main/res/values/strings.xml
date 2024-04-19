@@ -7,7 +7,8 @@
     <string name="add_image">Add Image</string>
     <string name="change_image">Change Image</string>
     <string name="plant_name">Plant name*</string>
-    <string name="watering_days">Watering days*</string>
+    <string name="label_watering_days">Watering days*</string>
+    <string name="watering_days">Watering days</string>
     <string name="watering_time">Watering time</string>
     <string name="water_amount">Water amount</string>
     <string name="plant_size">Plant size</string>
