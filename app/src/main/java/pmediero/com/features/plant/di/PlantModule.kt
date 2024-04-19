@@ -12,7 +12,7 @@ import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetFilteredPlantsUseCase
 import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
 import pmediero.com.features.plant.domain.useCase.UpdateWateredPlantUseCase
-import pmediero.com.features.plant.presentation.addplant.AddPlantViewModel
+import pmediero.com.features.plant.presentation.addeditplant.AddEditPlantViewModel
 import pmediero.com.features.plant.presentation.detailplant.DetailViewModel
 import pmediero.com.features.plant.presentation.home.HomeViewModel
 
@@ -39,5 +39,5 @@ private fun Module.dataModule() {
 private fun Module.presentationModule() {
     viewModelOf(::HomeViewModel)
     viewModelOf(::DetailViewModel)
-    viewModelOf(::AddPlantViewModel)
+    viewModelOf(::AddEditPlantViewModel)
 }

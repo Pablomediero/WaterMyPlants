@@ -1,4 +1,4 @@
-package pmediero.com.features.plant.presentation.addplant
+package pmediero.com.features.plant.presentation.addeditplant
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,20 +12,20 @@ import kotlinx.coroutines.launch
 import pmediero.com.features.plant.domain.useCase.AddPlantUseCase
 import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
-import pmediero.com.features.plant.presentation.addplant.root.AddPlantAction
-import pmediero.com.features.plant.presentation.addplant.root.AddPlantState
-import pmediero.com.features.plant.presentation.addplant.root.AddPlantUiEvent
+import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantAction
+import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantState
+import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantUiEvent
 
-class AddPlantViewModel(
+class AddEditPlantViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val filterWateringDaysUseCase: FilterWateringDaysUseCase,
     private val addPlantUseCase: AddPlantUseCase,
     private val getPlantByIdUseCase: GetPlantByIdUseCase,
 ) : ViewModel() {
 
-    var state by mutableStateOf(AddPlantState())
+    var state by mutableStateOf(AddEditPlantState())
         private set
-    private val _uiEvent = Channel<AddPlantUiEvent>()
+    private val _uiEvent = Channel<AddEditPlantUiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
     private val _plantIdParam = savedStateHandle.get<String>("plantIdParam").takeIf { it != null }
 
@@ -45,16 +45,16 @@ class AddPlantViewModel(
                     plantSize = plant.plantSize,
                     plantDescription = plant.description,
                     plantPhoto = plant.photo,
-                    isPhotoSelected = true
+                    isPhotoSelected = plant.photo.isNotEmpty()
                 )
                 updateLoadingState(false)
             }
         }
     }
 
-    fun onAction(action: AddPlantAction) {
+    fun onAction(action: AddEditPlantAction) {
         when (action) {
-            is AddPlantAction.OnCreatePlantClick -> {
+            is AddEditPlantAction.OnCreateEditPlantClick -> {
                 viewModelScope.launch {
                     updateLoadingState(true)
                     addPlantUseCase(action.plant).fold(
@@ -62,57 +62,57 @@ class AddPlantViewModel(
 
                         },
                         onSuccess = {
-                            _uiEvent.send(AddPlantUiEvent.NavigateToHome)
+                            _uiEvent.send(AddEditPlantUiEvent.NavigateToHome)
                         }
                     )
                     updateLoadingState(false)
                 }
             }
 
-            is AddPlantAction.OnAddImageButtonClick -> {
+            is AddEditPlantAction.OnAddImageButtonClickEdit -> {
                 state = state.copy(
                     plantPhoto = action.plantPhoto,
                     isPhotoSelected = true
                 )
 
             }
-            is AddPlantAction.OnRemoveImageButtonClick -> {
+            is AddEditPlantAction.OnRemoveImageButtonClick -> {
                 state = state.copy(
                     plantPhoto = "",
                     isPhotoSelected = false
                 )
 
             }
-            is AddPlantAction.OnPlantNameChange -> {
+            is AddEditPlantAction.OnEditPlantNameChange -> {
                 state = state.copy(
                     plantName = action.plantName
                 )
             }
-            is AddPlantAction.OnPlantSizeChange -> {
+            is AddEditPlantAction.OnEditPlantSizeChange -> {
                 state = state.copy(
                     plantSize = action.plantSize
                 )
             }
 
-            is AddPlantAction.OnPlantWaterAmountChange -> {
+            is AddEditPlantAction.OnEditPlantWaterAmountChange -> {
                 state = state.copy(
                     waterAmount = action.waterAmount
                 )
             }
 
-            is AddPlantAction.OnPlantWateringDaysChange -> {
+            is AddEditPlantAction.OnEditPlantWateringDaysChange -> {
                 state = state.copy(
                     wateringDays = filterWateringDaysUseCase(action.wateringDays)
                 )
             }
 
-            is AddPlantAction.OnPlantWateringTimeChange -> {
+            is AddEditPlantAction.OnEditPlantWateringTimeChange -> {
                 state = state.copy(
                     wateringTime = action.wateringTime
                 )
             }
 
-            is AddPlantAction.OnPlantDescriptionChange -> {
+            is AddEditPlantAction.OnEditPlantDescriptionChange -> {
                 state = state.copy(
                     plantDescription = action.plantDescription
                 )

@@ -46,8 +46,10 @@ import pmediero.com.features.plant.presentation.detailplant.root.DetailAction
 import pmediero.com.features.plant.presentation.detailplant.root.DetailState
 
 @Composable
-fun DetailScreen(state: DetailState,
-                 onAction: (DetailAction) -> Unit) {
+fun DetailScreen(
+    state: DetailState,
+    onAction: (DetailAction) -> Unit
+) {
     val spacing = LocalSpacing.current
     val height = LocalConfiguration.current.screenHeightDp.dp
 
@@ -132,7 +134,8 @@ fun DetailScreen(state: DetailState,
             }
             Column(
                 modifier = Modifier
-                    .height(height * 0.1f).background(MaterialTheme.colorScheme.surface),
+                    .height(height * 0.1f)
+                    .background(MaterialTheme.colorScheme.surface),
                 verticalArrangement = Arrangement.spacedBy(
                     spacing.default,
                     Alignment.CenterVertically
@@ -178,49 +181,32 @@ fun HeaderDetailPlant(
             modifier = Modifier.fillMaxWidth()
 
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(
-                    spacing.default,
-                    Alignment.Start
-                ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                CustomFloatingActionButton(
-                    onClick = {
-                        onReturnClick()
-                    },
-                    modifier = Modifier
-                        .width(48.dp)
-                        .height(48.dp)
-                        .clip(CircleShape),
-                    containerColor = MaterialTheme.colorScheme.secondary,
-                    contentColor = MaterialTheme.colorScheme.onSecondary,
-                    icon = Icons.Default.ArrowBack,
-                    isVisible = true
-                )
-            }
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(
-                    spacing.small,
-                    Alignment.End
-                ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                CustomFloatingActionButton(
-                    onClick = {
-                        onEditButtonClick(state.plant.id)
-                    },
-                    modifier = Modifier
-                        .width(48.dp)
-                        .height(48.dp)
-                        .clip(CircleShape),
-                    containerColor = MaterialTheme.colorScheme.onSecondary,
-                    contentColor = MaterialTheme.colorScheme.secondary,
-                    icon = Icons.Outlined.Edit,
-                    isVisible = true
-                )
-            }
+            CustomFloatingActionButton(
+                onClick = {
+                    onReturnClick()
+                },
+                modifier = Modifier
+                    .width(48.dp)
+                    .height(48.dp)
+                    .clip(CircleShape),
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.onSecondary,
+                icon = Icons.Default.ArrowBack,
+                isVisible = true
+            )
+            CustomFloatingActionButton(
+                onClick = {
+                    onEditButtonClick(state.plant.id)
+                },
+                modifier = Modifier
+                    .width(48.dp)
+                    .height(48.dp)
+                    .clip(CircleShape),
+                containerColor = MaterialTheme.colorScheme.onSecondary,
+                contentColor = MaterialTheme.colorScheme.secondary,
+                icon = Icons.Outlined.Edit,
+                isVisible = true
+            )
         }
         Row(
             horizontalArrangement = Arrangement.spacedBy(
@@ -230,9 +216,9 @@ fun HeaderDetailPlant(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             val infoList = listOf(
-                "Watering Days" to state.plant.wateringDays,
-                "Watering Time" to state.plant.wateringTime,
-                "Water Amount" to state.plant.waterAmount,
+                stringResource(R.string.watering_days) to state.plant.wateringDays,
+                stringResource(R.string.watering_time) to state.plant.wateringTime,
+                stringResource(R.string.water_amount) to state.plant.waterAmount,
             )
             CustomPoster(
                 infoList = infoList,

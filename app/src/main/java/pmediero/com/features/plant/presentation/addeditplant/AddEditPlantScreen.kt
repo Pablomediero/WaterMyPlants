@@ -1,4 +1,4 @@
-package pmediero.com.features.plant.presentation.addplant
+package pmediero.com.features.plant.presentation.addeditplant
 
 import android.content.Intent
 import android.net.Uri
@@ -60,15 +60,15 @@ import pmediero.com.core.presentation.common.PlantSize
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation.addplant.components.CustomTextField
-import pmediero.com.features.plant.presentation.addplant.components.CustomTextFieldModal
-import pmediero.com.features.plant.presentation.addplant.root.AddPlantAction
-import pmediero.com.features.plant.presentation.addplant.root.AddPlantState
+import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextField
+import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextFieldModal
+import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantAction
+import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantState
 
 @Composable
-fun AddPlantScreen(
-    state: AddPlantState,
-    onAction: (AddPlantAction) -> Unit
+fun AddEditPlantScreen(
+    state: AddEditPlantState,
+    onAction: (AddEditPlantAction) -> Unit
 ) {
     val spacing = LocalSpacing.current
     Column(
@@ -79,7 +79,7 @@ fun AddPlantScreen(
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        HeaderAddPlant(
+        HeaderAddEditPlant(
             modifier = Modifier
                 .weight(5f)
                 .fillMaxWidth()
@@ -88,14 +88,14 @@ fun AddPlantScreen(
 
             state = state,
             onAddImageButtonClick = { imageUrl ->
-                onAction(AddPlantAction.OnAddImageButtonClick(imageUrl))
+                onAction(AddEditPlantAction.OnAddImageButtonClickEdit(imageUrl))
             },
             onRemoveImageButtonClick = {
-                onAction(AddPlantAction.OnRemoveImageButtonClick)
+                onAction(AddEditPlantAction.OnRemoveImageButtonClick)
             }
 
         )
-        BodyAddPlant(
+        BodyAddEditPlant(
             modifier = Modifier
                 .weight(5f)
                 .verticalScroll(rememberScrollState())
@@ -119,26 +119,26 @@ fun AddPlantScreen(
             state = state,
             spacing = spacing,
             onPlantNameChange = { plantName ->
-                onAction(AddPlantAction.OnPlantNameChange(plantName))
+                onAction(AddEditPlantAction.OnEditPlantNameChange(plantName))
             },
             onPlantWateringDaysChange = { wateringDays ->
-                onAction(AddPlantAction.OnPlantWateringDaysChange(wateringDays))
+                onAction(AddEditPlantAction.OnEditPlantWateringDaysChange(wateringDays))
             },
             onPlantWateringTimeChange = { wateringTime ->
-                onAction(AddPlantAction.OnPlantWateringTimeChange(wateringTime))
+                onAction(AddEditPlantAction.OnEditPlantWateringTimeChange(wateringTime))
             },
             onPlantWaterAmountChange = { waterAmount ->
-                onAction(AddPlantAction.OnPlantWaterAmountChange(waterAmount))
+                onAction(AddEditPlantAction.OnEditPlantWaterAmountChange(waterAmount))
             },
             onPlantSizeChange = { plantSize ->
-                onAction(AddPlantAction.OnPlantSizeChange(plantSize))
+                onAction(AddEditPlantAction.OnEditPlantSizeChange(plantSize))
             },
             onPlantDescriptionChange = { plantDescription ->
-                onAction(AddPlantAction.OnPlantDescriptionChange(plantDescription))
+                onAction(AddEditPlantAction.OnEditPlantDescriptionChange(plantDescription))
             }
 
         )
-        FooterAddPlant(
+        FooterAddEditPlant(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
@@ -148,7 +148,7 @@ fun AddPlantScreen(
             state = state,
             onFooterBtnClick = {
                 onAction(
-                    AddPlantAction.OnCreatePlantClick(
+                    AddEditPlantAction.OnCreateEditPlantClick(
                         Plant(
                             id = state.plantId,
                             name = state.plantName,
@@ -167,10 +167,10 @@ fun AddPlantScreen(
 }
 
 @Composable
-fun HeaderAddPlant(
+fun HeaderAddEditPlant(
     modifier: Modifier,
     spacing: Spacing,
-    state: AddPlantState,
+    state: AddEditPlantState,
     onAddImageButtonClick: (String) -> Unit,
     onRemoveImageButtonClick: () -> Unit
 
@@ -203,7 +203,7 @@ fun HeaderAddPlant(
                 .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
-            if (state.plantPhoto.isEmpty()) {
+            if (state.plantPhoto == "") {
                 Image(
                     painter = painterResource(id = R.drawable.add_plant_background_header),
                     contentDescription = null,
@@ -335,9 +335,9 @@ fun HeaderAddPlant(
 }
 
 @Composable
-fun BodyAddPlant(
+fun BodyAddEditPlant(
     modifier: Modifier,
-    state: AddPlantState,
+    state: AddEditPlantState,
     spacing: Spacing,
     onPlantNameChange: (String) -> Unit,
     onPlantWateringDaysChange: (Map<String, Boolean>) -> Unit,
@@ -374,7 +374,7 @@ fun BodyAddPlant(
 fun FormAddPlantFigma(
     modifier: Modifier,
     spacing: Spacing,
-    state: AddPlantState,
+    state: AddEditPlantState,
     onPlantNameChange: (String) -> Unit,
     onPlantWateringDaysChange: (Map<String, Boolean>) -> Unit,
     onPlantWateringTimeChange: (String) -> Unit,
@@ -420,7 +420,7 @@ fun FormAddPlantFigma(
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
                 value = state.wateringDays,
-                placeholder = stringResource(R.string.watering_days),
+                placeholder = stringResource(R.string.label_watering_days),
                 onClick = {
                     showDialogCheckBox.value = true
                 },
@@ -502,7 +502,7 @@ fun FormAddPlantFigma(
 
 
 @Composable
-fun FooterAddPlant(modifier: Modifier, state: AddPlantState, onFooterBtnClick: () -> Unit) {
+fun FooterAddEditPlant(modifier: Modifier, state: AddEditPlantState, onFooterBtnClick: () -> Unit) {
     CustomIconButton(
         modifier = modifier.fillMaxWidth(),
         onClick = onFooterBtnClick,
@@ -518,6 +518,6 @@ fun FooterAddPlant(modifier: Modifier, state: AddPlantState, onFooterBtnClick: (
 @Composable
 fun PreviewAddPlantScreen() {
     WaterMyPlantsTheme {
-        AddPlantScreen(AddPlantState()) {}
+        AddEditPlantScreen(AddEditPlantState()) {}
     }
 }
