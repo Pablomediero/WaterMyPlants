@@ -87,6 +87,9 @@ fun AddEditPlantScreen(
             spacing = spacing,
 
             state = state,
+            onReturnButtonClick = {
+                onAction(AddEditPlantAction.OnReturnButtonClick)
+            },
             onAddImageButtonClick = { imageUrl ->
                 onAction(AddEditPlantAction.OnAddImageButtonClickEdit(imageUrl))
             },
@@ -171,6 +174,7 @@ fun HeaderAddEditPlant(
     modifier: Modifier,
     spacing: Spacing,
     state: AddEditPlantState,
+    onReturnButtonClick: () -> Unit,
     onAddImageButtonClick: (String) -> Unit,
     onRemoveImageButtonClick: () -> Unit
 
@@ -253,7 +257,9 @@ fun HeaderAddEditPlant(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         CustomFloatingActionButton(
-                            onClick = { },
+                            onClick = {
+                                onReturnButtonClick()
+                            },
                             modifier = Modifier
                                 .width(48.dp)
                                 .height(48.dp)

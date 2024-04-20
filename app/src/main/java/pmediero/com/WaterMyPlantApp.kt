@@ -9,7 +9,7 @@ import org.koin.core.context.GlobalContext.startKoin
 import pmediero.com.core.di.mainModule
 import pmediero.com.core.di.realmModule
 import pmediero.com.features.plant.di.plantModule
-import pmediero.com.features.plant.presentation.worker.SchedulePlantUpdateUseCase
+import pmediero.com.features.plant.domain.useCase.SchedulePlantUpdateUseCase
 
 class WaterMyPlantApp : Application() {
     @RequiresApi(Build.VERSION_CODES.O)

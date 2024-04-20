@@ -6,7 +6,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import pmediero.com.core.data.repository.PlantRepository
 import pmediero.com.core.domain.CheckPlantExistUseCase
-import pmediero.com.features.plant.presentation.worker.SchedulePlantUpdateUseCase
+import pmediero.com.features.plant.domain.useCase.SchedulePlantUpdateUseCase
 import pmediero.com.navigation.MainViewModel
 
 val mainModule = module {
