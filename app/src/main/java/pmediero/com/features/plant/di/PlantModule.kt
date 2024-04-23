@@ -29,6 +29,7 @@ private fun Module.domainModule() {
     factoryOf(::GetFilteredPlantsUseCase)
     factoryOf(::UpdateWateredPlantUseCase)
     factoryOf(::GetPlantByIdUseCase)
+
 }
 
 private fun Module.dataModule() {

@@ -9,6 +9,7 @@ import org.koin.core.context.GlobalContext.startKoin
 import pmediero.com.core.di.mainModule
 import pmediero.com.core.di.realmModule
 import pmediero.com.features.plant.di.plantModule
+import pmediero.com.features.plant.domain.useCase.ScheduleNotificationsUseCase
 import pmediero.com.features.plant.domain.useCase.SchedulePlantUpdateUseCase
 
 class WaterMyPlantApp : Application() {
@@ -16,6 +17,7 @@ class WaterMyPlantApp : Application() {
     override fun onCreate() {
         super.onCreate()
         SchedulePlantUpdateUseCase().schedulePlantUpdate(applicationContext)
+        ScheduleNotificationsUseCase().scheduleNotifications(applicationContext)
         startKoin {
             androidLogger()
             androidContext(this@WaterMyPlantApp)

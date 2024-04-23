@@ -30,4 +30,6 @@ object Dependencies {
     const val work_manager_coroutines = "androidx.work:work-runtime-ktx:${Versions.work_manager}"
     const val work_manager = "androidx.work:work-runtime:${Versions.work_manager}"
 
+    const val notify_permission = "com.google.accompanist:accompanist-permissions:${Versions.notify_permission}"
+
 }

@@ -62,6 +62,7 @@ class AddEditPlantViewModel(
 
                         },
                         onSuccess = {
+
                             _uiEvent.send(AddEditPlantUiEvent.NavigateToHome)
                         }
                     )

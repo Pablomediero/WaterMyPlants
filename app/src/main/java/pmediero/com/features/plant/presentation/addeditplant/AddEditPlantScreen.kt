@@ -511,7 +511,9 @@ fun FormAddPlantFigma(
 fun FooterAddEditPlant(modifier: Modifier, state: AddEditPlantState, onFooterBtnClick: () -> Unit) {
     CustomIconButton(
         modifier = modifier.fillMaxWidth(),
-        onClick = onFooterBtnClick,
+        onClick = {
+            onFooterBtnClick()
+        },
         contentColor = MaterialTheme.colorScheme.primary,
         containerColor = Color.White,
         icon = if (state.isEditPlant) Icons.Outlined.Edit else Icons.Outlined.Add,
