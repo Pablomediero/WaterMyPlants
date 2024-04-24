@@ -80,6 +80,9 @@ fun HomeRoot(
                 is HomeAction.NavigateAddPlant -> {
                     navController.navigate("${AppRoutes.AddEditPlantScreen.route}/${null}")
                 }
+                is HomeAction.NavigateNotification -> {
+                    navController.navigate(AppRoutes.NotificationScreen.route)
+                }
 
                 is HomeAction.OnClickPlant -> {
                     navController.navigate(

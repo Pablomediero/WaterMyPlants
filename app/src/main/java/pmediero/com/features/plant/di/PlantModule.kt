@@ -16,6 +16,7 @@ import pmediero.com.features.plant.domain.useCase.UpdateWateredPlantUseCase
 import pmediero.com.features.plant.presentation.addeditplant.AddEditPlantViewModel
 import pmediero.com.features.plant.presentation.detailplant.DetailViewModel
 import pmediero.com.features.plant.presentation.home.HomeViewModel
+import pmediero.com.features.plant.presentation.notification.NotificationViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 val plantModule = module {
@@ -42,4 +43,6 @@ private fun Module.presentationModule() {
     viewModelOf(::HomeViewModel)
     viewModelOf(::DetailViewModel)
     viewModelOf(::AddEditPlantViewModel)
+    viewModelOf(::NotificationViewModel)
+
 }

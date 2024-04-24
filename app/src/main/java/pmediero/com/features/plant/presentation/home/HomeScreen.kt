@@ -18,7 +18,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -76,6 +76,9 @@ fun HomeScreen(
                 .weight(1f)
                 .fillMaxSize(),
             onNotifyClick = {
+                onAction(HomeAction.NavigateNotification)
+            },
+            onTemporalAddPlantButtonClick = {
                 onAction(HomeAction.NavigateAddPlant)
             },
 
@@ -107,7 +110,7 @@ fun HomeScreen(
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit) {
+fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit, onTemporalAddPlantButtonClick: () -> Unit) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -132,11 +135,11 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit) {
         )
         CustomFloatingActionButtonNotification(
             onClick = {
-
+                onTemporalAddPlantButtonClick()
             },
             containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.secondary,
-            icon = Icons.Outlined.AccountCircle,
+            icon = Icons.Outlined.Add,
             isVisible = true,
             isNotify = true
         )
