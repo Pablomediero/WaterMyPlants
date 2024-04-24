@@ -26,6 +26,9 @@ fun AddEditPlantRoot(
         state = addEditPlantViewModel.state,
         onAction = { action ->
             when (action) {
+                is AddEditPlantAction.OnReturnButtonClick -> {
+                    navController.popBackStack()
+                }
                 else -> {
                     addEditPlantViewModel.onAction(action)
                 }

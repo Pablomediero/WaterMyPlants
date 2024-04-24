@@ -1,10 +1,10 @@
-package pmediero.com.features.plant.presentation.worker
+package pmediero.com.features.plant.domain.useCase
 
 import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import pmediero.com.features.plant.data.PlantUpdateWork
+import pmediero.com.features.plant.data.worker.PlantUpdateWork
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 

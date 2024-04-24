@@ -117,6 +117,8 @@ class AddEditPlantViewModel(
                     plantDescription = action.plantDescription
                 )
             }
+
+            else -> {}
         }
 
     }

@@ -12,6 +12,7 @@ sealed class AddEditPlantAction{
     data class OnEditPlantDescriptionChange(val plantDescription: String) : AddEditPlantAction()
     data class OnAddImageButtonClickEdit(val plantPhoto: String) : AddEditPlantAction()
     data object OnRemoveImageButtonClick: AddEditPlantAction()
+    data object OnReturnButtonClick: AddEditPlantAction()
 
 
 }
