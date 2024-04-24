@@ -19,6 +19,8 @@ import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantRo
 import pmediero.com.features.plant.presentation.detailplant.root.DetailRoot
 import pmediero.com.features.plant.presentation.home.root.HomeRoot
 import pmediero.com.features.plant.presentation.notification.root.NotificationRoot
+import pmediero.com.features.plant.presentation.welcome.WelcomeRoot
+import pmediero.com.features.plant.presentation.notification.root.NotificationRoot
 import pmediero.com.features.plant.presentation.welcome.root.WelcomeRoot
 
 @OptIn(ExperimentalSharedTransitionApi::class)
