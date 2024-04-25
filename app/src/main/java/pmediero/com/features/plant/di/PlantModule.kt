@@ -11,6 +11,7 @@ import pmediero.com.features.plant.domain.useCase.AddPlantUseCase
 import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetFilteredPlantsUseCase
 import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
+import pmediero.com.features.plant.domain.useCase.ScheduleNotificationPlant
 import pmediero.com.features.plant.domain.useCase.UpdateWateredPlantUseCase
 import pmediero.com.features.plant.presentation.addeditplant.AddEditPlantViewModel
 import pmediero.com.features.plant.presentation.detailplant.DetailViewModel
@@ -29,6 +30,7 @@ private fun Module.domainModule() {
     factoryOf(::GetFilteredPlantsUseCase)
     factoryOf(::UpdateWateredPlantUseCase)
     factoryOf(::GetPlantByIdUseCase)
+    factoryOf(::ScheduleNotificationPlant)
 
 }
 

@@ -8,8 +8,8 @@ import pmediero.com.features.plant.data.worker.PlantUpdateWork
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
-class SchedulePlantUpdateUseCase(){
-    fun schedulePlantUpdate(context: Context) {
+class ScheduleWorkerPlantUpdateUseCase(){
+    fun scheduleWorkerPlantUpdate(context: Context) {
         val workRequest = PeriodicWorkRequestBuilder<PlantUpdateWork>(1, TimeUnit.DAYS)
             .setInitialDelay(timeToUpdateWateredPlants(), TimeUnit.MILLISECONDS)
             .build()

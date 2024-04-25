@@ -19,12 +19,13 @@ class PlantRepository(
 ) {
 
 
-    suspend fun savePlant(plant: Plant): Result<Unit, RootError> {
+    suspend fun savePlant(plant: Plant): Result<Plant, RootError> {
         return try {
+            val plantEntity = toPlantEntity(plant)
             realm.write {
-                copyToRealm(toPlantEntity(plant), UpdatePolicy.ALL)
+                copyToRealm(plantEntity, UpdatePolicy.ALL)
             }
-            Result.Success(Unit)
+            Result.Success(toPlant(plantEntity))
         } catch (e: Exception) {
             Result.Error(LocalError)
         }

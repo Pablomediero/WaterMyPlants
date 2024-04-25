@@ -9,9 +9,9 @@ import pmediero.com.features.plant.data.worker.PlantNotificationsWork
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
-class ScheduleNotificationsUseCase() {
+class ScheduleWorkerNotificationsUseCase() {
 
-    fun scheduleNotifications(context: Context) {
+    fun scheduleWorkerNotifications(context: Context) {
         val workRequest = PeriodicWorkRequestBuilder<PlantNotificationsWork>(1, TimeUnit.DAYS)
             .setInitialDelay(timeToUpdateNotifications(), TimeUnit.MILLISECONDS)
             .build()

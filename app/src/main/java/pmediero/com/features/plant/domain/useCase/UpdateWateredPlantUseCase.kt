@@ -8,7 +8,7 @@ import pmediero.com.core.model.util.RootError
 class UpdateWateredPlantUseCase(
     private val plantRepository: PlantRepository
 ) {
-    suspend operator fun invoke(plant: Plant): Result<Unit, RootError> {
+    suspend operator fun invoke(plant: Plant): Result<Plant, RootError> {
         return plantRepository.savePlant(plant = plant)
     }
 }
