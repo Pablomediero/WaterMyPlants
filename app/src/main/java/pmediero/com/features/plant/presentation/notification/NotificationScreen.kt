@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
+import pmediero.com.core.model.local.Plant
 import pmediero.com.core.presentation.common.CustomFloatingActionButton
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
@@ -40,9 +42,11 @@ import pmediero.com.features.plant.presentation.home.components.CustomTabRow
 import pmediero.com.features.plant.presentation.notification.components.Item
 import pmediero.com.features.plant.presentation.notification.model.TabType
 import pmediero.com.features.plant.presentation.notification.root.NotificationAction
+import pmediero.com.features.plant.presentation.notification.root.NotificationState
 
 @Composable
 fun NotificationScreen(
+    state: NotificationState,
     onAction: (NotificationAction) -> Unit
 ) {
     val spacing = LocalSpacing.current
@@ -78,6 +82,10 @@ fun NotificationScreen(
                 .weight(8f)
                 .fillMaxWidth(),
             spacing = spacing,
+            plants = state.plantListMap[TabType.TODAY] ?: emptyList(),
+            onLinkTextClick = { plantIdParam ->
+                onAction(NotificationAction.OnLinkTextClick(plantIdParam))
+            }
         )
 
     }
@@ -133,11 +141,18 @@ fun HeaderHomeScreen(modifier: Modifier, spacing: Spacing, onReturnButtonClick: 
 @Composable
 fun BodyHomeScreen(
     modifier: Modifier,
-    spacing: Spacing
+    spacing: Spacing,
+    plants: List<Plant>,
+    onLinkTextClick: (String) -> Unit
 ) {
 
     Column(modifier = modifier) {
-        Row(modifier = Modifier.fillMaxWidth().padding(vertical = spacing.small), horizontalArrangement = Arrangement.Start) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = spacing.small),
+            horizontalArrangement = Arrangement.Start
+        ) {
             CustomTabRow(
                 modifier = Modifier
                     .fillMaxWidth(0.4f)
@@ -177,15 +192,29 @@ fun BodyHomeScreen(
                 text = "Today",
                 style = MaterialTheme.typography.titleMedium.copy(MaterialTheme.colorScheme.onSurfaceVariant)
             )
-
+            if (plants.isEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(R.string.not_notifications_for_today),
+                        modifier = Modifier.padding(top = spacing.large),
+                        style = MaterialTheme.typography.titleSmall.copy(MaterialTheme.colorScheme.onSurfaceVariant)
+                    )
+                }
+            }
             LazyColumn {
-                items(10) { index ->
+                items(plants) { plant ->
                     Item(
-                        image = painterResource(id = R.drawable.add_plant_plant_icon_header),
-                        title = "Title $index",
-                        subtitle = "Subtitle $index",
-                        buttonText = "Button 1",
-                        onButtonClick = { /* Acción al hacer clic en el botón 1 */ },
+                        image = plant.photo,
+                        title = plant.name,
+                        subtitle = "Plant will need to be watered at ${plant.wateringTime}",
+                        linkText = "Go to the plant",
+                        onLinkTextClick = {
+                            onLinkTextClick(plant.id)
+                        },
                     )
                 }
             }
@@ -199,6 +228,6 @@ fun BodyHomeScreen(
 @Composable
 fun PreviewNotificationScreen() {
     WaterMyPlantsTheme {
-        NotificationScreen() {}
+        NotificationScreen(state = NotificationState()) {}
     }
 }

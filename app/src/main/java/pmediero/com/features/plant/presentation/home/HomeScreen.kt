@@ -33,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
@@ -122,7 +123,18 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit, onTemporalAd
             modifier = Modifier.weight(0.5f),
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
         )
+        CustomFloatingActionButtonNotification(
+            onClick = {
+               onTemporalAddPlantButtonClick()
+            },
+            contentColor = MaterialTheme.colorScheme.background,
+            containerColor = MaterialTheme.colorScheme.primary,
+            icon = Icons.Outlined.Add,
+            isVisible = true,
+            modifier = Modifier.padding(end = 10.dp)
 
+
+        )
         CustomFloatingActionButtonNotification(
             onClick = {
                 onNotifyClick()
@@ -131,18 +143,9 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit, onTemporalAd
             contentColor = MaterialTheme.colorScheme.secondary,
             icon = Icons.Outlined.Notifications,
             isVisible = true,
-            isNotify = true
+            isNotify = false
         )
-        CustomFloatingActionButtonNotification(
-            onClick = {
-                onTemporalAddPlantButtonClick()
-            },
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.secondary,
-            icon = Icons.Outlined.Add,
-            isVisible = true,
-            isNotify = true
-        )
+
     }
 }
 

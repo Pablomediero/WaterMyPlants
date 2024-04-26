@@ -43,7 +43,7 @@
     <string name="label_watering_amount_card">50ml</string>
     <string name="label_watering_day_card">Today</string>
     <string name="upcoming">Upcoming</string>
-    <string name="all_notifications">All Notifications</string>
+    <string name="today">Today Notifications</string>
     <string name="forgot_water">Forgot Water</string>
     <string name="history">History</string>
     <string name="are_you_sure">Are you sure?</string>
@@ -51,6 +51,7 @@
     <string name="let_s_care_my_plants">Let\'s Care \nMy Plants</string>
     <string name="notifications">Notifications</string>
     <string name="all_plants_have_been_watered">All plants have been watered</string>
+    <string name="not_notifications_for_today">Not notifications for today</string>
     <string name="example_short_text">Short Text</string>
     <string name="example_large_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ullamcorper, eros eu viverra egestas, est magna sagittis massa, nec faucibus diam velit non nunc. Curabitur accumsan sapien et mi eleifend posuere. Praesent vel viverra justo. In urna nibh, dictum vel consequat non, pulvinar quis massa. Aliquam fermentum nulla quis ex gravida mollis. Donec interdum augue sed metus molestie rhoncus. Praesent egestas magna vel feugiat congue. Vivamus non ullamcorper nisi. Vestibulum dictum ante sit amet tortor dignissim vestibulum et ut magna. Donec pellentesque sodales accumsan. Aliquam erat volutpat. Donec at vestibulum odio. Etiam tempus, augue a pulvinar bibendum, est quam suscipit arcu, in accumsan felis leo non dui.
 Phasellus sollicitudin finibus augue, non pretium magna laoreet lacinia. Sed dapibus nisi eget tempus malesuada. Integer mollis tempor erat at sagittis. Nam fringilla ligula id tellus ultricies gravida. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent malesuada dolor ac velit dignissim suscipit. Morbi fringilla pretium tortor, sed hendrerit neque ultrices et. Mauris ut ultrices purus, id congue libero. Aenean consequat venenatis metus, a suscipit orci eleifend et. Nullam ornare, ipsum eget ultrices efficitur, tortor tellus fringilla eros, ut dignissim elit urna in lectus. Quisque blandit tincidunt felis, vel fringilla sapien gravida non. Nam luctus dapibus imperdiet. Aenean placerat enim vitae felis gravida tempor. Nullam rutrum consequat nisi eget suscipit. Phasellus sit amet aliquam orci. Praesent eget risus malesuada, lobortis sapien non, ornare neque.
