@@ -33,6 +33,7 @@ private fun Module.domainModule() {
     singleOf(::GetFilteredPlantsUseCase)
     singleOf(::GetPlantByIdUseCase)
     singleOf(::GetFilteredNotificationsUseCase)
+
 }
 
 private fun Module.dataModule() {
