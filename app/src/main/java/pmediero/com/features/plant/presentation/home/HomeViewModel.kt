@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pmediero.com.features.plant.domain.repository.PlantRepository
@@ -26,10 +27,13 @@ class HomeViewModel(
 
     init {
         viewModelScope.launch {
+            updateLoadingState(true)
             getFilteredPlantsUseCase().collectLatest {
                 state = state.copy(
                     plantListMap = it
                 )
+                delay(2000)
+                updateLoadingState(false)
             }
 
         }

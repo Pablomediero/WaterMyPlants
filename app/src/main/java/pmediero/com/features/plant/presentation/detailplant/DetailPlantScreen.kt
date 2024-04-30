@@ -231,11 +231,14 @@ fun HeaderDetailPlant(
             ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val infoList = listOf(
+            val infoList = mutableListOf(
                 stringResource(R.string.watering_days) to state.plant.wateringDays,
                 stringResource(R.string.watering_time) to state.plant.wateringTime,
-                stringResource(R.string.water_amount) to state.plant.waterAmount,
-            )
+
+                )
+            if (state.plant.waterAmount.isNotEmpty()) {
+                infoList.add(stringResource(R.string.water_amount) to state.plant.waterAmount + " ml")
+            }
             CustomPoster(
                 infoList = infoList,
                 containerColor = Color.White,

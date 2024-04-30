@@ -29,6 +29,7 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.twotone.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,6 +47,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -62,6 +64,7 @@ import pmediero.com.features.plant.presentation._common.DialogWateringTime
 import pmediero.com.features.plant.presentation._common.PlantSize
 import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextField
 import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextFieldModal
+import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextFieldPredicate
 import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantAction
 import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantState
 
@@ -394,17 +397,18 @@ fun FormAddPlantFigma(
 
     val showDialogTimePicker = remember { mutableStateOf(false) }
     val timePickerStateHorizontal = rememberTimePickerState(is24Hour = true)
+    //val timePickerStateHorizontal = rememberTimePickerState(is24Hour = true)
 
     val showDialogCheckBox = remember { mutableStateOf(false) }
     val checkboxState = remember { mutableStateMapOf<String, Boolean>().withDefault { false } }
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(spacing.medium, Alignment.Top),
+        verticalArrangement = Arrangement.spacedBy(spacing.default, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(bottom = spacing.extraSmall),
             verticalArrangement = Arrangement.spacedBy(spacing.small, Alignment.Top),
             horizontalAlignment = Alignment.Start,
         ) {
@@ -417,6 +421,7 @@ fun FormAddPlantFigma(
             )
         }
         Row(
+            modifier = Modifier.padding(top = spacing.medium,bottom = spacing.extraSmall),
             horizontalArrangement = Arrangement.spacedBy(
                 spacing.medium,
                 Alignment.CenterHorizontally
@@ -441,18 +446,33 @@ fun FormAddPlantFigma(
             )
         }
         Row(
+            modifier = Modifier.padding(top = spacing.medium, bottom = spacing.extraSmall),
             horizontalArrangement = Arrangement.spacedBy(
                 spacing.medium,
                 Alignment.CenterHorizontally
             ),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Top
         ) {
-            CustomTextField(
+            val maxChar = 3
+            val pattern = remember { Regex("^\\d*\$") }
+            CustomTextFieldPredicate(
                 modifier = Modifier.weight(1f),
                 value = state.waterAmount,
-                onValueChange = { onPlantWaterAmountChange(it) },
+                onValueChange = {
+                    if (it.length <= maxChar && (it.matches(pattern) || it.isEmpty())) onPlantWaterAmountChange(
+                        it
+                    )
+                },
                 placeholder = stringResource(R.string.water_amount),
-                isDescription = false,
+                supportingText = {
+                    Text(
+                        text = "${state.waterAmount.length} / $maxChar",
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.labelSmall.copy(Color.DarkGray)
+                    )
+                },
+                onClick = {}
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),
@@ -463,6 +483,7 @@ fun FormAddPlantFigma(
                 }
             )
         }
+        //SPACING HERE?
         Column(
             modifier = Modifier
                 .fillMaxSize(),

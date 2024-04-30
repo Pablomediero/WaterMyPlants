@@ -5,12 +5,17 @@ import pmediero.com.core.model.local.Plant
 import pmediero.com.core.model.realm.PlantEntity
 
 fun toPlant(type: PlantEntity): Plant {
+    val waterAmountWithoutLastThreeChars = if (type.waterAmount.length >= 3) {
+        type.waterAmount.substring(0, type.waterAmount.length - 3)
+    } else {
+        type.waterAmount
+    }
     return Plant(
         id = type._id.toHexString(),
         name = type.name,
         wateringDays = type.wateringDays,
         wateringTime = type.wateringTime,
-        waterAmount = type.waterAmount,
+        waterAmount = waterAmountWithoutLastThreeChars,
         plantSize = type.plantSize,
         description = type.description,
         photo = type.photo,
@@ -20,11 +25,13 @@ fun toPlant(type: PlantEntity): Plant {
 
 fun toPlantEntity(plant: Plant): PlantEntity {
     return PlantEntity().apply {
-        _id = if (plant.id == "0" || plant.id == "") { ObjectId() } else ObjectId(plant.id)
+        _id = if (plant.id == "0" || plant.id == "") {
+            ObjectId()
+        } else ObjectId(plant.id)
         name = plant.name
         wateringDays = plant.wateringDays
         wateringTime = plant.wateringTime
-        waterAmount = plant.waterAmount
+        waterAmount = plant.waterAmount + " ml"
         plantSize = plant.plantSize
         description = plant.description
         photo = plant.photo

@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -64,11 +65,11 @@ fun Item(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .size(90.dp)
-                    .background(Color(0xFFDFF0DC), shape = MaterialTheme.shapes.medium)
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(Color(0xFFDFF0DC))
             )
             {
                 if (image.isEmpty()) {
-
                     Image(
                         painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
                         modifier = Modifier.size(70.dp),
@@ -76,12 +77,11 @@ fun Item(
                         contentScale = ContentScale.Fit
 
                     )
-
                 } else {
                     AsyncImage(
                         model = image,
                         modifier = Modifier
-                            .fillMaxSize().background(Color(0xFFDFF0DC), shape = MaterialTheme.shapes.medium),
+                            .fillMaxSize().background(Color(0xFFDFF0DC)),
                         contentDescription = "",
                         contentScale = ContentScale.Crop
                     )

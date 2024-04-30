@@ -143,17 +143,19 @@ fun SharedTransitionScope.HeaderCardView(
             ) {
                 LazyColumn ( verticalArrangement = Arrangement.spacedBy(spacing.small)) {
                     items(labelCard) { itemTextLabel ->
-                        Text(
-                            text = itemTextLabel.toString(),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier
-                                .background(
-                                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.56f),
-                                    shape = MaterialTheme.shapes.extraSmall
-                                )
-                                .padding(horizontal = 6.dp, vertical = 2.dp)
-                        )
+                        if(itemTextLabel.toString().isNotEmpty()) {
+                            Text(
+                                text = itemTextLabel.toString(),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier
+                                    .background(
+                                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.56f),
+                                        shape = MaterialTheme.shapes.extraSmall
+                                    )
+                                    .padding(horizontal = 6.dp, vertical = 2.dp)
+                            )
+                        }
                     }
                 }
             }

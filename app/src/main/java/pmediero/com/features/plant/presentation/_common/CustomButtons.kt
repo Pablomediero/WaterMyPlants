@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
+import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 
 @Composable
@@ -66,10 +68,14 @@ fun CustomIconButtonNotification(
     containerColor: Color,
     contentColor: Color,
     modifier: Modifier = Modifier,
+    haveText: Boolean = false,
+    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
+    text: String = "",
     icon: Any,
     isVisible: Boolean,
     isNotify: Boolean = false
 ) {
+    val spacing = LocalSpacing.current
     if (isVisible) {
         Box(
             modifier = modifier,
@@ -80,7 +86,20 @@ fun CustomIconButtonNotification(
                 containerColor = containerColor,
                 modifier = Modifier.align(Alignment.Center)
             ) {
-                Icon(icon = icon)
+                Row (
+                    modifier = Modifier.padding(horizontal = spacing.medium),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(
+                        spacing.extraSmall,
+                        Alignment.CenterHorizontally
+                    )
+                ){
+                    Icon(icon = icon)
+                    if(haveText){
+                        Text(text = text, style = textStyle)
+                    }
+                }
+
             }
             if (isNotify) {
                 Badge(

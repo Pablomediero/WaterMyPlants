@@ -69,6 +69,13 @@ class AddEditPlantViewModel(
                     updateLoadingState(false)
                 }
             }
+            is AddEditPlantAction.OnEmptyFields -> {
+                state = state.copy(
+                    plantName =  action.plant.name,
+                    wateringDays =  action.plant.wateringDays,
+                    wateringTime =  action.plant.wateringTime,
+                )
+            }
 
             is AddEditPlantAction.OnAddImageButtonClickEdit -> {
                 state = state.copy(

@@ -24,10 +24,12 @@ class NotificationViewModel(
 
     init {
         viewModelScope.launch {
+            updateLoadingState(true)
             getFilteredNotificationsUseCase().collectLatest {
                 state = state.copy(
                     plantListMap = it
                 )
+                updateLoadingState(false)
             }
 
         }
@@ -37,6 +39,9 @@ class NotificationViewModel(
 
             else -> {}
         }
+    }
+    private fun updateLoadingState(param: Boolean) {
+        state = state.copy(isLoading = param)
     }
 
 }

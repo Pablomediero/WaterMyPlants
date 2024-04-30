@@ -33,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
@@ -80,6 +81,7 @@ fun SharedTransitionScope.HomeScreen(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxSize(),
+            spacing = spacing,
             onNotifyClick = {
                 onAction(HomeAction.NavigateNotification)
             },
@@ -139,10 +141,10 @@ fun HeaderHomeScreen(
             contentColor = MaterialTheme.colorScheme.background,
             containerColor = MaterialTheme.colorScheme.primary,
             icon = Icons.Outlined.Add,
+            haveText = true,
+            textStyle = MaterialTheme.typography.bodyLarge,
             isVisible = true,
-            modifier = Modifier.padding(end = 10.dp)
-
-
+            text = "New Plant"
         )
         CustomIconButtonNotification(
             onClick = {
@@ -195,6 +197,17 @@ fun SharedTransitionScope.BodyHomeScreen(
                 onTabClick = { index -> onTabClicked(index) }
             )
         }
+        if (state.isLoading) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.padding(top = spacing.large),
+                )
+            }
+        }
         if (plants.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -215,6 +228,8 @@ fun SharedTransitionScope.BodyHomeScreen(
             horizontalArrangement = Arrangement.spacedBy(spacing.medium),
             content = {
                 items(plants) { itemPlant ->
+                    val labelList = mutableListOf(itemPlant.wateringDays)
+                    if(itemPlant.waterAmount.isNotEmpty()) labelList.add( itemPlant.waterAmount+" ml")
                     CustomCardView(
                         animatedVisibilityScope = animatedVisibilityScope,
                         titleCard = itemPlant.name,
@@ -222,7 +237,7 @@ fun SharedTransitionScope.BodyHomeScreen(
                         idElement = itemPlant.id,
                         imageCard = itemPlant.photo,
                         icon = if (!itemPlant.isWatered) R.drawable.home_card_icon_water else Icons.Filled.Check,
-                        labelCard = listOf(itemPlant.waterAmount, itemPlant.wateringDays),
+                        labelCard = labelList,
                         onClick = {
                             onCardClick(itemPlant.id)
                         },
