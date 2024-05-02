@@ -5,8 +5,8 @@ import io.realm.kotlin.RealmConfiguration
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
-import pmediero.com.core.data.repository.PlantRepository
 import pmediero.com.core.model.realm.PlantEntity
+import pmediero.com.features.plant.data.repository.PlantRepository
 
 val realmModule = module {
     initDatabase()

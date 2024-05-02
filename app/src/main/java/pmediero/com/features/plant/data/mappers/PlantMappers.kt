@@ -1,4 +1,4 @@
-package pmediero.com.core.data.mappers
+package pmediero.com.features.plant.data.mappers
 
 import org.mongodb.kbson.ObjectId
 import pmediero.com.core.model.local.Plant

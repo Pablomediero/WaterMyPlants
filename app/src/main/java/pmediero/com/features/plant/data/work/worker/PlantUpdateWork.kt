@@ -1,4 +1,4 @@
-package pmediero.com.features.plant.data.worker
+package pmediero.com.features.plant.data.work.worker
 
 import android.content.Context
 import android.util.Log
@@ -6,8 +6,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import pmediero.com.core.data.repository.PlantRepository
 import pmediero.com.core.model.local.Plant
+import pmediero.com.features.plant.data.repository.PlantRepository
 
 class PlantUpdateWork(
     context: Context,

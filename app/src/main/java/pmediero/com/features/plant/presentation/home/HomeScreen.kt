@@ -36,8 +36,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
-import pmediero.com.core.presentation.common.CustomFloatingActionButtonNotification
-import pmediero.com.core.presentation.common.DeletePlantConfirmationModal
+import pmediero.com.core.presentation.components.CustomFloatingActionButtonNotification
+import pmediero.com.core.presentation.components.DeletePlantConfirmationModal
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme

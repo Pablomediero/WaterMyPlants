@@ -1,4 +1,4 @@
-package pmediero.com.features.plant.domain.useCase
+package pmediero.com.features.plant.data.notification.scheduler
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -8,9 +8,11 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import pmediero.com.core.model.local.Plant
+import pmediero.com.core.presentation.util.setTimeToMillis
 import pmediero.com.features.plant.data.notification.NotificationReceiver
 import java.util.Calendar
 
@@ -20,9 +22,10 @@ class ScheduleNotificationPlant(
     @SuppressLint("ScheduleExactAlarm")
     operator fun invoke(plant: Plant) {
         createChannel(context)
+        Log.i("AlarmManager", "Notificacion ${plant.name}")
         val timeParts = plant.wateringTime.split(":")
         val timeUntilAlarm =
-            timeToUpdateNotifications(hour = timeParts[0].toInt(), minute = timeParts[1].toInt())
+            Calendar.getInstance().setTimeToMillis(hour = timeParts[0].toInt(), minute = timeParts[1].toInt())
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra("notificationId", plant.id.hashCode())
             putExtra("plantId", plant.id)
@@ -42,16 +45,6 @@ class ScheduleNotificationPlant(
             timeUntilAlarm,
             pendingIntent
         )
-    }
-
-    private fun timeToUpdateNotifications(hour: Int, minute: Int): Long {
-        val timeWaterPlant = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, hour)
-            set(Calendar.MINUTE, minute)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        return timeWaterPlant.timeInMillis
     }
 
     private fun createChannel(context: Context) {

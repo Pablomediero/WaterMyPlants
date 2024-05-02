@@ -1,15 +1,16 @@
-package pmediero.com.features.plant.domain.useCase
+package pmediero.com.features.plant.data.notification.scheduler
 
 import android.content.Context
 import android.util.Log
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import pmediero.com.features.plant.data.worker.PlantNotificationsWork
+import pmediero.com.core.presentation.util.setTimeToMillis
+import pmediero.com.features.plant.data.notification.worker.PlantNotificationsWork
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
-class ScheduleWorkerNotificationsUseCase() {
+class PlantNotificationScheduler() {
 
     fun scheduleWorkerNotifications(context: Context) {
         val workRequest = PeriodicWorkRequestBuilder<PlantNotificationsWork>(1, TimeUnit.DAYS)
@@ -24,14 +25,8 @@ class ScheduleWorkerNotificationsUseCase() {
 
     private fun timeToUpdateNotifications(): Long {
         val now = Calendar.getInstance()
-        val timeToUpdate = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 1)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        Log.i("WorkerNotificationsPlants","Time to init worke: ${timeToUpdate.timeInMillis - now.timeInMillis}")
-
-        return timeToUpdate.timeInMillis - now.timeInMillis
+        val timeToUpdate = Calendar.getInstance().setTimeToMillis(0,1)
+        Log.i("WorkerNotificationsPlants","Time to init worke: ${timeToUpdate - now.timeInMillis}")
+        return timeToUpdate - now.timeInMillis
     }
 }

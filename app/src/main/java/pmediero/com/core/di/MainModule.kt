@@ -4,9 +4,9 @@ import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
-import pmediero.com.core.data.repository.PlantRepository
 import pmediero.com.core.domain.CheckPlantExistUseCase
-import pmediero.com.features.plant.domain.useCase.ScheduleWorkerPlantUpdateUseCase
+import pmediero.com.features.plant.data.repository.PlantRepository
+import pmediero.com.features.plant.data.work.scheduler.PlantUpdateScheduler
 import pmediero.com.navigation.MainViewModel
 
 val mainModule = module {
@@ -16,9 +16,8 @@ val mainModule = module {
 }
 
 private fun Module.domainModule() {
-
     factoryOf(::CheckPlantExistUseCase)
-    factoryOf(::ScheduleWorkerPlantUpdateUseCase)
+    factoryOf(::PlantUpdateScheduler)
 }
 
 private fun Module.dataModule() {

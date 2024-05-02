@@ -6,12 +6,12 @@ import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
-import pmediero.com.core.data.repository.PlantRepository
+import pmediero.com.features.plant.data.notification.scheduler.ScheduleNotificationPlant
+import pmediero.com.features.plant.data.repository.PlantRepository
 import pmediero.com.features.plant.domain.useCase.AddPlantUseCase
 import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetFilteredPlantsUseCase
 import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
-import pmediero.com.features.plant.domain.useCase.ScheduleNotificationPlant
 import pmediero.com.features.plant.domain.useCase.UpdateWateredPlantUseCase
 import pmediero.com.features.plant.presentation.addeditplant.AddEditPlantViewModel
 import pmediero.com.features.plant.presentation.detailplant.DetailViewModel
@@ -30,12 +30,11 @@ private fun Module.domainModule() {
     factoryOf(::GetFilteredPlantsUseCase)
     factoryOf(::UpdateWateredPlantUseCase)
     factoryOf(::GetPlantByIdUseCase)
-    factoryOf(::ScheduleNotificationPlant)
-
 }
 
 private fun Module.dataModule() {
     factoryOf(::PlantRepository)
+    factoryOf(::ScheduleNotificationPlant)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

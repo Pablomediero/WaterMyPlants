@@ -1,6 +1,6 @@
 package pmediero.com.core.domain
 
-import pmediero.com.core.data.repository.PlantRepository
+import pmediero.com.features.plant.data.repository.PlantRepository
 
 class CheckPlantExistUseCase(
     private val plantRepository: PlantRepository
