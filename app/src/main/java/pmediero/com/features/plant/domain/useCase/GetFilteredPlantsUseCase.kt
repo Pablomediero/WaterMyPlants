@@ -19,23 +19,10 @@ class GetFilteredPlantsUseCase(
             mapOf(
                 TabType.HISTORY to listAllPlants,
                 TabType.UPCOMING to plantRepository.getFilterUpcomingPlants(),
-                //TabType.UPCOMING to filterUpcomingPlants(listAllPlants),
                 TabType.FORGOT_TO_WATER to filterForgotToWaterPlants(listAllPlants)
             )
         }
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun filterUpcomingPlants(listPlants: List<Plant>): List<Plant> {
-        val currentDayOfWeek = LocalDate.now().dayOfWeek.name.substring(0, 2).lowercase(Locale.ROOT)
-        return listPlants.filter { plant ->
-            plant.wateringDays.split(" ").any { day ->
-                day.equals("everyday", ignoreCase = true) || day.lowercase(Locale.ROOT) == currentDayOfWeek
-            }
-        }
-    }
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun filterForgotToWaterPlants(listPlants: List<Plant>): List<Plant> {
         val yesterday = LocalDate.now().minusDays(1).dayOfWeek.name.substring(0, 2).lowercase(Locale.ROOT)
