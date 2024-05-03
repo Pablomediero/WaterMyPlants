@@ -9,7 +9,7 @@ import androidx.work.WorkerParameters
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import pmediero.com.core.model.local.Plant
-import pmediero.com.features.plant.data.notification.scheduler.SchedulerNotification
+import pmediero.com.features.plant.data.notification.scheduler.NotificationScheduler
 import pmediero.com.features.plant.data.repository.PlantRepository
 
 class PlantNotificationsWorker(
@@ -17,7 +17,7 @@ class PlantNotificationsWorker(
     params: WorkerParameters,
 ) : CoroutineWorker(context, params), KoinComponent {
     private val plantRepository: PlantRepository by inject()
-    private val schedulerNotification: SchedulerNotification by inject()
+    private val notificationScheduler: NotificationScheduler by inject()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun doWork(): Result {
@@ -46,7 +46,7 @@ class PlantNotificationsWorker(
 
         Log.d("WorkerNotificationsPlants", "Notification ON")
         filterPlants.forEach { plant ->
-            schedulerNotification(plant)
+            notificationScheduler(plant)
         }
         Log.d("WorkerNotificationsPlants", "Notification SUCCESS")
 

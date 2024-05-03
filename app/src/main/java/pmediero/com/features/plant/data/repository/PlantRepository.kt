@@ -16,14 +16,14 @@ import pmediero.com.core.model.util.RootError
 import pmediero.com.core.presentation.util.setTimeToMillis
 import pmediero.com.features.plant.data.mappers.toPlant
 import pmediero.com.features.plant.data.mappers.toPlantEntity
-import pmediero.com.features.plant.data.notification.scheduler.SchedulerNotification
+import pmediero.com.features.plant.data.notification.scheduler.NotificationScheduler
 import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
 
 class PlantRepository(
     private val realm: Realm,
-    private val schedulerTodayNotification: SchedulerNotification
+    private val schedulerTodayNotification: NotificationScheduler
 ) {
 
     suspend fun savePlant(plant: Plant): Result<Plant, RootError> {

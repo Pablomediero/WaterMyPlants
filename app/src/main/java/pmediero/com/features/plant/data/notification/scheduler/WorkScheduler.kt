@@ -10,7 +10,7 @@ import pmediero.com.features.plant.data.notification.worker.PlantNotificationsWo
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
-class SchedulerWork() {
+class WorkScheduler() {
 
     fun scheduleWorkerNotifications(context: Context) {
         val workRequest = PeriodicWorkRequestBuilder<PlantNotificationsWorker>(1, TimeUnit.DAYS)

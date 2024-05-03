@@ -36,16 +36,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
-import pmediero.com.core.presentation.components.CustomFloatingActionButtonNotification
-import pmediero.com.core.presentation.components.DeletePlantConfirmationModal
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
+import pmediero.com.features.plant.presentation._common.CustomFloatingActionButtonNotification
+import pmediero.com.features.plant.presentation._common.DeletePlantConfirmationModal
 import pmediero.com.features.plant.presentation.home.components.CustomCardView
 import pmediero.com.features.plant.presentation.home.components.CustomTabRow
 import pmediero.com.features.plant.presentation.home.model.TabType
 import pmediero.com.features.plant.presentation.home.root.HomeAction
 import pmediero.com.features.plant.presentation.home.root.HomeState
+
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun HomeScreen(

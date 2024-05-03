@@ -1,4 +1,4 @@
-package pmediero.com.core.presentation.components
+package pmediero.com.features.plant.presentation._common
 
 import android.Manifest
 import android.app.Activity

@@ -16,7 +16,7 @@ import pmediero.com.core.presentation.util.setTimeToMillis
 import pmediero.com.features.plant.data.notification.receiver.NotificationReceiver
 import java.util.Calendar
 
-class SchedulerNotification(
+class NotificationScheduler(
 ) : KoinComponent {
     private val context: Context by inject()
     @SuppressLint("ScheduleExactAlarm")

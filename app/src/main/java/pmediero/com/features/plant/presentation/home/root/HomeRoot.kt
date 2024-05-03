@@ -21,8 +21,8 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import org.koin.androidx.compose.koinViewModel
-import pmediero.com.core.presentation.components.NotificationPermissionTextProvider
-import pmediero.com.core.presentation.components.PermissionDialog
+import pmediero.com.features.plant.presentation._common.NotificationPermissionTextProvider
+import pmediero.com.features.plant.presentation._common.PermissionDialog
 import pmediero.com.features.plant.presentation.home.HomeScreen
 import pmediero.com.features.plant.presentation.home.HomeViewModel
 import pmediero.com.navigation.AppRoutes
