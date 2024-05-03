@@ -1,6 +1,8 @@
 package pmediero.com.features.plant.presentation.home
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +18,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,25 +33,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
-import pmediero.com.core.presentation.common.CustomFloatingActionButtonNotification
-import pmediero.com.core.presentation.common.DeletePlantConfirmationModal
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
+import pmediero.com.features.plant.presentation._common.CustomFloatingActionButtonNotification
+import pmediero.com.features.plant.presentation._common.DeletePlantConfirmationModal
 import pmediero.com.features.plant.presentation.home.components.CustomCardView
 import pmediero.com.features.plant.presentation.home.components.CustomTabRow
 import pmediero.com.features.plant.presentation.home.model.TabType
 import pmediero.com.features.plant.presentation.home.root.HomeAction
 import pmediero.com.features.plant.presentation.home.root.HomeState
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun HomeScreen(
     state: HomeState,
     onAction: (HomeAction) -> Unit
 ) {
     val spacing = LocalSpacing.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -71,7 +77,8 @@ fun HomeScreen(
                 .fillMaxSize(),
             onNotifyClick = {
                 onAction(HomeAction.NavigateAddPlant)
-            }
+            },
+
         )
 
         BodyHomeScreen(
@@ -98,6 +105,7 @@ fun HomeScreen(
     }
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit) {
     Row(
@@ -119,6 +127,16 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit) {
             containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.secondary,
             icon = Icons.Outlined.Notifications,
+            isVisible = true,
+            isNotify = true
+        )
+        CustomFloatingActionButtonNotification(
+            onClick = {
+
+            },
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.secondary,
+            icon = Icons.Outlined.AccountCircle,
             isVisible = true,
             isNotify = true
         )
@@ -203,6 +221,7 @@ fun BodyHomeScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Preview
 @Composable
 fun PreviewHomeScreen() {

@@ -1,21 +1,18 @@
 package pmediero.com.navigation
 
-import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.collectAsState
-import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.koin.android.ext.android.inject
 import pmediero.com.core_ui.WaterMyPlantsTheme
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by inject()
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +20,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             WaterMyPlantsTheme {
                 WaterMyPlantsNavHost(
-                    viewModel.isPlantDataSaved.collectAsState().value
-                )
+                    viewModel.isPlantDataSaved.collectAsState().value,
+                    viewModel.checkingData.collectAsState().value,)
             }
         }
     }
@@ -32,30 +29,30 @@ class MainActivity : ComponentActivity() {
     private fun initSplashScreen() {
         installSplashScreen().apply {
             setKeepOnScreenCondition {
-                !viewModel.isDataCheck.value
+                viewModel.checkingData.value
             }
-            setOnExitAnimationListener { screen ->
-                val zoomX = ObjectAnimator.ofFloat(
-                    screen.iconView,
-                    View.SCALE_X,
-                    INTERPOLATION_INITIAL_VALUE,
-                    INTERPOLATION_FINAL_VALUE
-                )
-                zoomX.interpolator = OvershootInterpolator()
-                zoomX.duration = INTERPOLATION_DURATION
-                zoomX.doOnEnd { screen.remove() }
-                val zoomY = ObjectAnimator.ofFloat(
-                    screen.iconView,
-                    View.SCALE_Y,
-                    INTERPOLATION_INITIAL_VALUE,
-                    INTERPOLATION_FINAL_VALUE
-                )
-                zoomY.interpolator = OvershootInterpolator()
-                zoomY.duration = INTERPOLATION_DURATION
-                zoomY.doOnEnd { screen.remove() }
-                zoomX.start()
-                zoomY.start()
-            }
+//            setOnExitAnimationListener { screen ->
+//                val zoomX = ObjectAnimator.ofFloat(
+//                    screen.iconView,
+//                    View.SCALE_X,
+//                    INTERPOLATION_INITIAL_VALUE,
+//                    INTERPOLATION_FINAL_VALUE
+//                )
+//                zoomX.interpolator = OvershootInterpolator()
+//                zoomX.duration = INTERPOLATION_DURATION
+//                zoomX.doOnEnd { screen.remove() }
+//                val zoomY = ObjectAnimator.ofFloat(
+//                    screen.iconView,
+//                    View.SCALE_Y,
+//                    INTERPOLATION_INITIAL_VALUE,
+//                    INTERPOLATION_FINAL_VALUE
+//                )
+//                zoomY.interpolator = OvershootInterpolator()
+//                zoomY.duration = INTERPOLATION_DURATION
+//                zoomY.doOnEnd { screen.remove() }
+//                zoomX.start()
+//                zoomY.start()
+//            }
         }
     }
 

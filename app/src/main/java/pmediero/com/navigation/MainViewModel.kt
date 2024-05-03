@@ -14,13 +14,13 @@ class MainViewModel(
     private val _isPlantDataSaved = MutableStateFlow(false)
     val isPlantDataSaved = _isPlantDataSaved.asStateFlow()
 
-    private val _isDataCheck = MutableStateFlow(false)
-    val isDataCheck = _isDataCheck.asStateFlow()
+    private val _checkingData = MutableStateFlow(true)
+    val checkingData = _checkingData.asStateFlow()
 
     init {
         viewModelScope.launch {
             _isPlantDataSaved.value = checkPlantExistUseCase()
-            _isDataCheck.value = true
+            _checkingData.value = false
         }
     }
 }

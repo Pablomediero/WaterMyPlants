@@ -75,6 +75,8 @@ dependencies {
     implementation(Dependencies.work_manager)
     implementation(Dependencies.work_manager_coroutines)
 
+    implementation(Dependencies.notify_permission)
+
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.test_junit)
     androidTestImplementation(Dependencies.test_expresso)

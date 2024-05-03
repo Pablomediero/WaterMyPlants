@@ -1,4 +1,4 @@
-package pmediero.com.core.presentation.common
+package pmediero.com.features.plant.presentation._common
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

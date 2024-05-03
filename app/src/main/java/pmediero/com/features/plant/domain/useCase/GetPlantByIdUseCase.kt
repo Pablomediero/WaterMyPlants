@@ -1,7 +1,7 @@
 package pmediero.com.features.plant.domain.useCase
 
-import pmediero.com.core.data.repository.PlantRepository
 import pmediero.com.core.model.local.Plant
+import pmediero.com.features.plant.data.repository.PlantRepository
 
 class GetPlantByIdUseCase(
     private val plantRepository: PlantRepository

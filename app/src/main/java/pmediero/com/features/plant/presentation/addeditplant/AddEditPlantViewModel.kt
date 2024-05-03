@@ -34,7 +34,7 @@ class AddEditPlantViewModel(
         if (!_plantIdParam.isNullOrEmpty() && _plantIdParam != "null") {
             viewModelScope.launch {
                 updateLoadingState(true)
-                val plant =  getPlantByIdUseCase(_plantIdParam)
+                val plant = getPlantByIdUseCase(_plantIdParam)
                 state = state.copy(
                     isEditPlant = true,
                     plantId = plant.id,
@@ -61,7 +61,7 @@ class AddEditPlantViewModel(
                         onError = {
 
                         },
-                        onSuccess = {
+                        onSuccess = { plant ->
                             _uiEvent.send(AddEditPlantUiEvent.NavigateToHome)
                         }
                     )
@@ -83,11 +83,13 @@ class AddEditPlantViewModel(
                 )
 
             }
+
             is AddEditPlantAction.OnEditPlantNameChange -> {
                 state = state.copy(
                     plantName = action.plantName
                 )
             }
+
             is AddEditPlantAction.OnEditPlantSizeChange -> {
                 state = state.copy(
                     plantSize = action.plantSize

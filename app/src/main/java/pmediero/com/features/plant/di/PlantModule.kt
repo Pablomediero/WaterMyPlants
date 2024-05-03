@@ -6,7 +6,8 @@ import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
-import pmediero.com.core.data.repository.PlantRepository
+import pmediero.com.features.plant.data.notification.scheduler.NotificationScheduler
+import pmediero.com.features.plant.data.repository.PlantRepository
 import pmediero.com.features.plant.domain.useCase.AddPlantUseCase
 import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetFilteredPlantsUseCase
@@ -33,6 +34,7 @@ private fun Module.domainModule() {
 
 private fun Module.dataModule() {
     factoryOf(::PlantRepository)
+    factoryOf(::NotificationScheduler)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

@@ -36,11 +36,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
-import pmediero.com.core.presentation.common.CustomFloatingActionButton
-import pmediero.com.core.presentation.common.CustomIconButton
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
+import pmediero.com.features.plant.presentation._common.CustomFloatingActionButton
+import pmediero.com.features.plant.presentation._common.CustomIconButton
 import pmediero.com.features.plant.presentation.detailplant.components.CustomPoster
 import pmediero.com.features.plant.presentation.detailplant.root.DetailAction
 import pmediero.com.features.plant.presentation.detailplant.root.DetailState

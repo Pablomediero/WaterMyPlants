@@ -51,15 +51,15 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
-import pmediero.com.core.presentation.common.CustomFloatingActionButton
-import pmediero.com.core.presentation.common.CustomIconButton
-import pmediero.com.core.presentation.common.DialogPlantSize
-import pmediero.com.core.presentation.common.DialogWateringDays
-import pmediero.com.core.presentation.common.DialogWateringTime
-import pmediero.com.core.presentation.common.PlantSize
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
+import pmediero.com.features.plant.presentation._common.CustomFloatingActionButton
+import pmediero.com.features.plant.presentation._common.CustomIconButton
+import pmediero.com.features.plant.presentation._common.DialogPlantSize
+import pmediero.com.features.plant.presentation._common.DialogWateringDays
+import pmediero.com.features.plant.presentation._common.DialogWateringTime
+import pmediero.com.features.plant.presentation._common.PlantSize
 import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextField
 import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextFieldModal
 import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantAction
@@ -511,7 +511,9 @@ fun FormAddPlantFigma(
 fun FooterAddEditPlant(modifier: Modifier, state: AddEditPlantState, onFooterBtnClick: () -> Unit) {
     CustomIconButton(
         modifier = modifier.fillMaxWidth(),
-        onClick = onFooterBtnClick,
+        onClick = {
+            onFooterBtnClick()
+        },
         contentColor = MaterialTheme.colorScheme.primary,
         containerColor = Color.White,
         icon = if (state.isEditPlant) Icons.Outlined.Edit else Icons.Outlined.Add,

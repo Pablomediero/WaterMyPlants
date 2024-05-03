@@ -1,4 +1,4 @@
-package pmediero.com.core.presentation.common
+package pmediero.com.features.plant.presentation._common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

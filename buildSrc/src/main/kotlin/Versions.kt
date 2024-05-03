@@ -19,4 +19,6 @@ object Versions {
 
     const val coil = "2.6.0"
     const val work_manager = "2.9.0"
+
+    const val notify_permission = "0.31.1-alpha"
 }
