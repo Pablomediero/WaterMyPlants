@@ -6,14 +6,14 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import pmediero.com.core.presentation.util.setTimeToMillis
-import pmediero.com.features.plant.data.notification.worker.PlantNotificationsWork
+import pmediero.com.features.plant.data.notification.worker.PlantNotificationsWorker
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
-class PlantNotificationScheduler() {
+class SchedulerWork() {
 
     fun scheduleWorkerNotifications(context: Context) {
-        val workRequest = PeriodicWorkRequestBuilder<PlantNotificationsWork>(1, TimeUnit.DAYS)
+        val workRequest = PeriodicWorkRequestBuilder<PlantNotificationsWorker>(1, TimeUnit.DAYS)
             .setInitialDelay(timeToUpdateNotifications(), TimeUnit.MILLISECONDS)
             .build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(

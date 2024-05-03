@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name=".features.plant.data.notification.NotificationReceiver"
+            android:name=".features.plant.data.notification.receiver.NotificationReceiver"
             android:enabled="true" />
     </application>
 

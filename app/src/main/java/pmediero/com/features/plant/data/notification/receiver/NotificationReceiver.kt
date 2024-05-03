@@ -1,4 +1,4 @@
-package pmediero.com.features.plant.data.notification
+package pmediero.com.features.plant.data.notification.receiver
 
 import android.app.NotificationManager
 import android.app.PendingIntent

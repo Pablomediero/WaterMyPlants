@@ -8,16 +8,14 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
 import pmediero.com.core.di.mainModule
 import pmediero.com.core.di.realmModule
-import pmediero.com.features.plant.data.notification.scheduler.PlantNotificationScheduler
-import pmediero.com.features.plant.data.work.scheduler.PlantUpdateScheduler
+import pmediero.com.features.plant.data.notification.scheduler.SchedulerWork
 import pmediero.com.features.plant.di.plantModule
 
 class WaterMyPlantApp : Application() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
-        PlantUpdateScheduler().scheduleWorkerPlantUpdate(applicationContext)
-        PlantNotificationScheduler().scheduleWorkerNotifications(applicationContext)
+        SchedulerWork().scheduleWorkerNotifications(applicationContext)
         startKoin {
             androidLogger()
             androidContext(this@WaterMyPlantApp)

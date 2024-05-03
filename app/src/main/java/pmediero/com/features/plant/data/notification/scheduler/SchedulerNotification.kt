@@ -13,10 +13,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core.presentation.util.setTimeToMillis
-import pmediero.com.features.plant.data.notification.NotificationReceiver
+import pmediero.com.features.plant.data.notification.receiver.NotificationReceiver
 import java.util.Calendar
 
-class ScheduleNotificationPlant(
+class SchedulerNotification(
 ) : KoinComponent {
     private val context: Context by inject()
     @SuppressLint("ScheduleExactAlarm")
@@ -24,8 +24,7 @@ class ScheduleNotificationPlant(
         createChannel(context)
         Log.i("AlarmManager", "Notificacion ${plant.name}")
         val timeParts = plant.wateringTime.split(":")
-        val timeUntilAlarm =
-            Calendar.getInstance().setTimeToMillis(hour = timeParts[0].toInt(), minute = timeParts[1].toInt())
+        val timeUntilAlarm = Calendar.getInstance().setTimeToMillis(hour = timeParts[0].toInt(), minute = timeParts[1].toInt())
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra("notificationId", plant.id.hashCode())
             putExtra("plantId", plant.id)

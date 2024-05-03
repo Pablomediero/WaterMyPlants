@@ -1,6 +1,5 @@
 package pmediero.com.features.plant.data.repository
 
-import android.util.Log
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
@@ -15,14 +14,13 @@ import pmediero.com.core.model.util.RootError
 import pmediero.com.core.presentation.util.setTimeToMillis
 import pmediero.com.features.plant.data.mappers.toPlant
 import pmediero.com.features.plant.data.mappers.toPlantEntity
-import pmediero.com.features.plant.data.notification.scheduler.ScheduleNotificationPlant
+import pmediero.com.features.plant.data.notification.scheduler.SchedulerNotification
 import java.util.Calendar
 
 class PlantRepository(
     private val realm: Realm,
-    private val scheduleNotificationPlant: ScheduleNotificationPlant
+    private val schedulerTodayNotification: SchedulerNotification
 ) {
-
 
     suspend fun savePlant(plant: Plant): Result<Plant, RootError> {
         return try {
@@ -31,12 +29,9 @@ class PlantRepository(
                 copyToRealm(plantEntity, UpdatePolicy.ALL)
             }
             if ( isTodayWateringDay(plant.wateringDays) ) {
-                Log.i("AlarmManagerCheck","True Check Days")
                 if(isTimeToWaterToday(plant.wateringTime)){
-                    scheduleNotificationPlant(plant)
-                    Log.i("AlarmManagerCheck","True Check Hours ")
+                    schedulerTodayNotification(plant)
                 }
-
             }
             Result.Success(toPlant(plantEntity))
         } catch (e: Exception) {
