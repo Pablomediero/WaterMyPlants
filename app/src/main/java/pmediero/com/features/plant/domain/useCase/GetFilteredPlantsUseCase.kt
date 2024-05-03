@@ -18,7 +18,8 @@ class GetFilteredPlantsUseCase(
         return plantRepository.observePlants().map { listAllPlants ->
             mapOf(
                 TabType.HISTORY to listAllPlants,
-                TabType.UPCOMING to filterUpcomingPlants(listAllPlants),
+                TabType.UPCOMING to plantRepository.getFilterUpcomingPlants(),
+                //TabType.UPCOMING to filterUpcomingPlants(listAllPlants),
                 TabType.FORGOT_TO_WATER to filterForgotToWaterPlants(listAllPlants)
             )
         }
@@ -33,6 +34,7 @@ class GetFilteredPlantsUseCase(
             }
         }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun filterForgotToWaterPlants(listPlants: List<Plant>): List<Plant> {

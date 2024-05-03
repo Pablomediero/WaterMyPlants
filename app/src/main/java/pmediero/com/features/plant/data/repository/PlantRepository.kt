@@ -1,5 +1,7 @@
 package pmediero.com.features.plant.data.repository
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
@@ -15,7 +17,9 @@ import pmediero.com.core.presentation.util.setTimeToMillis
 import pmediero.com.features.plant.data.mappers.toPlant
 import pmediero.com.features.plant.data.mappers.toPlantEntity
 import pmediero.com.features.plant.data.notification.scheduler.SchedulerNotification
+import java.time.LocalDate
 import java.util.Calendar
+import java.util.Locale
 
 class PlantRepository(
     private val realm: Realm,
@@ -68,6 +72,20 @@ class PlantRepository(
     suspend fun getPlantById(plantIdParam: String):Plant {
         val plantEntity = ObjectId(plantIdParam)
         return toPlant(realm.query<PlantEntity>("_id == $0", plantEntity).find().first())
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun getFilterUpcomingPlants(): List<Plant> {
+        val listPlants = realm.query<PlantEntity>().find().map { toPlant(it) }
+        val currentDayOfWeek = LocalDate.now().dayOfWeek.name.substring(0, 2).lowercase(Locale.ROOT)
+        return listPlants.filter { plant ->
+            plant.wateringDays.split(" ").any { day ->
+                day.equals(
+                    "everyday",
+                    ignoreCase = true
+                ) || day.lowercase(Locale.ROOT) == currentDayOfWeek
+            }
+        }
     }
 
     private fun isTimeToWaterToday(wateringTime: String): Boolean {
