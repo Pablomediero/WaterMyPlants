@@ -34,10 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
-import pmediero.com.core.presentation.common.CustomFloatingActionButton
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
+import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation.home.components.CustomTabRow
 import pmediero.com.features.plant.presentation.notification.components.Item
 import pmediero.com.features.plant.presentation.notification.model.TabType
@@ -107,7 +107,7 @@ fun HeaderHomeScreen(modifier: Modifier, spacing: Spacing, onReturnButtonClick: 
             Column(
                 modifier = Modifier.weight(3f)
             ) {
-                CustomFloatingActionButton(
+                CustomIconButtonDefault(
                     onClick = {
                         onReturnButtonClick()
                     },

@@ -33,7 +33,7 @@ import pmediero.com.R
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation._common.CustomFloatingActionButton
+import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -184,7 +184,7 @@ fun BodyCardView(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            CustomFloatingActionButton(
+            CustomIconButtonDefault(
                 onClick = { onIconClicked() },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,

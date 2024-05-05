@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import pmediero.com.core.model.local.Plant
-import pmediero.com.features.plant.data.repository.PlantRepository
+import pmediero.com.features.plant.domain.repository.PlantRepository
 import pmediero.com.features.plant.presentation.home.model.TabType
 import java.time.LocalDate
 import java.util.Locale

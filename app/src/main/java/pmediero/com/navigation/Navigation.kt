@@ -58,9 +58,10 @@ fun WaterMyPlantsNavHost(
             composable(AppRoutes.HomeScreen.route) {
                 HomeRoot(navController = navController)
             }
+            composable(AppRoutes.NotificationScreen.route) {
+                NotificationRoot(navController = navController)
+            }
         }
-        composable(AppRoutes.NotificationScreen.route) {
-            NotificationRoot(navController = navController)
-        }
+
     }
 }

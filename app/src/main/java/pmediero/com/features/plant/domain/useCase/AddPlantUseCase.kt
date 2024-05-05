@@ -3,7 +3,7 @@ package pmediero.com.features.plant.domain.useCase
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core.model.util.Result
 import pmediero.com.core.model.util.RootError
-import pmediero.com.features.plant.data.repository.PlantRepository
+import pmediero.com.features.plant.domain.repository.PlantRepository
 
 class AddPlantUseCase(
     private val plantRepository: PlantRepository

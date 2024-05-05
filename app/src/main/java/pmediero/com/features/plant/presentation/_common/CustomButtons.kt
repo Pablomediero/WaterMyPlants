@@ -35,7 +35,7 @@ import pmediero.com.R
 import pmediero.com.core_ui.WaterMyPlantsTheme
 
 @Composable
-fun CustomFloatingActionButton(
+fun CustomIconButtonDefault(
     onClick: () -> Unit,
     containerColor: Color,
     contentColor: Color,
@@ -61,7 +61,7 @@ fun CustomFloatingActionButton(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomFloatingActionButtonNotification(
+fun CustomIconButtonNotification(
     onClick: () -> Unit,
     containerColor: Color,
     contentColor: Color,

@@ -39,7 +39,7 @@ import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation._common.CustomFloatingActionButton
+import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation._common.CustomIconButton
 import pmediero.com.features.plant.presentation.detailplant.components.CustomPoster
 import pmediero.com.features.plant.presentation.detailplant.root.DetailAction
@@ -181,7 +181,7 @@ fun HeaderDetailPlant(
             modifier = Modifier.fillMaxWidth()
 
         ) {
-            CustomFloatingActionButton(
+            CustomIconButtonDefault(
                 onClick = {
                     onReturnClick()
                 },
@@ -194,7 +194,7 @@ fun HeaderDetailPlant(
                 icon = Icons.Default.ArrowBack,
                 isVisible = true
             )
-            CustomFloatingActionButton(
+            CustomIconButtonDefault(
                 onClick = {
                     onEditButtonClick(state.plant.id)
                 },

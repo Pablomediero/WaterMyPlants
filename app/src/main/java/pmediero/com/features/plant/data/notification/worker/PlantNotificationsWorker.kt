@@ -10,7 +10,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import pmediero.com.core.model.local.Plant
 import pmediero.com.features.plant.data.notification.scheduler.NotificationScheduler
-import pmediero.com.features.plant.data.repository.PlantRepository
+import pmediero.com.features.plant.domain.repository.PlantRepository
 
 class PlantNotificationsWorker(
     context: Context,

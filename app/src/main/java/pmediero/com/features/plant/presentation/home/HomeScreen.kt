@@ -40,7 +40,7 @@ import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation._common.CustomFloatingActionButtonNotification
+import pmediero.com.features.plant.presentation._common.CustomIconButtonNotification
 import pmediero.com.features.plant.presentation._common.DeletePlantConfirmationModal
 import pmediero.com.features.plant.presentation.home.components.CustomCardView
 import pmediero.com.features.plant.presentation.home.components.CustomTabRow
@@ -123,7 +123,7 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit, onTemporalAd
             modifier = Modifier.weight(0.5f),
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
         )
-        CustomFloatingActionButtonNotification(
+        CustomIconButtonNotification(
             onClick = {
                onTemporalAddPlantButtonClick()
             },
@@ -135,7 +135,7 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit, onTemporalAd
 
 
         )
-        CustomFloatingActionButtonNotification(
+        CustomIconButtonNotification(
             onClick = {
                 onNotifyClick()
             },
