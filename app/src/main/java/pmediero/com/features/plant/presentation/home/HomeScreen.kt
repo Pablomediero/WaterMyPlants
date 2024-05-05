@@ -3,6 +3,9 @@ package pmediero.com.features.plant.presentation.home
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,11 +51,13 @@ import pmediero.com.features.plant.presentation.home.model.TabType
 import pmediero.com.features.plant.presentation.home.root.HomeAction
 import pmediero.com.features.plant.presentation.home.root.HomeState
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun HomeScreen(
+fun SharedTransitionScope.HomeScreen(
     state: HomeState,
-    onAction: (HomeAction) -> Unit
+    onAction: (HomeAction) -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
     val spacing = LocalSpacing.current
 
@@ -83,13 +88,14 @@ fun HomeScreen(
                 onAction(HomeAction.NavigateAddPlant)
             },
 
-        )
+            )
 
         BodyHomeScreen(
             modifier = Modifier
                 .weight(4f)
                 .fillMaxSize(),
             spacing = spacing,
+            animatedVisibilityScope = animatedVisibilityScope,
             state = state,
             plants = state.plantListMap[state.tabSelected] ?: emptyList(),
             onTabClicked = { index ->
@@ -111,7 +117,11 @@ fun HomeScreen(
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit, onTemporalAddPlantButtonClick: () -> Unit) {
+fun HeaderHomeScreen(
+    modifier: Modifier,
+    onNotifyClick: () -> Unit,
+    onTemporalAddPlantButtonClick: () -> Unit
+) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -125,7 +135,7 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit, onTemporalAd
         )
         CustomIconButtonNotification(
             onClick = {
-               onTemporalAddPlantButtonClick()
+                onTemporalAddPlantButtonClick()
             },
             contentColor = MaterialTheme.colorScheme.background,
             containerColor = MaterialTheme.colorScheme.primary,
@@ -149,11 +159,13 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit, onTemporalAd
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun BodyHomeScreen(
+fun SharedTransitionScope.BodyHomeScreen(
     modifier: Modifier,
     state: HomeState,
     spacing: Spacing,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     plants: List<Plant>,
     onTabClicked: (Int) -> Unit,
     onIconClicked: (Plant) -> Unit,
@@ -205,8 +217,10 @@ fun BodyHomeScreen(
             content = {
                 items(plants) { itemPlant ->
                     CustomCardView(
+                        animatedVisibilityScope = animatedVisibilityScope,
                         titleCard = itemPlant.name,
                         subtitleCard = itemPlant.description,
+                        idElement = itemPlant.id,
                         imageCard = itemPlant.photo,
                         icon = if (!itemPlant.isWatered) R.drawable.home_card_icon_water else Icons.Filled.Check,
                         labelCard = listOf(itemPlant.waterAmount, itemPlant.wateringDays),
@@ -222,6 +236,7 @@ fun BodyHomeScreen(
                         }
                     )
                 }
+
             })
 
     }
@@ -232,6 +247,6 @@ fun BodyHomeScreen(
 @Composable
 fun PreviewHomeScreen() {
     WaterMyPlantsTheme {
-        HomeScreen(state = HomeState(), onAction = {})
+        //HomeScreen(state = HomeState(), onAction = {},)
     }
 }

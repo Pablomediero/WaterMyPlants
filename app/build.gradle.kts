@@ -54,6 +54,7 @@ dependencies {
     implementation(Dependencies.core)
     implementation(Dependencies.lifecycle)
     implementation(Dependencies.activity_compose)
+    implementation(Dependencies.compose_animation)
     implementation(platform(Dependencies.compose_boom))
     implementation(Dependencies.ui)
     implementation(Dependencies.ui_graphics)

@@ -2,6 +2,7 @@ object Versions {
     const val core = "1.12.0"
     const val lifecycle = "2.7.0"
     const val activity_compose = "1.8.2"
+    const val compose_animation = "1.7.0-alpha07"
     const val compose_boom = "2023.08.00"
 
     const val junit = "4.13.2"
@@ -11,7 +12,7 @@ object Versions {
 
     const val lottie = "6.3.0"
     const val splash = "1.0.0"
-    const val navigation = "2.5.3"
+    const val navigation = "2.7.7"
     const val font = "1.6.1"
 
     const val koin = "3.5.3"

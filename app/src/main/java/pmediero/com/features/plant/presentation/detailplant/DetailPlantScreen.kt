@@ -1,5 +1,9 @@
 package pmediero.com.features.plant.presentation.detailplant
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -39,16 +43,18 @@ import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation._common.CustomIconButton
+import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation.detailplant.components.CustomPoster
 import pmediero.com.features.plant.presentation.detailplant.root.DetailAction
 import pmediero.com.features.plant.presentation.detailplant.root.DetailState
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun DetailScreen(
+fun SharedTransitionScope.DetailScreen(
     state: DetailState,
-    onAction: (DetailAction) -> Unit
+    onAction: (DetailAction) -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
     val spacing = LocalSpacing.current
     val height = LocalConfiguration.current.screenHeightDp.dp
@@ -62,7 +68,15 @@ fun DetailScreen(
         if (state.plant.photo.isEmpty()) {
             Image(
                 painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
-                modifier = Modifier.padding(top = spacing.large),
+                modifier = Modifier
+                    .sharedElement(
+                        state = rememberSharedContentState(key = "image/${state.plant.id}"),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = {_, _ ->
+                            tween(durationMillis = 1000)
+                        }
+                    )
+                    .padding(top = spacing.large),
                 contentDescription = "image description",
                 contentScale = ContentScale.FillWidth
             )
@@ -75,6 +89,13 @@ fun DetailScreen(
                 contentAlignment = Alignment.TopCenter
             ) {
                 AsyncImage(
+                    modifier = Modifier.sharedElement(
+                        state = rememberSharedContentState(key = "image/${state.plant.photo}"),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = {_, _ ->
+                            tween(durationMillis = 1000)
+                        }
+                    ),
                     model = state.plant.photo,
                     contentDescription = "",
                     contentScale = ContentScale.Crop
@@ -128,6 +149,7 @@ fun DetailScreen(
                             bottom = spacing.default
                         ),
                     spacing = spacing,
+                    animatedVisibilityScope = animatedVisibilityScope,
                     state = state,
                 )
 
@@ -232,10 +254,12 @@ fun HeaderDetailPlant(
 }
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun BodyDetailPlant(
+fun SharedTransitionScope.BodyDetailPlant(
     modifier: Modifier,
     spacing: Spacing,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     state: DetailState,
 ) {
     Column(
@@ -244,7 +268,13 @@ fun BodyDetailPlant(
         modifier = modifier
     ) {
         Text(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.sharedElement(
+                state = rememberSharedContentState(key = "text/${state.plant.name}"),
+                animatedVisibilityScope = animatedVisibilityScope,
+                boundsTransform = {_, _ ->
+                    tween(durationMillis = 1000)
+                }
+            ).fillMaxWidth(),
             text = state.plant.name,
             style = MaterialTheme.typography.headlineMedium
         )
@@ -283,10 +313,13 @@ fun FooterDetailPlant(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview
 @Composable
 fun DetailScreenPreview() {
     WaterMyPlantsTheme {
-        DetailScreen(state = DetailState(), onAction = {})
+//        SharedTransitionScope {
+//            DetailScreen(state = DetailState(), onAction = {})
+//        }
     }
 }

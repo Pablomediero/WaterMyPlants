@@ -1,5 +1,8 @@
 package pmediero.com.features.plant.presentation.detailplant.root
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import org.koin.androidx.compose.koinViewModel
@@ -7,10 +10,12 @@ import pmediero.com.features.plant.presentation.detailplant.DetailScreen
 import pmediero.com.features.plant.presentation.detailplant.DetailViewModel
 import pmediero.com.navigation.AppRoutes
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun DetailRoot(
+fun SharedTransitionScope.DetailRoot(
     navController: NavController,
-    detailViewModel: DetailViewModel = koinViewModel()
+    detailViewModel: DetailViewModel = koinViewModel(),
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
 
     DetailScreen(
@@ -32,6 +37,8 @@ fun DetailRoot(
                     detailViewModel.onAction(action)
                 }
             }
-        }
+        },
+        animatedVisibilityScope = animatedVisibilityScope
+
     )
 }
