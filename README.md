@@ -1,0 +1,14 @@
+ - Jetpack Compose + Kotlin para una interfaz de usuario moderna y flexible.
+ - Implementación de Clean Architecture para un código más organizado y mantenible.
+ - Patrón MVI (Model-View-Intent) para una gestión robusta de estados.
+ - Utilización de BuildSrc Module para una gestión eficiente de dependencias.
+ - Integración de WorkManager y AlarmManager para recordatorios precisos.
+ - Almacenamiento de datos utilizando RealmDB.
+ - Inyección de dependencias con Koin para una arquitectura más desacoplada.
+ - Integración de Splash API para el manejo de la pantalla de carga.
+ - Navegación fluida utilizando el componente Navigation.
+ - Uso de Shared Transition Element para transiciones de pantalla suaves.
+ - Implementación de Coroutines para operaciones asincrónicas.
+ - Carga eficiente de imágenes con Coil.
+ - Diseño moderno con Material 3, incluyendo fuentes e iconos de Google para una apariencia intuitiva y consistente.
+ - Creación de componentes personalizados para futuros proyectos.
