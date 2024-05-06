@@ -5,4 +5,5 @@ sealed class AppRoutes(val route: String){
     data object AddEditPlantScreen: AppRoutes("add_plant_screen")
     data object DetailPlantScreen: AppRoutes("detail_plant_screen")
     data object HomeScreen: AppRoutes("home_screen")
+    data object NotificationScreen: AppRoutes("notification_screen")
 }

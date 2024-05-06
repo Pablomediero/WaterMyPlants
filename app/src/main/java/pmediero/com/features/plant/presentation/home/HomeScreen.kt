@@ -3,6 +3,9 @@ package pmediero.com.features.plant.presentation.home
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +21,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,13 +36,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation._common.CustomFloatingActionButtonNotification
+import pmediero.com.features.plant.presentation._common.CustomIconButtonNotification
 import pmediero.com.features.plant.presentation._common.DeletePlantConfirmationModal
 import pmediero.com.features.plant.presentation.home.components.CustomCardView
 import pmediero.com.features.plant.presentation.home.components.CustomTabRow
@@ -47,11 +51,13 @@ import pmediero.com.features.plant.presentation.home.model.TabType
 import pmediero.com.features.plant.presentation.home.root.HomeAction
 import pmediero.com.features.plant.presentation.home.root.HomeState
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun HomeScreen(
+fun SharedTransitionScope.HomeScreen(
     state: HomeState,
-    onAction: (HomeAction) -> Unit
+    onAction: (HomeAction) -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
     val spacing = LocalSpacing.current
 
@@ -76,16 +82,20 @@ fun HomeScreen(
                 .weight(1f)
                 .fillMaxSize(),
             onNotifyClick = {
+                onAction(HomeAction.NavigateNotification)
+            },
+            onTemporalAddPlantButtonClick = {
                 onAction(HomeAction.NavigateAddPlant)
             },
 
-        )
+            )
 
         BodyHomeScreen(
             modifier = Modifier
                 .weight(4f)
                 .fillMaxSize(),
             spacing = spacing,
+            animatedVisibilityScope = animatedVisibilityScope,
             state = state,
             plants = state.plantListMap[state.tabSelected] ?: emptyList(),
             onTabClicked = { index ->
@@ -107,7 +117,11 @@ fun HomeScreen(
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit) {
+fun HeaderHomeScreen(
+    modifier: Modifier,
+    onNotifyClick: () -> Unit,
+    onTemporalAddPlantButtonClick: () -> Unit
+) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -119,8 +133,19 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit) {
             modifier = Modifier.weight(0.5f),
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
         )
+        CustomIconButtonNotification(
+            onClick = {
+                onTemporalAddPlantButtonClick()
+            },
+            contentColor = MaterialTheme.colorScheme.background,
+            containerColor = MaterialTheme.colorScheme.primary,
+            icon = Icons.Outlined.Add,
+            isVisible = true,
+            modifier = Modifier.padding(end = 10.dp)
 
-        CustomFloatingActionButtonNotification(
+
+        )
+        CustomIconButtonNotification(
             onClick = {
                 onNotifyClick()
             },
@@ -128,26 +153,19 @@ fun HeaderHomeScreen(modifier: Modifier, onNotifyClick: () -> Unit) {
             contentColor = MaterialTheme.colorScheme.secondary,
             icon = Icons.Outlined.Notifications,
             isVisible = true,
-            isNotify = true
+            isNotify = false
         )
-        CustomFloatingActionButtonNotification(
-            onClick = {
 
-            },
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.secondary,
-            icon = Icons.Outlined.AccountCircle,
-            isVisible = true,
-            isNotify = true
-        )
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun BodyHomeScreen(
+fun SharedTransitionScope.BodyHomeScreen(
     modifier: Modifier,
     state: HomeState,
     spacing: Spacing,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     plants: List<Plant>,
     onTabClicked: (Int) -> Unit,
     onIconClicked: (Plant) -> Unit,
@@ -199,8 +217,10 @@ fun BodyHomeScreen(
             content = {
                 items(plants) { itemPlant ->
                     CustomCardView(
+                        animatedVisibilityScope = animatedVisibilityScope,
                         titleCard = itemPlant.name,
                         subtitleCard = itemPlant.description,
+                        idElement = itemPlant.id,
                         imageCard = itemPlant.photo,
                         icon = if (!itemPlant.isWatered) R.drawable.home_card_icon_water else Icons.Filled.Check,
                         labelCard = listOf(itemPlant.waterAmount, itemPlant.wateringDays),
@@ -216,6 +236,7 @@ fun BodyHomeScreen(
                         }
                     )
                 }
+
             })
 
     }
@@ -226,6 +247,6 @@ fun BodyHomeScreen(
 @Composable
 fun PreviewHomeScreen() {
     WaterMyPlantsTheme {
-        HomeScreen(state = HomeState(), onAction = {})
+        //HomeScreen(state = HomeState(), onAction = {},)
     }
 }

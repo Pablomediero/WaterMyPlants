@@ -54,7 +54,7 @@ import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation._common.CustomFloatingActionButton
+import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation._common.CustomIconButton
 import pmediero.com.features.plant.presentation._common.DialogPlantSize
 import pmediero.com.features.plant.presentation._common.DialogWateringDays
@@ -256,7 +256,7 @@ fun HeaderAddEditPlant(
                         ),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        CustomFloatingActionButton(
+                        CustomIconButtonDefault(
                             onClick = {
                                 onReturnButtonClick()
                             },
@@ -277,7 +277,7 @@ fun HeaderAddEditPlant(
                         ),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        CustomFloatingActionButton(
+                        CustomIconButtonDefault(
                             onClick = { },
                             modifier = Modifier
                                 .width(48.dp)
@@ -288,7 +288,7 @@ fun HeaderAddEditPlant(
                             icon = Icons.TwoTone.Edit,
                             isVisible = false
                         )
-                        CustomFloatingActionButton(
+                        CustomIconButtonDefault(
                             onClick = {
                                 onRemoveImageButtonClick()
                             },

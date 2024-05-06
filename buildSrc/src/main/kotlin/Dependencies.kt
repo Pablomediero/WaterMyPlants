@@ -2,6 +2,7 @@ object Dependencies {
     const val core = "androidx.core:core-ktx:${Versions.core}"
     const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val activity_compose = "androidx.activity:activity-compose:${Versions.activity_compose}"
+    const val compose_animation = "androidx.compose.animation:animation:${Versions.compose_animation}"
     const val compose_boom = "androidx.compose:compose-bom:${Versions.compose_boom}"
     const val ui = "androidx.compose.ui:ui"
     const val ui_graphics = "androidx.compose.ui:ui-graphics"

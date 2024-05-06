@@ -10,6 +10,9 @@ import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,11 +30,13 @@ import pmediero.com.features.plant.presentation.home.HomeScreen
 import pmediero.com.features.plant.presentation.home.HomeViewModel
 import pmediero.com.navigation.AppRoutes
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeRoot(
+fun SharedTransitionScope.HomeRoot(
     navController: NavController,
-    homeViewModel: HomeViewModel = koinViewModel()
+    homeViewModel: HomeViewModel = koinViewModel(),
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
     val context = LocalContext.current
     val activity = context as Activity
@@ -80,6 +85,9 @@ fun HomeRoot(
                 is HomeAction.NavigateAddPlant -> {
                     navController.navigate("${AppRoutes.AddEditPlantScreen.route}/${null}")
                 }
+                is HomeAction.NavigateNotification -> {
+                    navController.navigate(AppRoutes.NotificationScreen.route)
+                }
 
                 is HomeAction.OnClickPlant -> {
                     navController.navigate(
@@ -91,7 +99,8 @@ fun HomeRoot(
                     homeViewModel.onAction(action)
                 }
             }
-        }
+        },
+        animatedVisibilityScope = animatedVisibilityScope
     )
 }
 fun Activity.openAppSettings() {

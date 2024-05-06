@@ -1,5 +1,9 @@
 package pmediero.com.features.plant.presentation.home.components
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -8,7 +12,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,13 +36,15 @@ import pmediero.com.R
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation._common.CustomFloatingActionButton
+import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun CustomCardView(
+fun SharedTransitionScope.CustomCardView(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     titleCard: String,
     subtitleCard: String,
+    idElement: String,
     imageCard: String,
     labelCard: List<Any>,
     icon: Any,
@@ -67,6 +72,8 @@ fun CustomCardView(
                 .fillMaxSize()
                 .weight(3f),
             spacing = spacing,
+            animatedVisibilityScope = animatedVisibilityScope,
+            idElement = idElement,
             imageCard = imageCard,
             labelCard = labelCard
         )
@@ -77,6 +84,7 @@ fun CustomCardView(
                 .fillMaxSize()
                 .padding(spacing.small),
             spacing = spacing,
+            animatedVisibilityScope = animatedVisibilityScope,
             titleCard = titleCard,
             subtitleCard = subtitleCard,
             icon = icon,
@@ -85,10 +93,13 @@ fun CustomCardView(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun HeaderCardView(
+fun SharedTransitionScope.HeaderCardView(
     modifier: Modifier,
     spacing: Spacing,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    idElement : String,
     imageCard: String,
     labelCard: List<Any>
 ) {
@@ -103,7 +114,13 @@ fun HeaderCardView(
             if (imageCard.isEmpty()) {
                 Image(
                     painter = painterResource(id = R.drawable.add_plant_plant_icon_header),
-                    modifier = Modifier
+                    modifier = Modifier.sharedElement(
+                        state = rememberSharedContentState(key = "image/${idElement}"),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = { _, _ ->
+                            tween(durationMillis = 1000)
+                        }
+                    )
                         .padding(1.dp)
                         .width(61.dp)
                         .height(113.dp),
@@ -144,10 +161,12 @@ fun HeaderCardView(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun BodyCardView(
+fun SharedTransitionScope.BodyCardView(
     modifier: Modifier,
     spacing: Spacing,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     titleCard: String,
     subtitleCard: String,
     icon: Any,
@@ -170,11 +189,25 @@ fun BodyCardView(
         ) {
             Text(
                 text = titleCard,
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.sharedBounds(
+                    sharedContentState = rememberSharedContentState(key = "text/${titleCard}"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = {_, _ ->
+                        tween(durationMillis = 1000)
+                    }
+                )
             )
             Text(
                 text = subtitleCard,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.sharedBounds(
+                    sharedContentState = rememberSharedContentState(key = "desc/${titleCard}"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ ->
+                        tween(durationMillis = 1000)
+                    }
+                )
             )
         }
         Column(
@@ -184,7 +217,7 @@ fun BodyCardView(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            CustomFloatingActionButton(
+            CustomIconButtonDefault(
                 onClick = { onIconClicked() },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -203,27 +236,27 @@ fun BodyCardView(
 fun PreviewCustomCard() {
     WaterMyPlantsTheme {
         Column {
-            CustomCardView(
-                titleCard = "Planta 1",
-                subtitleCard = "Descript",
-                labelCard = listOf("5 ml", "Mo, Tu, We, Th, Fr, Sa"),
-                icon = R.drawable.home_card_icon_water,
-                imageCard = "",
-                onClick = {},
-                onLongClick = {},
-                onIconClicked = {}
-            )
-            Spacer(modifier = Modifier.padding(12.dp))
-            CustomCardView(
-                titleCard = "Planta 1",
-                subtitleCard = "Descript",
-                labelCard = listOf("5 ml", "Mo","Tu","We","Th","Fr","Sa"),
-                icon = R.drawable.home_card_icon_water,
-                imageCard = "",
-                onClick = {},
-                onLongClick = {},
-                onIconClicked = {}
-            )
+//            CustomCardView(
+//                titleCard = "Planta 1",
+//                subtitleCard = "Descript",
+//                labelCard = listOf("5 ml", "Mo, Tu, We, Th, Fr, Sa"),
+//                icon = R.drawable.home_card_icon_water,
+//                imageCard = "",
+//                onClick = {},
+//                onLongClick = {},
+//                onIconClicked = {}
+//            )
+//            Spacer(modifier = Modifier.padding(12.dp))
+//            CustomCardView(
+//                titleCard = "Planta 1",
+//                subtitleCard = "Descript",
+//                labelCard = listOf("5 ml", "Mo","Tu","We","Th","Fr","Sa"),
+//                icon = R.drawable.home_card_icon_water,
+//                imageCard = "",
+//                onClick = {},
+//                onLongClick = {},
+//                onIconClicked = {}
+//            )
         }
 
     }

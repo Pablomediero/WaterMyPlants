@@ -1,8 +1,8 @@
-package pmediero.com.features.plant.presentation.welcome
+package pmediero.com.features.plant.presentation.welcome.root
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import pmediero.com.features.plant.presentation.welcome.action.WelcomeAction
+import pmediero.com.features.plant.presentation.welcome.WelcomeScreen
 import pmediero.com.navigation.AppRoutes
 
 @Composable

@@ -28,13 +28,14 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pmediero.com.R
 import pmediero.com.core_ui.WaterMyPlantsTheme
 
 @Composable
-fun CustomFloatingActionButton(
+fun CustomIconButtonDefault(
     onClick: () -> Unit,
     containerColor: Color,
     contentColor: Color,
@@ -60,7 +61,7 @@ fun CustomFloatingActionButton(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomFloatingActionButtonNotification(
+fun CustomIconButtonNotification(
     onClick: () -> Unit,
     containerColor: Color,
     contentColor: Color,
@@ -103,6 +104,7 @@ fun CustomIconButton(
     contentColor: Color,
     modifier: Modifier = Modifier,
     border: BorderStroke = BorderStroke(0.dp, Color.Transparent),
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
     icon: Any,
     text: String
 ) {
@@ -125,7 +127,7 @@ fun CustomIconButton(
             Spacer(modifier = Modifier
                 .width(8.dp)
                 .background(containerColor))
-            Text(text = text, style = MaterialTheme.typography.bodyLarge)
+            Text(text = text, style = style)
         }
     }
 }

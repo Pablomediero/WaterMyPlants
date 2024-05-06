@@ -28,7 +28,7 @@ import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.core_ui.onBackgroundVariant
 import pmediero.com.features.plant.presentation._common.CustomIconButton
-import pmediero.com.features.plant.presentation.welcome.action.WelcomeAction
+import pmediero.com.features.plant.presentation.welcome.root.WelcomeAction
 
 @Composable
 fun WelcomeScreen(

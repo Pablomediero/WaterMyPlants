@@ -2,10 +2,12 @@ package pmediero.com.core.di
 
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import pmediero.com.core.domain.CheckPlantExistUseCase
-import pmediero.com.features.plant.data.repository.PlantRepository
+import pmediero.com.features.plant.data.PlantRepositoryImpl
+import pmediero.com.features.plant.domain.repository.PlantRepository
 import pmediero.com.navigation.MainViewModel
 
 val mainModule = module {
@@ -15,11 +17,11 @@ val mainModule = module {
 }
 
 private fun Module.domainModule() {
-    factoryOf(::CheckPlantExistUseCase)
+    singleOf(::CheckPlantExistUseCase)
 }
 
 private fun Module.dataModule() {
-    factoryOf(::PlantRepository)
+    singleOf(::PlantRepositoryImpl) bind PlantRepository::class
 }
 private fun Module.presentationModule() {
     viewModelOf(::MainViewModel)
