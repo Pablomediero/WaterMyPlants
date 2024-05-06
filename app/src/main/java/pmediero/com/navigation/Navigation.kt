@@ -4,6 +4,10 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,7 +19,7 @@ import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantRo
 import pmediero.com.features.plant.presentation.detailplant.root.DetailRoot
 import pmediero.com.features.plant.presentation.home.root.HomeRoot
 import pmediero.com.features.plant.presentation.notification.root.NotificationRoot
-import pmediero.com.features.plant.presentation.welcome.WelcomeRoot
+import pmediero.com.features.plant.presentation.welcome.root.WelcomeRoot
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -33,7 +37,11 @@ fun WaterMyPlantsNavHost(
                     AppRoutes.WelcomeScreen.route
                 } else {
                     AppRoutes.HomeScreen.route
-                }
+                },
+                enterTransition = { slideInHorizontally { it } + fadeIn() },
+                exitTransition = { slideOutHorizontally { -it } + fadeOut() },
+                popEnterTransition = { slideInHorizontally { -it } + fadeIn() },
+                popExitTransition = { slideOutHorizontally { it } + fadeOut() },
             ) {
                 composable(AppRoutes.WelcomeScreen.route) {
                     WelcomeRoot(navController = navController)

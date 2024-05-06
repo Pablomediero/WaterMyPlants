@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import pmediero.com.features.plant.domain.repository.PlantRepository
 import pmediero.com.features.plant.domain.useCase.GetFilteredPlantsUseCase
-import pmediero.com.features.plant.domain.useCase.UpdateWateredPlantUseCase
 import pmediero.com.features.plant.presentation.home.model.TabType
 import pmediero.com.features.plant.presentation.home.root.HomeAction
 import pmediero.com.features.plant.presentation.home.root.HomeState
@@ -18,7 +18,7 @@ import pmediero.com.features.plant.presentation.home.root.HomeState
 @RequiresApi(Build.VERSION_CODES.O)
 class HomeViewModel(
     private val getFilteredPlantsUseCase: GetFilteredPlantsUseCase,
-    private val updateWateredPlantUseCase: UpdateWateredPlantUseCase
+    private val plantRepository: PlantRepository
 ) : ViewModel() {
 
     var state by mutableStateOf(HomeState())
@@ -47,7 +47,7 @@ class HomeViewModel(
                 action.plant.isWatered = !action.plant.isWatered
                 viewModelScope.launch {
                     updateLoadingState(true)
-                    updateWateredPlantUseCase(action.plant).fold(
+                    plantRepository.savePlant(action.plant).fold(
                         onError = {
 
                         },

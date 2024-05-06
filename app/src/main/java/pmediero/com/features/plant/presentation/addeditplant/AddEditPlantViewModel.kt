@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import pmediero.com.features.plant.domain.useCase.AddPlantUseCase
+import pmediero.com.features.plant.domain.repository.PlantRepository
 import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
 import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantAction
@@ -19,7 +19,7 @@ import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantUi
 class AddEditPlantViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val filterWateringDaysUseCase: FilterWateringDaysUseCase,
-    private val addPlantUseCase: AddPlantUseCase,
+    private val plantRepository: PlantRepository,
     private val getPlantByIdUseCase: GetPlantByIdUseCase,
 ) : ViewModel() {
 
@@ -57,14 +57,15 @@ class AddEditPlantViewModel(
             is AddEditPlantAction.OnCreateEditPlantClick -> {
                 viewModelScope.launch {
                     updateLoadingState(true)
-                    addPlantUseCase(action.plant).fold(
+                    plantRepository.savePlant(action.plant).fold(
                         onError = {
 
                         },
-                        onSuccess = { plant ->
+                        onSuccess = {
                             _uiEvent.send(AddEditPlantUiEvent.NavigateToHome)
                         }
                     )
+
                     updateLoadingState(false)
                 }
             }

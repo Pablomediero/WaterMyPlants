@@ -72,6 +72,7 @@ fun SharedTransitionScope.DetailScreen(
                     .sharedElement(
                         state = rememberSharedContentState(key = "image/${state.plant.id}"),
                         animatedVisibilityScope = animatedVisibilityScope,
+                        placeHolderSize = SharedTransitionScope.PlaceHolderSize.animatedSize,
                         boundsTransform = {_, _ ->
                             tween(durationMillis = 1000)
                         }
@@ -89,13 +90,6 @@ fun SharedTransitionScope.DetailScreen(
                 contentAlignment = Alignment.TopCenter
             ) {
                 AsyncImage(
-                    modifier = Modifier.sharedElement(
-                        state = rememberSharedContentState(key = "image/${state.plant.photo}"),
-                        animatedVisibilityScope = animatedVisibilityScope,
-                        boundsTransform = {_, _ ->
-                            tween(durationMillis = 1000)
-                        }
-                    ),
                     model = state.plant.photo,
                     contentDescription = "",
                     contentScale = ContentScale.Crop
@@ -268,10 +262,10 @@ fun SharedTransitionScope.BodyDetailPlant(
         modifier = modifier
     ) {
         Text(
-            modifier = Modifier.sharedElement(
-                state = rememberSharedContentState(key = "text/${state.plant.name}"),
+            modifier = Modifier.sharedBounds(
+                sharedContentState = rememberSharedContentState(key = "text/${state.plant.name}"),
                 animatedVisibilityScope = animatedVisibilityScope,
-                boundsTransform = {_, _ ->
+                boundsTransform = { _, _ ->
                     tween(durationMillis = 1000)
                 }
             ).fillMaxWidth(),
@@ -284,7 +278,13 @@ fun SharedTransitionScope.BodyDetailPlant(
 
         ) {
             Text(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.sharedBounds(
+                    sharedContentState = rememberSharedContentState(key = "desc/${state.plant.name}"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ ->
+                        tween(durationMillis = 1000)
+                    }
+                ).fillMaxWidth(),
                 text = state.plant.description,
                 style = MaterialTheme.typography.bodyLarge
             )

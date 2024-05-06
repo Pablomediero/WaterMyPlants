@@ -12,12 +12,10 @@ import pmediero.com.features.plant.data.local.localsource.PlantLocalSource
 import pmediero.com.features.plant.data.local.localsource.PlantLocalSourceImpl
 import pmediero.com.features.plant.data.notification.scheduler.NotificationScheduler
 import pmediero.com.features.plant.domain.repository.PlantRepository
-import pmediero.com.features.plant.domain.useCase.AddPlantUseCase
 import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetFilteredNotificationsUseCase
 import pmediero.com.features.plant.domain.useCase.GetFilteredPlantsUseCase
 import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
-import pmediero.com.features.plant.domain.useCase.UpdateWateredPlantUseCase
 import pmediero.com.features.plant.presentation.addeditplant.AddEditPlantViewModel
 import pmediero.com.features.plant.presentation.detailplant.DetailViewModel
 import pmediero.com.features.plant.presentation.home.HomeViewModel
@@ -32,9 +30,7 @@ val plantModule = module {
 
 private fun Module.domainModule() {
     singleOf(::FilterWateringDaysUseCase)
-    singleOf(::AddPlantUseCase)
     singleOf(::GetFilteredPlantsUseCase)
-    singleOf(::UpdateWateredPlantUseCase)
     singleOf(::GetPlantByIdUseCase)
     singleOf(::GetFilteredNotificationsUseCase)
 }

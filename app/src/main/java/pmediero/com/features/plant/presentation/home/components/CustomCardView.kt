@@ -117,7 +117,7 @@ fun SharedTransitionScope.HeaderCardView(
                     modifier = Modifier.sharedElement(
                         state = rememberSharedContentState(key = "image/${idElement}"),
                         animatedVisibilityScope = animatedVisibilityScope,
-                        boundsTransform = {_, _ ->
+                        boundsTransform = { _, _ ->
                             tween(durationMillis = 1000)
                         }
                     )
@@ -130,13 +130,6 @@ fun SharedTransitionScope.HeaderCardView(
                 )
             } else {
                 AsyncImage(
-                    modifier = Modifier.sharedElement(
-                        state = rememberSharedContentState(key = "image/${imageCard}"),
-                        animatedVisibilityScope = animatedVisibilityScope,
-                        boundsTransform = {_, _ ->
-                            tween(durationMillis = 1000)
-                        }
-                    ),
                     model = imageCard,
                     contentDescription = "",
                     contentScale = ContentScale.Crop
@@ -197,8 +190,8 @@ fun SharedTransitionScope.BodyCardView(
             Text(
                 text = titleCard,
                 style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.sharedElement(
-                    state = rememberSharedContentState(key = "text/${titleCard}"),
+                modifier = Modifier.sharedBounds(
+                    sharedContentState = rememberSharedContentState(key = "text/${titleCard}"),
                     animatedVisibilityScope = animatedVisibilityScope,
                     boundsTransform = {_, _ ->
                         tween(durationMillis = 1000)
@@ -207,7 +200,14 @@ fun SharedTransitionScope.BodyCardView(
             )
             Text(
                 text = subtitleCard,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.sharedBounds(
+                    sharedContentState = rememberSharedContentState(key = "desc/${titleCard}"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ ->
+                        tween(durationMillis = 1000)
+                    }
+                )
             )
         }
         Column(

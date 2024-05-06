@@ -7,15 +7,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import pmediero.com.features.plant.domain.repository.PlantRepository
 import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
-import pmediero.com.features.plant.domain.useCase.UpdateWateredPlantUseCase
 import pmediero.com.features.plant.presentation.detailplant.root.DetailAction
 import pmediero.com.features.plant.presentation.detailplant.root.DetailState
 
 class DetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val getPlantByIdUseCase: GetPlantByIdUseCase,
-    private val updateWateredPlantUseCase: UpdateWateredPlantUseCase
+    private val plantRepository: PlantRepository
 
 ) : ViewModel() {
     var state by mutableStateOf(DetailState())
@@ -41,7 +41,7 @@ class DetailViewModel(
                 action.plant.isWatered = !action.plant.isWatered
                 viewModelScope.launch {
                     updateLoadingState(true)
-                    updateWateredPlantUseCase(action.plant).fold(
+                    plantRepository.savePlant(action.plant).fold(
                         onError = {
 
                         },

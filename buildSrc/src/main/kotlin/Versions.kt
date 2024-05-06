@@ -12,7 +12,7 @@ object Versions {
 
     const val lottie = "6.3.0"
     const val splash = "1.0.0"
-    const val navigation = "2.7.7"
+    const val navigation = "2.8.0-alpha07"
     const val font = "1.6.1"
 
     const val koin = "3.5.3"
