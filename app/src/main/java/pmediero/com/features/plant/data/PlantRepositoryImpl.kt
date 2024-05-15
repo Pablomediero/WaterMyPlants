@@ -1,6 +1,7 @@
 package pmediero.com.features.plant.data
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import kotlinx.coroutines.flow.Flow
 import pmediero.com.core.model.local.Plant
@@ -8,25 +9,25 @@ import pmediero.com.core.model.util.Result
 import pmediero.com.core.model.util.RootError
 import pmediero.com.core.presentation.util.setTimeToMillis
 import pmediero.com.features.plant.data.local.localsource.PlantLocalSource
-import pmediero.com.features.plant.data.notification.scheduler.NotificationScheduler
+import pmediero.com.features.plant.data.notification.PlantNotificationScheduler
 import pmediero.com.features.plant.domain.repository.PlantRepository
 import java.util.Calendar
 
 class PlantRepositoryImpl(
     private val plantLocalSource: PlantLocalSource,
-    private val schedulerTodayNotification: NotificationScheduler
+    private val plantNotificationScheduler: PlantNotificationScheduler
 ): PlantRepository {
     override suspend fun savePlant(plant: Plant): Result<Plant, RootError> {
-        if ( isTodayWateringDay(plant.wateringDays) ) {
-            if(isTimeToWaterToday(plant.wateringTime)){
-                schedulerTodayNotification(plant)
-            }
+        if(plant.id != "0"){
+            Log.i("WorkerPlantsNotifications","Cancelar Notification ${plant.id}: Edit Plant = Cancel Exist Notification ")
+            plantNotificationScheduler.cancelNotification(plant)
         }
         return plantLocalSource.savePlant(plant)
     }
-
-
-    override suspend fun saveAllPlant(plants: List<Plant>): Result<Unit, RootError> = plantLocalSource.saveAllPlant(plants)
+    override suspend fun saveAllPlant(plants: List<Plant>): Result<Unit, RootError> {
+        Log.d("WorkerPlantsUpdate", "Entra Repository Impl")
+        return plantLocalSource.saveAllPlant(plants)
+    }
 
     override suspend fun observePlants(): Flow<List<Plant>> = plantLocalSource.observePlants()
 
@@ -34,8 +35,22 @@ class PlantRepositoryImpl(
 
     override suspend fun getPlantById(plantIdParam: String): Plant = plantLocalSource.getPlantById(plantIdParam)
 
+    override suspend fun deletePlantById(plant: Plant): Result<Unit, RootError> {
+        plantNotificationScheduler.cancelNotification(plant)
+        return plantLocalSource.deletePlantById(plant.id)
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getFilterUpcomingPlants(): List<Plant> = plantLocalSource.getFilterUpcomingPlants()
+    override fun schedulerNotificationPlant(plant: Plant) {
+        if ( isTodayWateringDay(plant.wateringDays) ) {
+            Log.i("WorkerPlantsNotificationsIndividual","Individual Notification: (Dia) Se tiene que regar hoy")
+            if(isTimeToWaterToday(plant.wateringTime)){
+                Log.i("WorkerPlantsNotificationsIndividual","Individual Notification: (Hora) Se tiene que regar hoy")
+                plantNotificationScheduler.schedulerNotification(plant)
+                Log.i("WorkerPlantsNotificationsIndividual","Individual Notification: Notificacion programada.")
+            }
+        }
+    }
 
     private fun isTimeToWaterToday(wateringTime: String): Boolean {
         val currentTime = Calendar.getInstance()

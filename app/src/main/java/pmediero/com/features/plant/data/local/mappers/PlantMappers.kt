@@ -4,7 +4,7 @@ import org.mongodb.kbson.ObjectId
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core.model.realm.PlantEntity
 
-fun toPlant(type: PlantEntity): Plant {
+fun PlantEntity.toPlant(type: PlantEntity): Plant {
     val waterAmountWithoutLastThreeChars = if (type.waterAmount.length >= 3) {
         type.waterAmount.substring(0, type.waterAmount.length - 3)
     } else {
@@ -23,7 +23,7 @@ fun toPlant(type: PlantEntity): Plant {
     )
 }
 
-fun toPlantEntity(plant: Plant): PlantEntity {
+fun Plant.toPlantEntity(plant: Plant): PlantEntity {
     return PlantEntity().apply {
         _id = if (plant.id == "0" || plant.id == "") {
             ObjectId()

@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pmediero.com.R
+import pmediero.com.core.presentation.util.truncate
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
@@ -190,7 +191,7 @@ fun SharedTransitionScope.BodyCardView(
             )
         ) {
             Text(
-                text = titleCard,
+                text = titleCard.truncate(20),
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.sharedBounds(
                     sharedContentState = rememberSharedContentState(key = "text/${titleCard}"),
@@ -201,7 +202,7 @@ fun SharedTransitionScope.BodyCardView(
                 )
             )
             Text(
-                text = subtitleCard,
+                text = subtitleCard.truncate(21),
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.sharedBounds(
                     sharedContentState = rememberSharedContentState(key = "desc/${titleCard}"),

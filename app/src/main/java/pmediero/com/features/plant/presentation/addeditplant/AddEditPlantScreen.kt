@@ -56,8 +56,8 @@ import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation._common.CustomIconButton
+import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation._common.DialogPlantSize
 import pmediero.com.features.plant.presentation._common.DialogWateringDays
 import pmediero.com.features.plant.presentation._common.DialogWateringTime
@@ -397,7 +397,6 @@ fun FormAddPlantFigma(
 
     val showDialogTimePicker = remember { mutableStateOf(false) }
     val timePickerStateHorizontal = rememberTimePickerState(is24Hour = true)
-    //val timePickerStateHorizontal = rememberTimePickerState(is24Hour = true)
 
     val showDialogCheckBox = remember { mutableStateOf(false) }
     val checkboxState = remember { mutableStateMapOf<String, Boolean>().withDefault { false } }

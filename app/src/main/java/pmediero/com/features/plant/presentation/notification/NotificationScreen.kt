@@ -125,7 +125,7 @@ fun HeaderHomeScreen(modifier: Modifier, spacing: Spacing, onReturnButtonClick: 
             }
 
             Column(
-                modifier = Modifier.weight(7f)
+                modifier = Modifier.weight(5f)
             ) {
                 Text(
                     text = stringResource(R.string.notifications),

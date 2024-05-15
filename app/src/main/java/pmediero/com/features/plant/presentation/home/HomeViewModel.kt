@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pmediero.com.features.plant.domain.repository.PlantRepository
@@ -32,7 +31,7 @@ class HomeViewModel(
                 state = state.copy(
                     plantListMap = it
                 )
-                delay(2000)
+//                delay(1000)
                 updateLoadingState(false)
             }
 
@@ -50,7 +49,7 @@ class HomeViewModel(
             is HomeAction.OnIconCardPlantClicked -> {
                 action.plant.isWatered = !action.plant.isWatered
                 viewModelScope.launch {
-                    updateLoadingState(true)
+                   // updateLoadingState(true)
                     plantRepository.savePlant(action.plant).fold(
                         onError = {
 
@@ -59,8 +58,13 @@ class HomeViewModel(
 
                         }
                     )
-                    updateLoadingState(false)
+                   // updateLoadingState(false)
                 }
+            }
+            is HomeAction.StateNotification -> {
+                state = state.copy(
+                    notificationAux = 1
+                )
             }
             is HomeAction.OnTabClicked -> {
                 state = state.copy(
@@ -68,7 +72,14 @@ class HomeViewModel(
                 )
             }
 
-            is HomeAction.OnDeletePlant -> {}
+            is HomeAction.OnDeletePlant -> {
+                viewModelScope.launch {
+                    updateLoadingState(true)
+                    plantRepository.deletePlantById(action.plant)
+                    updateLoadingState(false)
+                }
+
+            }
             else -> {}
         }
     }
@@ -76,5 +87,4 @@ class HomeViewModel(
     private fun updateLoadingState(param: Boolean) {
         state = state.copy(isLoading = param)
     }
-
 }

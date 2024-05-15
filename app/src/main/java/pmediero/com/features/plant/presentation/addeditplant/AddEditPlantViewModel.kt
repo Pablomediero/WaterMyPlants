@@ -61,7 +61,8 @@ class AddEditPlantViewModel(
                         onError = {
 
                         },
-                        onSuccess = {
+                        onSuccess = { savedPlant ->
+                            plantRepository.schedulerNotificationPlant(savedPlant)
                             _uiEvent.send(AddEditPlantUiEvent.NavigateToHome)
                         }
                     )
