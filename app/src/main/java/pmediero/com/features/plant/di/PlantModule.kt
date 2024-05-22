@@ -41,7 +41,6 @@ private fun Module.dataModule() {
     singleOf(::PlantRepositoryImpl) bind PlantRepository::class
     singleOf(::PlantNotificationSchedulerImpl) bind PlantNotificationScheduler::class
     singleOf(::PlantLocalSourceImpl) bind PlantLocalSource::class
-    singleOf(::PlantNotificationSchedulerImpl)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

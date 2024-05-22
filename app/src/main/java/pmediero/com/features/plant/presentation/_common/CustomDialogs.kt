@@ -217,7 +217,6 @@ fun DialogWateringTime(
                         .padding(8.dp)
                 ) {
                     TimePicker(state = timePickerState)
-                    //TimeInput(state = timePickerState)
                 }
                 Row(
                     modifier = Modifier

@@ -196,11 +196,4 @@ fun PreviewTextfield() {
         },
         onClick = {}
     )
-//    CustomTextField(
-//        modifier = Modifier.fillMaxSize(),
-//        value = description,
-//        onValueChange = { description = it },
-//        placeholder = "Description",
-//        isDescription = true,
-//    )
 }

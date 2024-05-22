@@ -28,7 +28,7 @@ class PlantNotificationsWorker(
             Log.i("WorkerPlantsNotifications", "Worker Notification: Today Plants: ${filterPlants.map { it.name }}")
             doUpdateIsWateredPlantWork(filterPlants)
             if(filterPlants.isNotEmpty()){
-                doNotificationsWork(allPlantsList)
+                scheduleNotifications(allPlantsList)
             }
 
             Result.success()
@@ -47,7 +47,7 @@ class PlantNotificationsWorker(
         Log.d("WorkerPlantsUpdate", "Update SUCCESS")
     }
 
-    private fun doNotificationsWork(filterPlants: List<Plant>) {
+    private fun scheduleNotifications(filterPlants: List<Plant>) {
         filterPlants.forEach { plant ->
             plantNotificationScheduler.schedulerNotification(plant)
             Log.i("WorkerPlantsNotifications", "Worker Notification: Schedule Notification for ${plant.name}")

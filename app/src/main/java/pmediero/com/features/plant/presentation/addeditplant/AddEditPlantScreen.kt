@@ -133,8 +133,8 @@ fun AddEditPlantScreen(
             onPlantWateringTimeChange = { wateringTime ->
                 onAction(AddEditPlantAction.OnEditPlantWateringTimeChange(wateringTime))
             },
-            onPlantWaterAmountChange = { waterAmount ->
-                onAction(AddEditPlantAction.OnEditPlantWaterAmountChange(waterAmount))
+            onPlantWaterAmountChange = { waterAmount, maxChar ->
+                onAction(AddEditPlantAction.OnEditPlantWaterAmountChange(waterAmount, maxChar))
             },
             onPlantSizeChange = { plantSize ->
                 onAction(AddEditPlantAction.OnEditPlantSizeChange(plantSize))
@@ -351,7 +351,7 @@ fun BodyAddEditPlant(
     onPlantNameChange: (String) -> Unit,
     onPlantWateringDaysChange: (Map<String, Boolean>) -> Unit,
     onPlantWateringTimeChange: (String) -> Unit,
-    onPlantWaterAmountChange: (String) -> Unit,
+    onPlantWaterAmountChange: (String, Int) -> Unit,
     onPlantSizeChange: (String) -> Unit,
     onPlantDescriptionChange: (String) -> Unit
 
@@ -387,7 +387,7 @@ fun FormAddPlantFigma(
     onPlantNameChange: (String) -> Unit,
     onPlantWateringDaysChange: (Map<String, Boolean>) -> Unit,
     onPlantWateringTimeChange: (String) -> Unit,
-    onPlantWaterAmountChange: (String) -> Unit,
+    onPlantWaterAmountChange: (String, Int) -> Unit,
     onPlantSizeChange: (String) -> Unit,
     onPlantDescriptionChange: (String) -> Unit
 ) {
@@ -453,13 +453,13 @@ fun FormAddPlantFigma(
             verticalAlignment = Alignment.Top
         ) {
             val maxChar = 3
-            val pattern = remember { Regex("^\\d*\$") }
+
             CustomTextFieldPredicate(
                 modifier = Modifier.weight(1f),
                 value = state.waterAmount,
                 onValueChange = {
-                    if (it.length <= maxChar && (it.matches(pattern) || it.isEmpty())) onPlantWaterAmountChange(
-                        it
+                     onPlantWaterAmountChange(
+                        it, maxChar
                     )
                 },
                 placeholder = stringResource(R.string.water_amount),
@@ -482,7 +482,6 @@ fun FormAddPlantFigma(
                 }
             )
         }
-        //SPACING HERE?
         Column(
             modifier = Modifier
                 .fillMaxSize(),

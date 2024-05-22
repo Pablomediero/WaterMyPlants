@@ -106,9 +106,19 @@ class AddEditPlantViewModel(
             }
 
             is AddEditPlantAction.OnEditPlantWaterAmountChange -> {
-                state = state.copy(
-                    waterAmount = action.waterAmount
-                )
+                val pattern =  Regex("^\\d*\$")
+                val controlWaterAmount = if (action.waterAmount.length <= action.maxChar &&
+                    (action.waterAmount.matches(pattern) || action.waterAmount.isEmpty())) {
+                    action.waterAmount
+                } else {
+                    null
+                }
+
+                controlWaterAmount?.let {
+                    state = state.copy(
+                        waterAmount = it
+                    )
+                }
             }
 
             is AddEditPlantAction.OnEditPlantWateringDaysChange -> {
