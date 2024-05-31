@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import pmediero.com.features.plant.domain.repository.PlantRepository
 import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
+import pmediero.com.features.plant.domain.useCase.RegexWaterAmount
 import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantAction
 import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantState
 import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantUiEvent
@@ -19,6 +20,7 @@ import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantUi
 class AddEditPlantViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val filterWateringDaysUseCase: FilterWateringDaysUseCase,
+    private val regexWaterAmount: RegexWaterAmount,
     private val plantRepository: PlantRepository,
     private val getPlantByIdUseCase: GetPlantByIdUseCase,
 ) : ViewModel() {
@@ -70,11 +72,12 @@ class AddEditPlantViewModel(
                     updateLoadingState(false)
                 }
             }
+
             is AddEditPlantAction.OnEmptyFields -> {
                 state = state.copy(
-                    plantName =  action.plant.name,
-                    wateringDays =  action.plant.wateringDays,
-                    wateringTime =  action.plant.wateringTime,
+                    plantName = action.plant.name,
+                    wateringDays = action.plant.wateringDays,
+                    wateringTime = action.plant.wateringTime,
                 )
             }
 
@@ -85,6 +88,7 @@ class AddEditPlantViewModel(
                 )
 
             }
+
             is AddEditPlantAction.OnRemoveImageButtonClick -> {
                 state = state.copy(
                     plantPhoto = "",
@@ -106,14 +110,8 @@ class AddEditPlantViewModel(
             }
 
             is AddEditPlantAction.OnEditPlantWaterAmountChange -> {
-                val pattern =  Regex("^\\d*\$")
-                val controlWaterAmount = if (action.waterAmount.length <= action.maxChar &&
-                    (action.waterAmount.matches(pattern) || action.waterAmount.isEmpty())) {
-                    action.waterAmount
-                } else {
-                    null
-                }
-
+                val pattern = Regex("^\\d*\$")
+                val controlWaterAmount = regexWaterAmount(pattern, action.waterAmount, action.maxChar)
                 controlWaterAmount?.let {
                     state = state.copy(
                         waterAmount = it

@@ -31,7 +31,6 @@ class HomeViewModel(
                 state = state.copy(
                     plantListMap = it
                 )
-//                delay(1000)
                 updateLoadingState(false)
             }
 
@@ -49,7 +48,6 @@ class HomeViewModel(
             is HomeAction.OnIconCardPlantClicked -> {
                 action.plant.isWatered = !action.plant.isWatered
                 viewModelScope.launch {
-                   // updateLoadingState(true)
                     plantRepository.savePlant(action.plant).fold(
                         onError = {
 
@@ -58,7 +56,6 @@ class HomeViewModel(
 
                         }
                     )
-                   // updateLoadingState(false)
                 }
             }
             is HomeAction.StateNotification -> {

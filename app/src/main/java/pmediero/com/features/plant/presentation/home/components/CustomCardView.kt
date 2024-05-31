@@ -29,14 +29,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pmediero.com.R
 import pmediero.com.core.presentation.util.truncate
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
-import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalSharedTransitionApi::class)
@@ -230,37 +228,5 @@ fun SharedTransitionScope.BodyCardView(
                 elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp)
             )
         }
-    }
-}
-
-
-@Preview
-@Composable
-fun PreviewCustomCard() {
-    WaterMyPlantsTheme {
-        Column {
-//            CustomCardView(
-//                titleCard = "Planta 1",
-//                subtitleCard = "Descript",
-//                labelCard = listOf("5 ml", "Mo, Tu, We, Th, Fr, Sa"),
-//                icon = R.drawable.home_card_icon_water,
-//                imageCard = "",
-//                onClick = {},
-//                onLongClick = {},
-//                onIconClicked = {}
-//            )
-//            Spacer(modifier = Modifier.padding(12.dp))
-//            CustomCardView(
-//                titleCard = "Planta 1",
-//                subtitleCard = "Descript",
-//                labelCard = listOf("5 ml", "Mo","Tu","We","Th","Fr","Sa"),
-//                icon = R.drawable.home_card_icon_water,
-//                imageCard = "",
-//                onClick = {},
-//                onLongClick = {},
-//                onIconClicked = {}
-//            )
-        }
-
     }
 }

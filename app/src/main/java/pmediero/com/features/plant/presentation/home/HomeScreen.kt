@@ -268,15 +268,3 @@ fun SharedTransitionScope.BodyHomeScreen(
 
     }
 }
-
-//@OptIn(ExperimentalSharedTransitionApi::class)
-//@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-//@Preview
-//@Composable
-//fun PreviewHomeScreen() {
-//    WaterMyPlantsTheme {
-//            HomeScreen(state = HomeState(), onAction = {})
-//
-//
-//    }
-//}

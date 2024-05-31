@@ -22,7 +22,6 @@ class PlantNotificationSchedulerImpl(
     private val context: Context by inject()
     @SuppressLint("ScheduleExactAlarm")
     override fun schedulerNotification(plant: Plant) {
-        //createChannel(context)
         val now = Calendar.getInstance()
         val timeParts = plant.wateringTime.split(":")
         val timeUntilAlarm = Calendar.getInstance().setTimeToMillis(hour = timeParts[0].toInt(), minute = timeParts[1].toInt())

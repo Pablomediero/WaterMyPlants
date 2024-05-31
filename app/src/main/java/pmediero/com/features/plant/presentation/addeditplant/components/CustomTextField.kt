@@ -183,7 +183,7 @@ fun PreviewTextfield() {
     val maxChar = 3
     CustomTextFieldPredicate(
         modifier = Modifier.fillMaxWidth(),
-        value = "Textu",
+        value = "prueba",
         onValueChange = { },
         placeholder = stringResource(R.string.water_amount),
         supportingText = {

@@ -35,14 +35,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
-import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.features.plant.presentation._common.CustomIconButton
 import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation.detailplant.components.CustomPoster
@@ -313,16 +311,5 @@ fun FooterDetailPlant(
             icon = if (!state.plant.isWatered) R.drawable.home_card_icon_water else Icons.Filled.Check,
             text = stringResource(if (!state.plant.isWatered) R.string.mark_as_watered else R.string.mark_as_unwatered)
         )
-    }
-}
-
-@OptIn(ExperimentalSharedTransitionApi::class)
-@Preview
-@Composable
-fun DetailScreenPreview() {
-    WaterMyPlantsTheme {
-//        SharedTransitionScope {
-//            DetailScreen(state = DetailState(), onAction = {})
-//        }
     }
 }

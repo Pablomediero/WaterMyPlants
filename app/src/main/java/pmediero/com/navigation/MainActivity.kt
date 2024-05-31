@@ -21,7 +21,8 @@ class MainActivity : ComponentActivity() {
             WaterMyPlantsTheme {
                 WaterMyPlantsNavHost(
                     viewModel.isPlantDataSaved.collectAsState().value,
-                    viewModel.checkingData.collectAsState().value,)
+                    viewModel.checkingData.collectAsState().value,
+                )
             }
         }
     }
@@ -31,35 +32,7 @@ class MainActivity : ComponentActivity() {
             setKeepOnScreenCondition {
                 viewModel.checkingData.value
             }
-//            setOnExitAnimationListener { screen ->
-//                val zoomX = ObjectAnimator.ofFloat(
-//                    screen.iconView,
-//                    View.SCALE_X,
-//                    INTERPOLATION_INITIAL_VALUE,
-//                    INTERPOLATION_FINAL_VALUE
-//                )
-//                zoomX.interpolator = OvershootInterpolator()
-//                zoomX.duration = INTERPOLATION_DURATION
-//                zoomX.doOnEnd { screen.remove() }
-//                val zoomY = ObjectAnimator.ofFloat(
-//                    screen.iconView,
-//                    View.SCALE_Y,
-//                    INTERPOLATION_INITIAL_VALUE,
-//                    INTERPOLATION_FINAL_VALUE
-//                )
-//                zoomY.interpolator = OvershootInterpolator()
-//                zoomY.duration = INTERPOLATION_DURATION
-//                zoomY.doOnEnd { screen.remove() }
-//                zoomX.start()
-//                zoomY.start()
-//            }
         }
-    }
-
-    companion object {
-        const val INTERPOLATION_DURATION = 500L
-        const val INTERPOLATION_INITIAL_VALUE = 0.4f
-        const val INTERPOLATION_FINAL_VALUE = 0.0f
     }
 }
 

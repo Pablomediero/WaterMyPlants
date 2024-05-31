@@ -4,37 +4,37 @@ import org.mongodb.kbson.ObjectId
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core.model.realm.PlantEntity
 
-fun PlantEntity.toPlant(plantEntityTipe: PlantEntity): Plant {
-    val waterAmountWithoutLastThreeChars = if (plantEntityTipe.waterAmount.length >= 3) {
-        plantEntityTipe.waterAmount.substring(0, plantEntityTipe.waterAmount.length - 3)
+fun PlantEntity.toPlant(plantEntity: PlantEntity): Plant {
+    val waterAmountWithoutLastThreeChars = if (plantEntity.waterAmount.length >= 3) {
+        plantEntity.waterAmount.substring(0, plantEntity.waterAmount.length - 3)
     } else {
-        plantEntityTipe.waterAmount
+        plantEntity.waterAmount
     }
     return Plant(
-        id = plantEntityTipe._id.toHexString(),
-        name = plantEntityTipe.name,
-        wateringDays = plantEntityTipe.wateringDays,
-        wateringTime = plantEntityTipe.wateringTime,
+        id = plantEntity._id.toHexString(),
+        name = plantEntity.name,
+        wateringDays = plantEntity.wateringDays,
+        wateringTime = plantEntity.wateringTime,
         waterAmount = waterAmountWithoutLastThreeChars,
-        plantSize = plantEntityTipe.plantSize,
-        description = plantEntityTipe.description,
-        photo = plantEntityTipe.photo,
-        isWatered = plantEntityTipe.isWatered
+        plantSize = plantEntity.plantSize,
+        description = plantEntity.description,
+        photo = plantEntity.photo,
+        isWatered = plantEntity.isWatered
     )
 }
 
-fun Plant.toPlantEntity(plantType: Plant): PlantEntity {
+fun Plant.toPlantEntity(plant: Plant): PlantEntity {
     return PlantEntity().apply {
-        _id = if (plantType.id == "0" || plantType.id == "") {
+        _id = if (plant.id == "0" || plant.id == "") {
             ObjectId()
-        } else ObjectId(plantType.id)
-        name = plantType.name
-        wateringDays = plantType.wateringDays
-        wateringTime = plantType.wateringTime
-        waterAmount = plantType.waterAmount + " ml"
-        plantSize = plantType.plantSize
-        description = plantType.description
-        photo = plantType.photo
-        isWatered = plantType.isWatered
+        } else ObjectId(plant.id)
+        name = plant.name
+        wateringDays = plant.wateringDays
+        wateringTime = plant.wateringTime
+        waterAmount = plant.waterAmount + " ml"
+        plantSize = plant.plantSize
+        description = plant.description
+        photo = plant.photo
+        isWatered = plant.isWatered
     }
 }
