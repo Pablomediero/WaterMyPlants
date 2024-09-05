@@ -5,5 +5,5 @@ import pmediero.com.features.plant.presentation.notification.model.TabType
 
 data class NotificationState(
     var plantListMap: Map<TabType, List<Plant>> = mapOf(),
-
+    var isLoading: Boolean = false,
     )

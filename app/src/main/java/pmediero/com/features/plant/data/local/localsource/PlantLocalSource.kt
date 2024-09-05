@@ -11,5 +11,6 @@ interface PlantLocalSource {
     suspend fun observePlants(): Flow<List<Plant>>
     suspend fun getPlants(): List<Plant>
     suspend fun getPlantById(plantIdParam: String): Plant
+    suspend fun deletePlantById(plantIdParam: String): Result<Unit, RootError>
     suspend fun getFilterUpcomingPlants(): List<Plant>
 }

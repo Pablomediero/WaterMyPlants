@@ -19,7 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TimeInput
+import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
@@ -216,7 +216,7 @@ fun DialogWateringTime(
                     modifier = Modifier
                         .padding(8.dp)
                 ) {
-                    TimeInput(state = timePickerState)
+                    TimePicker(state = timePickerState)
                 }
                 Row(
                     modifier = Modifier

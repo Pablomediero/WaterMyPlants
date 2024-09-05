@@ -6,10 +6,12 @@ import pmediero.com.core.model.util.Result
 import pmediero.com.core.model.util.RootError
 
 interface PlantRepository {
-    suspend fun savePlant(plant: Plant):Result<Plant, RootError>
+    suspend fun savePlant(plant: Plant): Result<Plant, RootError>
     suspend fun saveAllPlant(plants: List<Plant>): Result<Unit, RootError>
     suspend fun observePlants(): Flow<List<Plant>>
     suspend fun getPlants(): List<Plant>
     suspend fun getPlantById(plantIdParam: String): Plant
+    suspend fun deletePlantById(plant: Plant): Result<Unit, RootError>
     suspend fun getFilterUpcomingPlants(): List<Plant>
+    fun schedulerNotificationPlant(plant: Plant)
 }

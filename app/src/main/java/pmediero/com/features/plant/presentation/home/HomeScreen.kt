@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,14 +36,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import pmediero.com.R
 import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
-import pmediero.com.core_ui.WaterMyPlantsTheme
 import pmediero.com.features.plant.presentation._common.CustomIconButtonNotification
 import pmediero.com.features.plant.presentation._common.DeletePlantConfirmationModal
 import pmediero.com.features.plant.presentation.home.components.CustomCardView
@@ -50,6 +48,7 @@ import pmediero.com.features.plant.presentation.home.components.CustomTabRow
 import pmediero.com.features.plant.presentation.home.model.TabType
 import pmediero.com.features.plant.presentation.home.root.HomeAction
 import pmediero.com.features.plant.presentation.home.root.HomeState
+
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -81,10 +80,14 @@ fun SharedTransitionScope.HomeScreen(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxSize(),
+            spacing = spacing,
+            state = state,
             onNotifyClick = {
+                onAction(HomeAction.StateNotification)
                 onAction(HomeAction.NavigateNotification)
+
             },
-            onTemporalAddPlantButtonClick = {
+            onAddPlantButtonClick = {
                 onAction(HomeAction.NavigateAddPlant)
             },
 
@@ -109,6 +112,9 @@ fun SharedTransitionScope.HomeScreen(
             },
             onCardLongClick = { plant ->
                 onAction(HomeAction.OnCardLongClick(plant))
+            },
+            onConfirmDeletePlant = { plant ->
+                onAction(HomeAction.OnDeletePlant(plant))
             }
         )
 
@@ -119,8 +125,10 @@ fun SharedTransitionScope.HomeScreen(
 @Composable
 fun HeaderHomeScreen(
     modifier: Modifier,
+    spacing: Spacing,
+    state: HomeState,
     onNotifyClick: () -> Unit,
-    onTemporalAddPlantButtonClick: () -> Unit
+    onAddPlantButtonClick: () -> Unit
 ) {
     Row(
         modifier = modifier,
@@ -135,16 +143,18 @@ fun HeaderHomeScreen(
         )
         CustomIconButtonNotification(
             onClick = {
-                onTemporalAddPlantButtonClick()
+                onAddPlantButtonClick()
             },
             contentColor = MaterialTheme.colorScheme.background,
             containerColor = MaterialTheme.colorScheme.primary,
             icon = Icons.Outlined.Add,
+            haveText = true,
+            textStyle = MaterialTheme.typography.bodyLarge,
             isVisible = true,
-            modifier = Modifier.padding(end = 10.dp)
-
-
+            text = stringResource(R.string.new_plant),
+            modifier = Modifier.padding(end = spacing.small)
         )
+
         CustomIconButtonNotification(
             onClick = {
                 onNotifyClick()
@@ -153,7 +163,7 @@ fun HeaderHomeScreen(
             contentColor = MaterialTheme.colorScheme.secondary,
             icon = Icons.Outlined.Notifications,
             isVisible = true,
-            isNotify = false
+            isNotify = state.notificationAux == 0
         )
 
     }
@@ -170,13 +180,17 @@ fun SharedTransitionScope.BodyHomeScreen(
     onTabClicked: (Int) -> Unit,
     onIconClicked: (Plant) -> Unit,
     onCardClick: (String) -> Unit,
-    onCardLongClick: (Plant) -> Unit
+    onCardLongClick: (Plant) -> Unit,
+    onConfirmDeletePlant: (Plant) -> Unit
 ) {
     val showModal = remember { mutableStateOf(false) }
     DeletePlantConfirmationModal(
         showDialog = showModal,
         itemName = state.plant.name,
-        onConfirm = { },
+        onConfirm = {
+            onConfirmDeletePlant(state.plant)
+            showModal.value = false
+        },
         onCancel = { showModal.value = false }
     )
     Column(
@@ -195,6 +209,17 @@ fun SharedTransitionScope.BodyHomeScreen(
                 textUnSelectedColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 onTabClick = { index -> onTabClicked(index) }
             )
+        }
+        if (state.isLoading) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.padding(top = spacing.large),
+                )
+            }
         }
         if (plants.isEmpty()) {
             Column(
@@ -216,6 +241,8 @@ fun SharedTransitionScope.BodyHomeScreen(
             horizontalArrangement = Arrangement.spacedBy(spacing.medium),
             content = {
                 items(plants) { itemPlant ->
+                    val labelList = mutableListOf(itemPlant.wateringDays)
+                    if (itemPlant.waterAmount.isNotEmpty()) labelList.add(itemPlant.waterAmount + " ml")
                     CustomCardView(
                         animatedVisibilityScope = animatedVisibilityScope,
                         titleCard = itemPlant.name,
@@ -223,7 +250,7 @@ fun SharedTransitionScope.BodyHomeScreen(
                         idElement = itemPlant.id,
                         imageCard = itemPlant.photo,
                         icon = if (!itemPlant.isWatered) R.drawable.home_card_icon_water else Icons.Filled.Check,
-                        labelCard = listOf(itemPlant.waterAmount, itemPlant.wateringDays),
+                        labelCard = labelList,
                         onClick = {
                             onCardClick(itemPlant.id)
                         },
@@ -239,14 +266,5 @@ fun SharedTransitionScope.BodyHomeScreen(
 
             })
 
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@Preview
-@Composable
-fun PreviewHomeScreen() {
-    WaterMyPlantsTheme {
-        //HomeScreen(state = HomeState(), onAction = {},)
     }
 }

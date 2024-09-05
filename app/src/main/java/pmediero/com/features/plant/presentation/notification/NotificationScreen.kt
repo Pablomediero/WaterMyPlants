@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -82,6 +83,7 @@ fun NotificationScreen(
                 .weight(8f)
                 .fillMaxWidth(),
             spacing = spacing,
+            isLoading = state.isLoading,
             plants = state.plantListMap[TabType.TODAY] ?: emptyList(),
             onLinkTextClick = { plantIdParam ->
                 onAction(NotificationAction.OnLinkTextClick(plantIdParam))
@@ -123,7 +125,7 @@ fun HeaderHomeScreen(modifier: Modifier, spacing: Spacing, onReturnButtonClick: 
             }
 
             Column(
-                modifier = Modifier.weight(7f)
+                modifier = Modifier.weight(5f)
             ) {
                 Text(
                     text = stringResource(R.string.notifications),
@@ -142,6 +144,7 @@ fun HeaderHomeScreen(modifier: Modifier, spacing: Spacing, onReturnButtonClick: 
 fun BodyHomeScreen(
     modifier: Modifier,
     spacing: Spacing,
+    isLoading: Boolean,
     plants: List<Plant>,
     onLinkTextClick: (String) -> Unit
 ) {
@@ -192,6 +195,17 @@ fun BodyHomeScreen(
                 text = "Today",
                 style = MaterialTheme.typography.titleMedium.copy(MaterialTheme.colorScheme.onSurfaceVariant)
             )
+            if (isLoading) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.padding(top = spacing.large),
+                    )
+                }
+            }
             if (plants.isEmpty()) {
                 Column(
                     modifier = Modifier.fillMaxSize(),

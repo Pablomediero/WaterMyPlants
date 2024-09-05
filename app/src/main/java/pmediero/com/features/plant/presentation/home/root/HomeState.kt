@@ -15,6 +15,7 @@ data class HomeState(
         wateringDays = "",
         description = ""
     ),
+    var notificationAux: Int = 0,
     var tabSelected: TabType = TabType.UPCOMING,
     var plantListMap: Map<TabType, List<Plant>> = mapOf(),
     var isPlantWatered: Boolean = false

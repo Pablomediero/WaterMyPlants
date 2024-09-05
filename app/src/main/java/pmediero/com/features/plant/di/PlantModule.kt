@@ -10,12 +10,14 @@ import org.koin.dsl.module
 import pmediero.com.features.plant.data.PlantRepositoryImpl
 import pmediero.com.features.plant.data.local.localsource.PlantLocalSource
 import pmediero.com.features.plant.data.local.localsource.PlantLocalSourceImpl
-import pmediero.com.features.plant.data.notification.scheduler.NotificationScheduler
+import pmediero.com.features.plant.data.notification.PlantNotificationScheduler
+import pmediero.com.features.plant.data.notification.PlantNotificationSchedulerImpl
 import pmediero.com.features.plant.domain.repository.PlantRepository
 import pmediero.com.features.plant.domain.useCase.FilterWateringDaysUseCase
 import pmediero.com.features.plant.domain.useCase.GetFilteredNotificationsUseCase
 import pmediero.com.features.plant.domain.useCase.GetFilteredPlantsUseCase
 import pmediero.com.features.plant.domain.useCase.GetPlantByIdUseCase
+import pmediero.com.features.plant.domain.useCase.RegexWaterAmount
 import pmediero.com.features.plant.presentation.addeditplant.AddEditPlantViewModel
 import pmediero.com.features.plant.presentation.detailplant.DetailViewModel
 import pmediero.com.features.plant.presentation.home.HomeViewModel
@@ -33,12 +35,13 @@ private fun Module.domainModule() {
     singleOf(::GetFilteredPlantsUseCase)
     singleOf(::GetPlantByIdUseCase)
     singleOf(::GetFilteredNotificationsUseCase)
+    singleOf(::RegexWaterAmount)
 }
 
 private fun Module.dataModule() {
     singleOf(::PlantRepositoryImpl) bind PlantRepository::class
+    singleOf(::PlantNotificationSchedulerImpl) bind PlantNotificationScheduler::class
     singleOf(::PlantLocalSourceImpl) bind PlantLocalSource::class
-    singleOf(::NotificationScheduler)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

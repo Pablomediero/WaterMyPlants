@@ -12,6 +12,7 @@ import java.util.Locale
 
 class GetFilteredNotificationsUseCase(
     private val plantRepository: PlantRepository
+
 ) {
     @RequiresApi(Build.VERSION_CODES.O)
     suspend operator fun invoke(): Flow<Map<TabType, List<Plant>>> {

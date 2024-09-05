@@ -29,6 +29,7 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.twotone.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,6 +47,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -54,14 +56,15 @@ import pmediero.com.core.model.local.Plant
 import pmediero.com.core_ui.LocalSpacing
 import pmediero.com.core_ui.Spacing
 import pmediero.com.core_ui.WaterMyPlantsTheme
-import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation._common.CustomIconButton
+import pmediero.com.features.plant.presentation._common.CustomIconButtonDefault
 import pmediero.com.features.plant.presentation._common.DialogPlantSize
 import pmediero.com.features.plant.presentation._common.DialogWateringDays
 import pmediero.com.features.plant.presentation._common.DialogWateringTime
 import pmediero.com.features.plant.presentation._common.PlantSize
 import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextField
 import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextFieldModal
+import pmediero.com.features.plant.presentation.addeditplant.components.CustomTextFieldPredicate
 import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantAction
 import pmediero.com.features.plant.presentation.addeditplant.root.AddEditPlantState
 
@@ -130,8 +133,8 @@ fun AddEditPlantScreen(
             onPlantWateringTimeChange = { wateringTime ->
                 onAction(AddEditPlantAction.OnEditPlantWateringTimeChange(wateringTime))
             },
-            onPlantWaterAmountChange = { waterAmount ->
-                onAction(AddEditPlantAction.OnEditPlantWaterAmountChange(waterAmount))
+            onPlantWaterAmountChange = { waterAmount, maxChar ->
+                onAction(AddEditPlantAction.OnEditPlantWaterAmountChange(waterAmount, maxChar))
             },
             onPlantSizeChange = { plantSize ->
                 onAction(AddEditPlantAction.OnEditPlantSizeChange(plantSize))
@@ -348,7 +351,7 @@ fun BodyAddEditPlant(
     onPlantNameChange: (String) -> Unit,
     onPlantWateringDaysChange: (Map<String, Boolean>) -> Unit,
     onPlantWateringTimeChange: (String) -> Unit,
-    onPlantWaterAmountChange: (String) -> Unit,
+    onPlantWaterAmountChange: (String, Int) -> Unit,
     onPlantSizeChange: (String) -> Unit,
     onPlantDescriptionChange: (String) -> Unit
 
@@ -384,7 +387,7 @@ fun FormAddPlantFigma(
     onPlantNameChange: (String) -> Unit,
     onPlantWateringDaysChange: (Map<String, Boolean>) -> Unit,
     onPlantWateringTimeChange: (String) -> Unit,
-    onPlantWaterAmountChange: (String) -> Unit,
+    onPlantWaterAmountChange: (String, Int) -> Unit,
     onPlantSizeChange: (String) -> Unit,
     onPlantDescriptionChange: (String) -> Unit
 ) {
@@ -400,11 +403,11 @@ fun FormAddPlantFigma(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(spacing.medium, Alignment.Top),
+        verticalArrangement = Arrangement.spacedBy(spacing.default, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(bottom = spacing.extraSmall),
             verticalArrangement = Arrangement.spacedBy(spacing.small, Alignment.Top),
             horizontalAlignment = Alignment.Start,
         ) {
@@ -417,6 +420,7 @@ fun FormAddPlantFigma(
             )
         }
         Row(
+            modifier = Modifier.padding(top = spacing.medium,bottom = spacing.extraSmall),
             horizontalArrangement = Arrangement.spacedBy(
                 spacing.medium,
                 Alignment.CenterHorizontally
@@ -441,18 +445,33 @@ fun FormAddPlantFigma(
             )
         }
         Row(
+            modifier = Modifier.padding(top = spacing.medium, bottom = spacing.extraSmall),
             horizontalArrangement = Arrangement.spacedBy(
                 spacing.medium,
                 Alignment.CenterHorizontally
             ),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Top
         ) {
-            CustomTextField(
+            val maxChar = 3
+
+            CustomTextFieldPredicate(
                 modifier = Modifier.weight(1f),
                 value = state.waterAmount,
-                onValueChange = { onPlantWaterAmountChange(it) },
+                onValueChange = {
+                     onPlantWaterAmountChange(
+                        it, maxChar
+                    )
+                },
                 placeholder = stringResource(R.string.water_amount),
-                isDescription = false,
+                supportingText = {
+                    Text(
+                        text = "${state.waterAmount.length} / $maxChar",
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.labelSmall.copy(Color.DarkGray)
+                    )
+                },
+                onClick = {}
             )
             CustomTextFieldModal(
                 modifier = Modifier.weight(1f),

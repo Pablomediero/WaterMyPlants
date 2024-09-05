@@ -1,6 +1,7 @@
 package pmediero.com.features.plant.data.local.localsource
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
@@ -20,26 +21,32 @@ import java.util.Locale
 
 class PlantLocalSourceImpl(
     private val realm: Realm,
-): PlantLocalSource{
-     override suspend fun savePlant(plant: Plant): Result<Plant, RootError> {
+) : PlantLocalSource {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun savePlant(plant: Plant): Result<Plant, RootError> {
         return try {
-            val plantEntity = toPlantEntity(plant)
+            Log.d("BBDD", "BBDD PreAdd: $plant")
+            val plantEntity = plant.toPlantEntity(plant)
+            Log.d("BBDD", "BBDD Add: $plantEntity")
             realm.write {
                 copyToRealm(plantEntity, UpdatePolicy.ALL)
             }
 
-            Result.Success(toPlant(plantEntity))
+            Result.Success(plantEntity.toPlant(plantEntity))
         } catch (e: Exception) {
             Result.Error(LocalError)
         }
 
     }
 
-     override suspend fun saveAllPlant(plants: List<Plant>): Result<Unit, RootError> {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun saveAllPlant(plants: List<Plant>): Result<Unit, RootError> {
         return try {
+            Log.d("WorkerPlantsUpdate", "Entra SourceImpl")
             realm.write {
                 plants.forEach { plant ->
-                    copyToRealm(toPlantEntity(plant), UpdatePolicy.ALL)
+                    Log.d("WorkerPlantsUpdate", "${plant.name} is ${plant.isWatered}")
+                    copyToRealm(plant.toPlantEntity(plant), UpdatePolicy.ALL)
                 }
             }
             Result.Success(Unit)
@@ -49,25 +56,42 @@ class PlantLocalSourceImpl(
 
     }
 
-     override suspend fun observePlants(): Flow<List<Plant>> = realm
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun observePlants(): Flow<List<Plant>> = realm
         .query<PlantEntity>()
         .asFlow()
         .map { results ->
-            results.list.toList().map {
-                toPlant(it)
+            results.list.toList().map {plant -> plant.toPlant(plant)
             }
         }
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun getPlants(): List<Plant> =
+        realm.query<PlantEntity>().find().map { plant -> plant.toPlant(plant) }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun getPlantById(plantIdParam: String): Plant {
+        val plantEntityId = BsonObjectId(plantIdParam)
+        val plantEntity = realm.query<PlantEntity>("_id == $0", plantEntityId).find().first()
+        return plantEntity.toPlant(plantEntity)
+    }
 
-     override suspend fun getPlants(): List<Plant> = realm.query<PlantEntity>().find().map { toPlant(it) }
-     override suspend fun getPlantById(plantIdParam: String): Plant {
-        val plantEntity = BsonObjectId(plantIdParam)
-        return toPlant(realm.query<PlantEntity>("_id == $0", plantEntity).find().first())
+    override suspend fun deletePlantById(plantIdParam: String): Result<Unit, RootError> {
+        return try {
+            val plantEntityId = BsonObjectId(plantIdParam)
+            realm.write {
+                val deletePlant = query<PlantEntity>("_id == $0", plantEntityId).find().first()
+                delete(deletePlant)
+            }
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(LocalError)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getFilterUpcomingPlants(): List<Plant> {
-        val listPlants = realm.query<PlantEntity>().find().map { toPlant(it) }
+        val listPlants = realm.query<PlantEntity>().find()
+            .map { plantEntity -> plantEntity.toPlant(plantEntity) }
         val currentDayOfWeek = LocalDate.now().dayOfWeek.name.substring(0, 2).lowercase(Locale.ROOT)
         return listPlants.filter { plant ->
             plant.wateringDays.split(" ").any { day ->
