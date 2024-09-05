@@ -23,15 +23,16 @@ class GetFilteredPlantsUseCase(
             )
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun filterForgotToWaterPlants(listPlants: List<Plant>): List<Plant> {
+    fun filterForgotToWaterPlants(plants: List<Plant>): List<Plant> {
         val yesterday = LocalDate.now().minusDays(1).dayOfWeek.name.substring(0, 2).lowercase(Locale.ROOT)
-        return listPlants.filter { plant ->
+        return plants.filter { plant ->
             plant.wateringDays.split(" ").any { day ->
-                day.equals("everyday", ignoreCase = true) || day.lowercase(Locale.ROOT) == yesterday
+                day.lowercase(Locale.ROOT) == yesterday || day.equals("everyday", ignoreCase = true)
             }
         }.filter { plant ->
-            !plant.isWatered
+            plant.lastWateredDate.lowercase(Locale.ROOT) == yesterday
         }
     }
 

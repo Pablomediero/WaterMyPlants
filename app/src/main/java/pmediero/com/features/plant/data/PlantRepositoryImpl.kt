@@ -11,23 +11,24 @@ import pmediero.com.core.presentation.util.setTimeToMillis
 import pmediero.com.features.plant.data.local.localsource.PlantLocalSource
 import pmediero.com.features.plant.data.notification.PlantNotificationScheduler
 import pmediero.com.features.plant.domain.repository.PlantRepository
+import java.time.LocalDate
 import java.util.Calendar
+import java.util.Locale
 
 class PlantRepositoryImpl(
     private val plantLocalSource: PlantLocalSource,
     private val plantNotificationScheduler: PlantNotificationScheduler
 ): PlantRepository {
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun savePlant(plant: Plant): Result<Plant, RootError> {
         if(plant.id != "0"){
             Log.i("WorkerPlantsNotifications","Cancelar Notification ${plant.id}: Edit Plant = Cancel Exist Notification ")
             plantNotificationScheduler.cancelNotification(plant)
         }
+        plant.lastWateredDate = toShortDayName()
         return plantLocalSource.savePlant(plant)
     }
-    override suspend fun saveAllPlant(plants: List<Plant>): Result<Unit, RootError> {
-        Log.d("WorkerPlantsUpdate", "Entra Repository Impl")
-        return plantLocalSource.saveAllPlant(plants)
-    }
+    override suspend fun saveAllPlant(plants: List<Plant>): Result<Unit, RootError> = plantLocalSource.saveAllPlant(plants)
 
     override suspend fun observePlants(): Flow<List<Plant>> = plantLocalSource.observePlants()
 
@@ -50,6 +51,16 @@ class PlantRepositoryImpl(
                 Log.i("WorkerPlantsNotificationsIndividual","Individual Notification: Notificacion programada.")
             }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun toShortDayName(): String {
+        val today = LocalDate.now()
+        val dayOfWeek = today.dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, Locale.ENGLISH)
+        val convert =  dayOfWeek.substring(0, 2)
+        Log.d("BBDD", "Map toShortDayName: $convert")
+
+        return convert
     }
 
     private fun isTimeToWaterToday(wateringTime: String): Boolean {

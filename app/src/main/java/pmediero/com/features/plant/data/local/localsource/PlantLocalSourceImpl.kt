@@ -22,9 +22,12 @@ import java.util.Locale
 class PlantLocalSourceImpl(
     private val realm: Realm,
 ) : PlantLocalSource {
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun savePlant(plant: Plant): Result<Plant, RootError> {
         return try {
+            Log.d("BBDD", "BBDD PreAdd: $plant")
             val plantEntity = plant.toPlantEntity(plant)
+            Log.d("BBDD", "BBDD Add: $plantEntity")
             realm.write {
                 copyToRealm(plantEntity, UpdatePolicy.ALL)
             }
@@ -36,6 +39,7 @@ class PlantLocalSourceImpl(
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun saveAllPlant(plants: List<Plant>): Result<Unit, RootError> {
         return try {
             Log.d("WorkerPlantsUpdate", "Entra SourceImpl")
@@ -52,6 +56,7 @@ class PlantLocalSourceImpl(
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun observePlants(): Flow<List<Plant>> = realm
         .query<PlantEntity>()
         .asFlow()
@@ -59,9 +64,11 @@ class PlantLocalSourceImpl(
             results.list.toList().map {plant -> plant.toPlant(plant)
             }
         }
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getPlants(): List<Plant> =
         realm.query<PlantEntity>().find().map { plant -> plant.toPlant(plant) }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getPlantById(plantIdParam: String): Plant {
         val plantEntityId = BsonObjectId(plantIdParam)
         val plantEntity = realm.query<PlantEntity>("_id == $0", plantEntityId).find().first()

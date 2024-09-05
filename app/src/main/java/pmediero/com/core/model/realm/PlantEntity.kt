@@ -8,6 +8,7 @@ class PlantEntity: RealmObject {
     @PrimaryKey var _id: ObjectId = ObjectId()
     var name: String = "nombre"
     var wateringDays: String = "días de regado a la semana"
+    var lastWateredDate: String = "th" //Example data
     var wateringTime: String = "hora de regado "
     var waterAmount: String = "cantidad de agua"
     var plantSize: String = "tamaño de la planta"
